@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/infinite-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/infinite-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"awayx.online","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="ACMMM 2023   github：https:&#x2F;&#x2F;github.com&#x2F;ssecv&#x2F;PSR  Abstract近年来，显著性排名作为一个具有挑战性的任务，专注于评估实例级的显著性程度。由于显著性具有主观性，即使是人类也很难准确识别所有显著实例的确切顺序。以前的方法通常通过直接排序显著实例的排名分数来进行显著性排名，但这些方法并没有明确解决固有的模糊性。为了解决这一限制，我们提出了“分区排名">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Partitioned Saliency Ranking with Dense Pyramid Transformers">
+<meta property="og:url" content="http://awayx.online/2024/08/17/Partitioned%20Saliency%20Ranking%20with%20Dense%20Pyramid%20Transformers/index.html">
+<meta property="og:site_name" content="AwaySpace">
+<meta property="og:description" content="ACMMM 2023   github：https:&#x2F;&#x2F;github.com&#x2F;ssecv&#x2F;PSR  Abstract近年来，显著性排名作为一个具有挑战性的任务，专注于评估实例级的显著性程度。由于显著性具有主观性，即使是人类也很难准确识别所有显著实例的确切顺序。以前的方法通常通过直接排序显著实例的排名分数来进行显著性排名，但这些方法并没有明确解决固有的模糊性。为了解决这一限制，我们提出了“分区排名">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://vip.helloimg.com/i/2024/08/17/66c08fce65d12.png">
+<meta property="og:image" content="https://vip.helloimg.com/i/2024/08/17/66c0902a72313.png">
+<meta property="article:published_time" content="2024-08-17T12:09:06.000Z">
+<meta property="article:modified_time" content="2024-08-18T12:52:00.084Z">
+<meta property="article:author" content="AwayX">
+<meta property="article:tag" content="论文笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://vip.helloimg.com/i/2024/08/17/66c08fce65d12.png">
+
+<link rel="canonical" href="http://awayx.online/2024/08/17/Partitioned%20Saliency%20Ranking%20with%20Dense%20Pyramid%20Transformers/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Partitioned Saliency Ranking with Dense Pyramid Transformers | AwaySpace</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">AwaySpace</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">5</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">42</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">32</span></a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container"></div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="algolia-results">
+  <div id="algolia-stats"></div>
+  <div id="algolia-hits"></div>
+  <div id="algolia-pagination" class="algolia-pagination"></div>
+</div>
+
+      
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://awayx.online/2024/08/17/Partitioned%20Saliency%20Ranking%20with%20Dense%20Pyramid%20Transformers/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/TheRightToCry.jpg">
+      <meta itemprop="name" content="AwayX">
+      <meta itemprop="description" content="嘿嘿">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AwaySpace">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Partitioned Saliency Ranking with Dense Pyramid Transformers
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-08-17 20:09:06" itemprop="dateCreated datePublished" datetime="2024-08-17T20:09:06+08:00">2024-08-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-08-18 20:52:00" itemprop="dateModified" datetime="2024-08-18T20:52:00+08:00">2024-08-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">论文笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/Computer-Vision/" itemprop="url" rel="index"><span itemprop="name">Computer Vision</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/Computer-Vision/Salient-Object-Ranking/" itemprop="url" rel="index"><span itemprop="name">Salient Object Ranking</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/Computer-Vision/Salient-Object-Ranking/image/" itemprop="url" rel="index"><span itemprop="name">image</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/Computer-Vision/Salient-Object-Ranking/image/2023/" itemprop="url" rel="index"><span itemprop="name">2023</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
+<p><strong>ACMMM 2023</strong></p>
+</blockquote>
+<blockquote>
+<p><strong>github</strong>：<a target="_blank" rel="noopener" href="https://github.com/ssecv/PSR">https://github.com/ssecv/PSR</a></p>
+</blockquote>
+<h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>近年来，显著性排名作为一个具有挑战性的任务，专注于评估实例级的显著性程度。由于显著性具有主观性，即使是人类也很难准确识别所有显著实例的确切顺序。以前的方法通常通过直接排序显著实例的排名分数来进行显著性排名，但这些方法并没有明确解决固有的模糊性。为了解决这一限制，我们提出了“分区排名”范式，该方法<strong>将无序的显著实例分割成多个分区，然后根据这些分区之间的相关性进行排名</strong>。分区排名范式<strong>从一般意义上缓解了排名模糊性</strong>，并且始终提高了其他显著性排名模型的性能。此外，我们<strong>引入了密集金字塔变换器</strong>（DPT），以实现全局跨尺度交互，这显著增强了特征交互，并减少了计算负担。大量实验表明，我们的方法优于所有现有方法。我们的方法代码可以在 <a target="_blank" rel="noopener" href="https://github.com/ssecv/PSR">https://github.com/ssecv/PSR</a> 获得。</p>
+<span id="more"></span>
+
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>显著性检测是计算机视觉中的一个重要研究领域。之前的研究主要集中在像素级的显著物体检测 [6, 12, 13, 24, 37, 43, 46–49] 和显著实例分割 [18, 23, 30, 39, 45]。尽管这些工作取得了令人鼓舞的成果，但它们并没有考虑物体之间的相对显著性排序，这与人类视觉系统的处理方式更为一致 [35]。为了解决这个问题，Islam 等人 [17] 引入了一个名为显著性排名（SR）的新任务，该任务不仅从图像中分割出显著实例，还预测这些实例的相对显著性排名。随后的一些研究 [10, 22, 36, 38] 将像素级预测 [17] 提升到实例级预测。这项研究有望应用于其他视觉任务，例如人员重识别 [3, 34]、人类注视交流 [8] 和视频转换 [50]。</p>
+<img src="https://vip.helloimg.com/i/2024/08/17/66c08fce65d12.png" width="70%"/>
+
+<blockquote>
+<p>图 1：显著性排名中的挑战。(a) 在 ASSR 数据集上进行的用户研究显示，参与者在确定显著性程度的方法上存在差异。(b) 以往的研究在处理模糊和复杂场景时，未能成功预测显著性排名和掩码。</p>
+</blockquote>
+<p>为了生成最一致的显著性排名的真实值（GT），Siris 等人 [36] 通过一项包含 11 名参与者的用户研究，对 2,500 张图像的九种方法进行了比较。在这些方法中，DistFixSeq 获得了参与者最多的图像选择，并被采用来生成显著性排名的真实值。然而，如图 1(a) 所示，参与者 1 和参与者 3 之间的图像选择数量存在 1688 张图像的差异，占比达 67.5%。这表明，<strong>即使使用最一致的生成方法，显著性排名的 GT 仍然可能存在歧义</strong>。这种歧义可能是因为显著性排名任务即便对于人类而言，也很难确定显著物体之间的确切排名而没有争议 [22]。</p>
+<p>显著性排名的内在歧义使得现代方法难以准确预测显著实例的排名。如图 1(b) 的顶部所示，尽管诸如 ASSR [36]、IRSR [22] 和 SOR [10] 等方法可以预测出合理的显著实例掩膜，但它们的预测排名彼此之间存在差异，尤其是对于那些排名较低的实例。</p>
+<img src="https://vip.helloimg.com/i/2024/08/17/66c0902a72313.png" width="75%"/>
+
+<blockquote>
+<p>图 2：(a) 通过排序进行排名和 (b) 通过分区进行排名。通过排序进行排名是指直接通过<strong>对显著实例的评分进行排序</strong>来预测其排名。通过分区进行排名则涉及识别<strong>无序显著实例的显著性分区</strong>，并通过这些分区之间的关联对显著实例进行排名。</p>
+</blockquote>
+<p>考虑到之前工作的范式，[10, 22, 36, 38] 通过对显著实例的评分进行排序直接预测它们的排名，即通过排序进行排名（参见图 2(a)）。但是，这种范式并未明确解决显著性排名中固有的歧义，导致对那些排名较低的显著实例评估不准确，如图 1(b) 顶部所示。</p>
+<p>另一方面，ASSR [36]、IRSR [22] 和 SOR [10] 基于提案特征的稀疏交互 [15]。它们在第一阶段获得物体提案，然后在第二阶段通过交互这些提案来建立相对关系。然而，这些模型选择显著的物体提案，并丢弃了背景和显著性较低的物体。<strong>未参与交互的缺失特征对于显著性排名也是有用的</strong>。如图 1(b) 底部所示，基于稀疏交互的方法 ASSR [36]、IRSR [22] 和 SOR [10] 导致了误报和漏报。</p>
+<p>在本文中，我们通过<strong>缓解歧义并增强特征交互</strong>（alleviating ambiguity and enhancing feature interaction）来解决显著实例排名中的上述限制。<strong>假设人类更容易识别出最吸引人的 N 个物体整体，而不是逐一确定它们的确切相对顺序</strong>。基于这一假设，我们提出了一种新的范式来缓解显著性排名中的歧义问题，即通过分区进行排名。如图 2(b) 所示，我们生成了 N 个显著性分区，其中 N 等于数据集中最大排名。</p>
+<p>每个分区由一组未排序的显著实例组成，这些实例的优先级等于或高于对应的排名。具体而言，分区 n 最多生成 n 个未排序的显著实例。</p>
+<p>为了实现这个想法，我们设计了分区头（partition heads）来预测每个实例的 N 个分区概率，并提出了“分区转排名”（Partition to Rank，P2R）方法，通过这些显著性分区之间的关联来推断每个显著实例的确切排名。这种通过分区进行排名的范式有助于缓解显著性歧义。</p>
+<p>此外，我们在全局范围内以及跨尺度地<strong>充分增强了特征交互</strong>。为了避免因尺度数量和空间分辨率乘积的平方计算复杂性，我们设计了密集金字塔转换器（Dense Pyramid Transformer，DPT），将交互过程分为三条路径：行注意力、列注意力和跨尺度注意力。所提出的 DPT 在速度相同的情况下优于 Twin Transformer [14] 和 Deformable Transformer [51]。</p>
+<p>总之，本工作的贡献如下：</p>
+<ul>
+<li>为了缓解显著性排名中的歧义，我们提出了一种新的范式，即通过分区进行排名，而不是通过排序进行排名。</li>
+<li>我们提出了密集金字塔变压器（DPT），它在减少计算负担的同时实现了全球跨尺度交互。</li>
+<li>我们进行了广泛的实验来分析我们的方法，并验证其在现有最先进方法上的优越性能。</li>
+</ul>
+<h2 id="RELATED-WORK"><a href="#RELATED-WORK" class="headerlink" title="RELATED WORK"></a>RELATED WORK</h2><h3 id="Saliency-Ranking"><a href="#Saliency-Ranking" class="headerlink" title="Saliency Ranking\"></a>Saliency Ranking\</h3><p>显著性排名任务的动机来源于现实世界中人们优先关注某些物体而非其他物体的情况。Islam 等人[17] 首次在计算机视觉领域引入了显著性排名，并将其视为一个像素级回归问题。Siris 等人[36] 根据人类注意力转移引入了新的数据集 ASSR，并提出了一种方法，使用了自下而上和自上而下的注意力机制来预测显著实例的排名和掩膜。这是第一个实例级显著性排名方法，后续的研究也跟随了这一目标。Liu 等人[22] 建立了另一个数据集 IRSR，该数据集依赖于注视持续时间而不是顺序。他们设计了一个基于图卷积的网络来预测相对显著性排名，并提出了一种包含真实排名顺序的排名损失。Fang 等人[10] 提出了第一个基于变换器的保持位置注意力模块，并使用了一个端到端的多任务模型，同时执行实例分割和显著性排名。Tian 等人[38] 提出了一个双向提议交互方法，并结合了选择性物体显著性模块。在视频领域，[42] 提出了一种根据人类观察者的相对注视来排名物体显著性的技术。</p>
+<p>通过建模提议和上下文之间的交互，上述方法预测显著实例的掩膜和相对排名。然而，它们遵循的排序排名范式未能充分解决标签模糊性挑战（label ambiguity challenge）。相比之下，本文<strong>提出了一种新的分区排名范式，并结合密集金字塔变换器，以缓解显著性模糊性并促进跨尺度的全局特征交互</strong>。</p>
+<h3 id="Regular-Instance-Segmentation"><a href="#Regular-Instance-Segmentation" class="headerlink" title="Regular Instance Segmentation"></a>Regular Instance Segmentation</h3><h3 id="Salient-Instance-Segmentation"><a href="#Salient-Instance-Segmentation" class="headerlink" title="Salient Instance Segmentation"></a>Salient Instance Segmentation</h3><h2 id="PROBLEM-FORMULATION"><a href="#PROBLEM-FORMULATION" class="headerlink" title="PROBLEM FORMULATION"></a>PROBLEM FORMULATION</h2><h3 id="Ranking-by-sorting"><a href="#Ranking-by-sorting" class="headerlink" title="Ranking by sorting"></a>Ranking by sorting</h3><p>之前的显著性排名方法[10, 22, 36, 38]将图像  $I \in \mathbb{R}^{3 \times H \times W}$  分割成一组掩码，然后对显著实例的评分进行排序，以确定排名，这就是所谓的通过排序进行排名。这一过程如图 2(a) 所示。我们假设 $N$ 等于数据集的最大排名， $f(\cdot)$ 是网络的前向过程。令  $M &#x3D; {m_i | m_i \in {0, 1}^{H \times W}}^N_{i&#x3D;1}$  表示实例的掩码， $R &#x3D; {r_i | r_i \in {1, 2, …, N}}^N_{i&#x3D;1}$  表示实例的排名。每个实例的掩码和显著性排名的预测可以表示为：</p>
+<p>$$<br>&lt;m_i, r_i&gt; &#x3D; f(I)<br>$$</p>
+<p>然而，如图 1(b) 所示，基于排序的排名方法[10, 22, 36]未能正确预测低排名一般来说，个人<strong>同时选择</strong> $N$ <strong>个最显著的实例要比准确确定显著实例的顺序简单得多</strong>。显著实例的掩码和排名。</p>
+<h3 id="Ranking-by-partition"><a href="#Ranking-by-partition" class="headerlink" title="Ranking by partition"></a>Ranking by partition</h3><p>一般来说，个人<strong>同时选择</strong> $N$ <strong>个最显著的实例要比准确确定显著实例的顺序简单得多</strong>。受此观点的启发，我们提出了一种新范式，即通过分区进行排名，这种方法减少了对每个显著实例进行排名时的模糊性。如图 2(b) 所示，每个分区由一组未排序的显著实例组成，这些实例的优先级等于或高于相应的排名。令 $P &#x3D; {p_n}^N_{n&#x3D;1}$ 表示每个实例属于 $N$ 个分区的概率。网络的输出包括每个实例的掩码和分区概率的预测，公式如下：</p>
+<p>$$<br>&lt;M, p_1, p_2, …, p_N&gt; &#x3D; f(I)<br>$$</p>
+<p>我们提出了从分区到排名（P2R）的方法，通过解析这些分区之间的相关性来推断每个实例的排名。解析结果可以表示为：</p>
+<p>$$<br>&lt;m_i, r_i &#x3D; n&gt; &#x3D; P2R(M, p_1, p_2, …, p_n)<br>$$</p>
+<h2 id="METHODOLOGY"><a href="#METHODOLOGY" class="headerlink" title="METHODOLOGY"></a>METHODOLOGY</h2><h2 id="EXPERIMENTS"><a href="#EXPERIMENTS" class="headerlink" title="EXPERIMENTS"></a>EXPERIMENTS</h2><h3 id="Datasets-and-Evaluation-Metrics"><a href="#Datasets-and-Evaluation-Metrics" class="headerlink" title="Datasets and Evaluation Metrics"></a>Datasets and Evaluation Metrics</h3><h4 id="Dataset"><a href="#Dataset" class="headerlink" title="Dataset"></a>Dataset</h4><p>我们在两个公开可访问的数据集 ASSR [36] 和 IRSR [22] 上进行了实验。ASSR 数据集通过鼠标追踪来收集注视数据，并对前五个唯一注视的物体进行显著性排名。该数据集包含 7,464 张训练图像、1,436 张验证图像和 2,418 张测试图像。IRSR 数据集去除了过度或不足分割的图像以及包含超过八个或少于两个显著实例的图像。该数据集包括 6,059 张训练图像和 2,929 张测试图像。</p>
+<h4 id="Evaluation-Metrics"><a href="#Evaluation-Metrics" class="headerlink" title="Evaluation Metrics"></a>Evaluation Metrics</h4><p>我们采用了与 [22, 36] 相同的评估方法进行公平比较，即显著物体排名 (SOR)、分割感知显著物体排名 (SA-SOR) 和平均绝对误差 (MAE)。SOR 计算预测结果与真实值 (GT) 之间的 Spearman 等级相关系数。而 SA-SOR 则使用遮罩的交并比 (IoU) 在实例级别过滤对象，并使用 Pearson 相关系数来衡量预测结果与真实值之间的线性相关性。MAE 指标比较预测结果与真实值之间的平均每像素差异，作为一个综合指标，既考虑了分割质量，也考虑了排序质量。</p>
+<h3 id="Implementation-Details"><a href="#Implementation-Details" class="headerlink" title="Implementation Details"></a>Implementation Details</h3><h3 id="Comparisons-with-the-State-of-the-arts"><a href="#Comparisons-with-the-State-of-the-arts" class="headerlink" title="Comparisons with the State-of-the-arts"></a>Comparisons with the State-of-the-arts</h3><h3 id="Ablation-Studies"><a href="#Ablation-Studies" class="headerlink" title="Ablation Studies"></a>Ablation Studies</h3><h3 id="Generalization-Experiment-of-Ranking-by-Partition"><a href="#Generalization-Experiment-of-Ranking-by-Partition" class="headerlink" title="Generalization Experiment of Ranking by Partition"></a>Generalization Experiment of Ranking by Partition</h3><h2 id="CONCLUSIONS"><a href="#CONCLUSIONS" class="headerlink" title="CONCLUSIONS"></a>CONCLUSIONS</h2><p>在本文中，我们提出了一种“分区排名”范式，以缓解显著性排名任务中的显著性模糊性。分区排名范式可以应用于其他相关模型，以提升显著性排名。我们还提出了密集金字塔变换器（DPT），以促进跨尺度的全局特征交互，从而增强显著性排名。通过利用提出的分区排名方法和DPT，我们的分区显著性排名（PSR）方法在性能上超越了现有的最先进方法。</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.jpg" alt="AwayX 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>AwayX
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://awayx.online/2024/08/17/Partitioned%20Saliency%20Ranking%20with%20Dense%20Pyramid%20Transformers/" title="Partitioned Saliency Ranking with Dense Pyramid Transformers">http://awayx.online/2024/08/17/Partitioned Saliency Ranking with Dense Pyramid Transformers/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" rel="tag"><i class="fa fa-tag"></i> 论文笔记</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/08/17/Bidirectional%20object-context%20prioritization%20learning%20for%20saliency%20ranking/" rel="prev" title="Bidirectional object-context prioritization learning for saliency ranking">
+      <i class="fa fa-chevron-left"></i> Bidirectional object-context prioritization learning for saliency ranking
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/08/17/Rethinking%20Object%20Saliency%20Ranking%20-%20A%20Novel%20Whole-Flow%20Processing%20Paradigm/" rel="next" title="Rethinking Object Saliency Ranking - A Novel Whole-Flow Processing Paradigm">
+      Rethinking Object Saliency Ranking - A Novel Whole-Flow Processing Paradigm <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC81OTUwMS8zNTk2Mw=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Abstract"><span class="nav-number">1.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-number">2.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RELATED-WORK"><span class="nav-number">3.</span> <span class="nav-text">RELATED WORK</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PROBLEM-FORMULATION"><span class="nav-number">4.</span> <span class="nav-text">PROBLEM FORMULATION</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#METHODOLOGY"><span class="nav-number">5.</span> <span class="nav-text">METHODOLOGY</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#EXPERIMENTS"><span class="nav-number">6.</span> <span class="nav-text">EXPERIMENTS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CONCLUSIONS"><span class="nav-number">7.</span> <span class="nav-text">CONCLUSIONS</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="AwayX"
+      src="/images/TheRightToCry.jpg">
+  <p class="site-author-name" itemprop="name">AwayX</p>
+  <div class="site-description" itemprop="description">嘿嘿</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/awaygithub" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;awaygithub" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:away2557103310@outlook.com" title="E-Mail → mailto:away2557103310@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://yoursite.com/" title="http:&#x2F;&#x2F;yoursite.com" rel="noopener" target="_blank">Title</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2024-02 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AwayX</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.4' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch-lite.umd.js"></script>
+<script src="//cdn.jsdelivr.net/npm/instantsearch.js@4/dist/instantsearch.production.min.js"></script>
+<script src="/js/algolia-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+</body>
+</html>

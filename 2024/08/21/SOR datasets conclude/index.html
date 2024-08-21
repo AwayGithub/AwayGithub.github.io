@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/infinite-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/infinite-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"awayx.online","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="图像">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SOR 领域数据集汇总">
+<meta property="og:url" content="http://awayx.online/2024/08/21/SOR%20datasets%20conclude/index.html">
+<meta property="og:site_name" content="AwaySpace">
+<meta property="og:description" content="图像">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://vip.helloimg.com/i/2024/08/19/66c33c9544e81.png">
+<meta property="og:image" content="https://vip.helloimg.com/i/2024/08/19/66c33c951d101.png">
+<meta property="og:image" content="https://vip.helloimg.com/i/2024/08/19/66c304649eb4a.png">
+<meta property="article:published_time" content="2024-08-21T08:27:54.000Z">
+<meta property="article:modified_time" content="2024-08-21T08:33:37.738Z">
+<meta property="article:author" content="AwayX">
+<meta property="article:tag" content="论文笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://vip.helloimg.com/i/2024/08/19/66c33c9544e81.png">
+
+<link rel="canonical" href="http://awayx.online/2024/08/21/SOR%20datasets%20conclude/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>SOR 领域数据集汇总 | AwaySpace</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">AwaySpace</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">5</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">42</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">32</span></a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container"></div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="algolia-results">
+  <div id="algolia-stats"></div>
+  <div id="algolia-hits"></div>
+  <div id="algolia-pagination" class="algolia-pagination"></div>
+</div>
+
+      
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://awayx.online/2024/08/21/SOR%20datasets%20conclude/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/TheRightToCry.jpg">
+      <meta itemprop="name" content="AwayX">
+      <meta itemprop="description" content="嘿嘿">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AwaySpace">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          SOR 领域数据集汇总
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-08-21 16:27:54 / 修改时间：16:33:37" itemprop="dateCreated datePublished" datetime="2024-08-21T16:27:54+08:00">2024-08-21</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">论文笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/Computer-Vision/" itemprop="url" rel="index"><span itemprop="name">Computer Vision</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/Computer-Vision/Salient-Object-Ranking/" itemprop="url" rel="index"><span itemprop="name">Salient Object Ranking</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="图像"><a href="#图像" class="headerlink" title="图像"></a>图像</h2><span id="more"></span>
+
+<table>
+<thead>
+<tr>
+<th>数据库</th>
+<th>使用的论文</th>
+<th>创建的论文</th>
+<th>图像数目</th>
+<th>标注类型</th>
+<th>建库过程</th>
+<th>其它</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>PASCAL-S</strong><br>（应该优于IS与增强的Bruce）</td>
+<td>Revisiting Salient Object Detection:  Simultaneous Detection, Ranking, and Subitizing of Multiple Salient Objects<br><strong>CVPR 2018</strong></td>
+<td>The Secrets of Salient Object Segmentation<br><strong>CVPR 2014.6</strong></td>
+<td>训练集：425<br>测试集：425<br></td>
+<td>凝视点+完整分割图+实例显著性排序(通过多人点击定义)</td>
+<td>来自<strong>PASCAL VOC 2010</strong> 分割任务的验证集<br>每个分割的显著性值为其获得的点击总数除以参与标注的受试者人数</td>
+<td><a target="_blank" rel="noopener" href="https://cbs.ic.gatech.edu/salobj/">The Secrets of Salient Object Segmentation (gatech.edu)</a><br>（网站打不开）<br>缺点：图像规模较小</td>
+</tr>
+<tr>
+<td>IS</td>
+<td>The Secrets of Salient Object Segmentation<br><strong>CVPR 2014.6</strong></td>
+<td>Visual saliency based on scale-space analysis in the frequency domain<br><strong>TPAMI 2013.4</strong></td>
+<td>235张，分为6类：<br>1) 50 张具有大显著区域的图像；2) 80 张具有中等显著区域的图像；3) 60 张具有小显著区域的图像；4) 15 张背景杂乱的图像；5) 15 张具有重复干扰物的图像；6) 15 张同时具有大和小显著区域的图像。<br></td>
+<td>凝视点+显著物体标注</td>
+<td>使用 Google 以及最近的文献收集</td>
+<td><a target="_blank" rel="noopener" href="http://www.cim.mcgill.ca/%E2%88%BClijian">http://www.cim.mcgill.ca/∼lijian</a><br>（网站打不开）</td>
+</tr>
+<tr>
+<td>增强的Bruce</td>
+<td>The Secrets of Salient Object Segmentation<br><strong>CVPR 2014.6</strong></td>
+<td>What stands out in a scene? A study of human explicit saliency judgment<br><strong>Vision Research 2013.10</strong></td>
+<td>原生Bruce数据集：<br>120张彩色室内外图像，凝视点数据<br><a target="_blank" rel="noopener" href="http://www-sop.inria.fr/members/Neil.Bruce/">Neil D. B. Bruce (inria.fr)</a></td>
+<td>凝视点+<strong>单一</strong>最显著物体掩码</td>
+<td>观察者需要在最显眼的物体周围画一个多边形。我们主要关注在图像中选择单个显著物体的情况。观察者的标注要求不能太宽泛（笼统）或太紧凑（具体）围绕物体。</td>
+<td>未找到地址<br>超过 30% 的分割图完全为空</td>
+</tr>
+<tr>
+<td><strong>COCO-SalRank</strong><br>(声称好于PASCAL-SR)</td>
+<td>Relative Saliency and Ranking: Models, Metrics,  Data and Benchmarks<br> <strong>TMAPI, 2019</strong></td>
+<td>Relative Saliency and Ranking: Models, Metrics,  Data and Benchmarks<br> <strong>TMAPI, 2019</strong></td>
+<td>版本1(有噪)：训练集：7047<br>测试集：3363<br><br>版本2(精炼)：训练集：3052<br>测试集：1381</td>
+<td>模拟注视点+实例级掩码</td>
+<td>从<strong>SALICON</strong>数据集获得模拟眼动数据，从<strong>MS COCO</strong>获得实例级掩码数据，通过<strong>一系列算法（见论文）</strong>得到排名真值</td>
+<td>实例总数限制为最多五个<br>没有实例被分配相同的排名值<br>缺点：使用复杂的人为设计规则来确定显著实例</td>
+</tr>
+<tr>
+<td>未命名<br>（<strong>ASR</strong>）<br>（<strong>ASSR</strong>）</td>
+<td>Inferring Attention Shift Ranks of Objects for Image Saliency<br><strong>CPVR 2020</strong><br>Salient object ranking with position-preserved attention<br><strong>ICCV 2021</strong><br>Bidirectional object-context prioritization learning for saliency ranking<br><strong>CVPR 2022</strong><br>Partitioned Saliency Ranking with Dense Pyramid Transformers<br><strong>ACMMM 2023</strong><br>Domain Separation Graph Neural Networks for Saliency Object Ranking<br><strong>CVPR 2024</strong></td>
+<td>Inferring Attention Shift Ranks of Objects for Image Saliency<br><strong>CPVR 2020</strong></td>
+<td>训练集：7646 <br>验证集：1436 <br>测试集：2418<br>包含 78 个物体类别，每张图像中的平均物体数量约为 11 个，前 5 个视觉上最显著的实例拥有从 1 到 5 的唯一排序顺序</td>
+<td>模拟注视点+实例级掩码+显著性排名(通过注视点转移顺序定义)</td>
+<td>从<strong>MS COCO</strong>和<strong>SALICON</strong>的训练、验证集构建，基于前五个不重复访问的<strong>不同对象的注视顺序</strong>来考虑显著性排序</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/SirisAvishek/Attention_Shift_Ranks">SirisAvishek&#x2F;Attention_Shift_Ranks (github.com)</a><br>使用至少包含两个显著对象的图像<br>缺点：关注注意力转移；为每张图像中的<strong>固定数量</strong>物体生成注释，而不是区分显著物体和非显著物体</td>
+</tr>
+<tr>
+<td>未命名<br>（<strong>IRSR</strong>）</td>
+<td>Instance-level relative saliency ranking with graph reasoning<br><strong>TPAMI 2021</strong><br>Bidirectional object-context prioritization learning for saliency ranking<br><strong>CVPR 2022</strong><br>Partitioned Saliency Ranking with Dense Pyramid Transformers<br><strong>ACMMM 2023</strong><br>Domain Separation Graph Neural Networks for Saliency Object Ranking<br><strong>CVPR 2024</strong></td>
+<td>Instance-level relative saliency ranking with graph reasoning<br><strong>TPAMI 2021</strong></td>
+<td>训练集：6,059<br>测试集：2,929</td>
+<td>实例级掩码+显著性排名(通过实例掩码中显著性最大值定义，相当于<strong>注视时间</strong>)</td>
+<td>1. 从 <strong>MS COCO</strong> 数据集中找到 15,000 张 <strong>SALICON</strong> 图片，提取其实例分割掩码<br>2. 5名研究生人工选择和标注，按给定规则<strong>排除不合适的图像</strong><br>3. 利用SALICON 数据集提供的显著性图（而不是注视点），根据每个实例掩码中的<strong>最大显著性值</strong>对标记的显著物体进行排名</td>
+<td></td>
+</tr>
+<tr>
+<td>CAM-FR<br><strong>(伪装物体)</strong></td>
+<td>Simultaneously Localize, Segment and Rank the Camouflaged Objects<br><strong>CVPR 2021</strong></td>
+<td>Simultaneously Localize, Segment and Rank the Camouflaged Objects<br><strong>CVPR 2021</strong></td>
+<td>训练集：2000(1711来自COD10K-CAM+289来自CAMO)<br>测试集：280(238来自COD10K-CAM+42来自CAMO)</td>
+<td>分割掩码+注视点+显著性排名<br>（排名 0 ：背景<br>排名 1 ：最困难<br>排名 2：中等<br>排名 3 ：最简单）</td>
+<td>1. 对现有伪装目标检测数据集 <strong>CAMO</strong>和 <strong>COD10K</strong>中的一些图像进行重新标注<br>2. 眼动追踪伪装物体检测数据集，得到基于检测延迟(<strong>6名观察者</strong>注意到每个伪装实例的<strong>时间的中位数</strong>)的排序数据集<br>3. 如果超过一半的观众忽略了该实例，将其视为难样本，搜索时间设置为 1；否则删除相应观众的值，从剩余的检测延迟中计算中位数</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/JingZhang617/COD-Rank-Localize-and-Segment">JingZhang617&#x2F;COD-Rank-Localize-and-Segment (github.com)</a></td>
+</tr>
+<tr>
+<td>未命名</td>
+<td>Rethinking Object Saliency Ranking - A Novel Whole-Flow Processing Paradigm<br><strong>TIP 2023</strong></td>
+<td>Rethinking Object Saliency Ranking - A Novel Whole-Flow Processing Paradigm<br><strong>TIP 2023</strong></td>
+<td>训练集：10,000<br>验证集：1,200<br>测试集：3,800</td>
+<td>从注视点利用算法生成真值</td>
+<td>利用论文提出的<strong>RA-SRGT</strong>真值生成方法，从<strong>SALICON</strong>的注视点数据中标注</td>
+<td></td>
+</tr>
+<tr>
+<td>RGBD NYU-rank dataset<br><strong>(3D、室内图像)</strong></td>
+<td>RGB-D salient object ranking based on depth stack and truth stack for complex indoor scenes<br><strong>PR 2023</strong></td>
+<td>RGB-D salient object ranking based on depth stack and truth stack for complex indoor scenes<br><strong>PR 2023</strong></td>
+<td>训练集：1160<br>测试集：289</td>
+<td>RGB图+深度图+实例分割标签+显著性排序真值</td>
+<td>1. 基于<strong>NYU Depth-v2</strong>数据集，由<strong>13名标注者</strong>根据<strong>注意到对象的顺序</strong>对每张图像中的显著对象进行标记<br>2. 不限制标注者可以标注的物体数量<br>3. 将标注次数超过 6 次的物体视为显著物体<br>4. 每个标注者对第一个标注的显著物体给予 1 分，之后标注的显著物体的分数每次减少 10%<br>5. 将不同标注者对同一实例的标注分数汇总，然后将不同实例的汇总分数在每张图像内进行排序<br></td>
+<td></td>
+</tr>
+<tr>
+<td>SalSOD</td>
+<td>HyperSOR: Context-Aware Graph Hypernetwork for Salient Object Ranking<br><strong>TPAMI 2024</strong></td>
+<td>HyperSOR: Context-Aware Graph Hypernetwork for Salient Object Ranking<br><strong>TPAMI 2024</strong></td>
+<td>4,373 张图像(133,338 个对象)<br>训练集:测试集&#x3D;2:1</td>
+<td>语义分割掩码和边界框+显著性值和显著性排名+<strong>场景图标注</strong></td>
+<td><strong>COCO</strong>收集多场景图像，<strong>SALICON</strong>+<strong>SAM方法</strong>得到显著性图，<strong>VG</strong>标注场景图，<strong>41名志愿者</strong>判断、修改</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/MinglangQiao/SalSOD">MinglangQiao&#x2F;SalSOD: Database for “HyperSOR: Context-aware graph hypernetwork for salient object ranking”, TPAMI 2024 (github.com)</a><br></td>
+</tr>
+<tr>
+<td>SIFR</td>
+<td>Advancing Saliency Ranking with Human Fixations - Dataset, Models and Benchmarks<br><strong>CVPR 2024</strong></td>
+<td>Advancing Saliency Ranking with Human Fixations - Dataset, Models and Benchmarks<br><strong>CVPR 2024</strong></td>
+<td>训练集：6701 <br>测试集：1688</td>
+<td>注视点+实例分割掩码+显著性排序真值(由注视点数量定义)</td>
+<td>1. 使用从 <strong>MS-COCO</strong> 中挑选的<strong>至少包含三个物体</strong>的图像，计算多个用户在每个场景中的眼动注视时间<br>2. 使用眼动跟踪系统进行“自由浏览”任务，观察<strong>8名参与者</strong>的观看习惯，凝视记录的过程持续了六个月，移除所有时长少于 200 毫秒的注视，移除了每位参与者首次捕获的注视点<br>3. <strong>10名参与者</strong>对任何注释质量差或缺失的分割进行重新注释</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/EricDengbowen/QAGNet">EricDengbowen&#x2F;QAGNet: Official repository for CVPR 2024 paper “Advancing Saliency Ranking with Human Fixations: Dataset, Models and Benchmarks”. (github.com)</a><br><br>对给定场景中可能的显著实例数量不设上限</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="视频"><a href="#视频" class="headerlink" title="视频"></a>视频</h2><table>
+<thead>
+<tr>
+<th>数据库</th>
+<th>使用的论文</th>
+<th>创建的论文</th>
+<th>规模</th>
+<th>标注类型</th>
+<th>建库过程</th>
+<th>其它</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>RVSOD</td>
+<td>Ranking Video Salient Object Detection<br><strong>ACMMM 2019</strong></td>
+<td>Ranking Video Salient Object Detection<br><strong>ACMMM 2019</strong></td>
+<td>300多个视频，共10,000张帧图像(每5帧标注一张)</td>
+<td>实例级掩码+注视点+显著性排名真值</td>
+<td>1. 基于现有的眼动追踪数据集 <strong>UCF sports</strong> 和 <strong>HOLLYWOOD2</strong> 进行标注，表现相似且不适合显著目标检测的视频序列被移除<br>2. 眼动追踪点的数量用于确定每个目标的显著程度<br></td>
+<td>缺点：<br>1. 80%以上的眼动注视集中在人的身上<br>2. 一些视频仅包含单一显著目标（即没有显著性排名）<br>3. 仅从运动视频和电影中选取，缺乏多样性</td>
+</tr>
+<tr>
+<td>DAVSOR</td>
+<td>Rethinking Video Salient Object Ranking<br><strong>Arxiv 2022</strong></td>
+<td>Rethinking Video Salient Object Ranking<br><strong>Arxiv 2022</strong></td>
+<td>128个视频，17,584张帧图像<br>包含动物、车辆和人类活动等类别<br>训练集：7,403张<br>测试集：10,181张</td>
+<td>眼动图、实例级掩码、显著性排名真值</td>
+<td>1. 从<strong>DAVSOD</strong>收集视频、对应的眼动图、显著目标掩码<br>2. 请了<strong>5位人工标注者</strong>根据 Fan et al. (2019) 的眼动点和显著实例注释对显著性进行排序</td>
+<td>1. 不需要任何后处理或眼动注视监督<br>2. 每个视频中都有<strong>至少两个</strong>具有显著性排名的显著目标</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="全景图"><a href="#全景图" class="headerlink" title="全景图"></a>全景图</h2><h3 id="全景图数据库"><a href="#全景图数据库" class="headerlink" title="全景图数据库"></a>全景图数据库</h3><table>
+<thead>
+<tr>
+<th>数据库</th>
+<th>创建日期</th>
+<th>描述</th>
+<th>其它</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>F-360iSOD</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>SUN360</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>YouTube360</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>ODISR</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="VQA（Visual-Quality-Assessment）-数据库"><a href="#VQA（Visual-Quality-Assessment）-数据库" class="headerlink" title="VQA（Visual Quality Assessment） 数据库"></a>VQA（Visual Quality Assessment） 数据库</h3><img src="https://vip.helloimg.com/i/2024/08/19/66c33c9544e81.png" width="120%"/>
+
+<blockquote>
+<p>截至 2020，ODI&#x2F;ODV 的 VQA 数据库（来自《State-of-the-Art in 360° Video_Image Processing - Perception, Assessment and Compression》）</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>数据库</th>
+<th>使用的论文</th>
+<th>创建的论文</th>
+<th>规模</th>
+<th>标注类型</th>
+<th>建库过程</th>
+<th>其它</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>IQA-ODI</td>
+<td>Spatial Attention-Based Non-Reference Perceptual Quality Prediction Network for Omnidirectional Images<br><strong>ICME 2021</strong><br>TVFormer: Trajectory-guided Visual Quality Assessment on 360° Images with Transformers<br><strong>ACMMM 2022</strong><br></td>
+<td>Spatial Attention-Based Non-Reference Perceptual Quality Prediction Network for Omnidirectional Images<br><strong>ICME 2021</strong></td>
+<td>1080张<br>(120张参考图像+960张受损图像)</td>
+<td><strong>头部轨迹</strong>+人类主观评分</td>
+<td>1. 所有参考图像的分辨率为8K（7680 × 3840像素），采用等距矩形投影（ERP）格式；涵盖了人类、风景和自然等广泛的内容类别<br>2. 考虑了两种类型的损伤：压缩级别和投影模式<br>3. 受试者200人（138男62女），分为10组，每组观看108张全景图像（每组12张参考图像和96张受损图像）<br>4. 使用HTC Vive作为媒体播放器，每张图片观看20s，根据质量给出主观评分</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/yanglixiaoshen/SAP-Ne">https://github.com/yanglixiaoshen/SAP-Ne</a></td>
+</tr>
+</tbody></table>
+<h3 id="Attention-数据库-显著性数据库"><a href="#Attention-数据库-显著性数据库" class="headerlink" title="Attention 数据库 &#x2F; 显著性数据库"></a>Attention 数据库 &#x2F; 显著性数据库</h3><img src="https://vip.helloimg.com/i/2024/08/19/66c33c951d101.png" width="120%"/>
+
+<blockquote>
+<p>截至 2020，ODI&#x2F;ODV 的 attention 数据库（来自《State-of-the-Art in 360° Video_Image Processing - Perception, Assessment and Compression》）<br><img src="https://vip.helloimg.com/i/2024/08/19/66c304649eb4a.png" width="120%"/></p>
+</blockquote>
+<blockquote>
+<p>截至 2021，ODI&#x2F;ODV 的 attention 数据库（来自《Saliency Prediction on Omnidirectional Image With Generative Adversarial Imitation Learning》）</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>数据库</th>
+<th>使用的论文</th>
+<th>创建的论文</th>
+<th>规模</th>
+<th>标注类型</th>
+<th>建库过程</th>
+<th>其它</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>AOI</td>
+<td>Saliency Prediction on Omnidirectional Image With Generative Adversarial Imitation Learning<br><strong>TIP 2021 MC2</strong></td>
+<td>Saliency Prediction on Omnidirectional Image With Generative Adversarial Imitation Learning<br><strong>TIP 2021 MC2</strong></td>
+<td>全景图：600<br>训练集：500<br>测试集：100</td>
+<td>head fixations + eye fixations<br>(也能提取 head saccades)</td>
+<td>1. 从<strong>Flickr</strong> 收集，分辨率范围从4,000 × 2,000到24,028 × 12,014，均以等距矩形格式和最大分辨率下载，包括城市风光、自然风景、室内场景和人物场景四类<br>2. 通过<strong>HTC Vive</strong>和<strong>aGlass</strong>设备获取受试者的头部运动（HM）和眼动（EM）数据<br>3. 共30名受试者（11男19女），600张图被随机且均等地分为两组，受试者在不同的日期观看，每张图观看22s</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/yanglixiaoshen/SalGAIL">yanglixiaoshen&#x2F;SalGAIL: Saliency Prediction on Omnidirectional Image with Generative Adversarial Imitation Learning (TIP 2021) (github.com)</a></td>
+</tr>
+<tr>
+<td>HTRO</td>
+<td>Hierarchical Bayesian LSTM for Head Trajectory Prediction on Omnidirectional Images<br><strong>TPAMI 2022 MC2</strong></td>
+<td>Hierarchical Bayesian LSTM for Head Trajectory Prediction on Omnidirectional Images<br><strong>TPAMI 2022 MC2</strong></td>
+<td>全景图：1080<br>训练集：900<br>测试集：180<br>头部轨迹：21600</td>
+<td>头部轨迹（head trajectories &#x3D; head fixations + head saccades）</td>
+<td>1. 所有的ODIs都具有8k分辨率，即8,000 × 4,000像素；涵盖了多种内容类型，包括人物、室内场景、风景和自然景观<br>2.20名受试者(12男8女)，使用<strong>HTC Vive</strong>作为头戴式显示器<br>3. 分两天进行，每天每名受试者观看540张ODIs，每幅观看22s<br>4. 如果HM样本的速度小于18度&#x2F;秒且持续时间大于500毫秒，则该样本属于头部固视点<br></td>
+<td><a target="_blank" rel="noopener" href="https://github.com/yanglixiaoshen/HiBayes-LSTM">Page not found · GitHub</a></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p><strong>得到显著性图的方法</strong>：头部轨迹数据库 -&gt; 头部注视点 -&gt; 显著性图</p>
+<h3 id="分割数据库"><a href="#分割数据库" class="headerlink" title="分割数据库"></a>分割数据库</h3><table>
+<thead>
+<tr>
+<th>数据库</th>
+<th>使用的论文</th>
+<th>创建的论文</th>
+<th>规模</th>
+<th>标注类型</th>
+<th>建库过程</th>
+<th>其它</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Matterport3D</td>
+<td></td>
+<td>Matterport3D: Learning from RGB-D Data in Indoor Environments<br><strong>3DV</strong></td>
+<td>90座建筑，总共包含194,400张RGB-D图像，10,800个全景图和24,727,520个带纹理的三角形；我们提供了使用[21]和[25]获得的带纹理网格重建</td>
+<td>彩色和深度图像、相机姿态、带纹理的3D网格、建筑平面图和区域注释、实例级别语义注释(室内场景)</td>
+<td>1. 使用一个装在三脚架上的摄像机装置，配备三个彩色和三个深度相机，它们轻微向上、水平和轻微向下指向。对于每个全景图，它围绕重力方向旋转到6个不同的方向，在每个方向上停下来，从每个3个RGB相机获取一张HDR照片。3个深度相机在装置旋转时连续获取数据，这些数据被综合起来，与每张彩色图像合成一个对齐的<strong>1280x1024</strong>深度图像。每个全景图的结果是<strong>18张RGB-D图像</strong>，它们的投影中心几乎重合，大约在人类观察者的高度。对于数据集中的每个环境，操作员在整个可行走平面图上均匀间隔地捕获一组全景图，大约每隔2.5米。<br>2. 用户使用iPad应用程序标记窗户和镜子，并将数据上传到Matterport。然后，Matterport通过以下步骤处理原始数据：1）将每个全景图中的图像拼接成一个适合全景查看的“skybox”，2）使用全局束调整估计每张图像的6自由度姿态，3）重建一个包含环境中所有可见表面的单一带纹理网格。<br><br></td>
+<td><a target="_blank" rel="noopener" href="https://github.com/niessner/Matterport">niessner&#x2F;Matterport: Matterport3D is a pretty awesome dataset for RGB-D machine learning tasks :) (github.com)</a></td>
+</tr>
+<tr>
+<td>Structured3D</td>
+<td></td>
+<td>Structured3D: A Large Photo-realistic Dataset  for Structured 3D Modeling<br><strong>ECCV</strong></td>
+<td>3.5k房屋涉设计，21,835个房间的真实3D结构注释，以及这些房间的超过196k幅2D渲染图像</td>
+<td>平面、框线、立方体、房屋布局、房屋平面图、抽象3D结构<br>(室内场景)<br></td>
+<td></td>
+<td><a target="_blank" rel="noopener" href="https://structured3d-dataset.org/">Structured3D Dataset (structured3d-dataset.org)</a><br>可以利用该数据集<strong>渲染出全景图</strong>（含有<strong>semantic</strong> 分割）</td>
+</tr>
+<tr>
+<td>Stanford 2D3DS</td>
+<td>Orientation-Aware Semantic Segmentation on Icosahedron Spheres<br><strong>ICCV 2019</strong></td>
+<td>Joint 2d-3d-semantic data for indoor scene understanding<br><strong>arxiv 2017</strong></td>
+<td>1413张等距柱状投影的 RGB-D 图<br>类别: 13</td>
+<td>3D Mesh, semantics in 2D&#x2F;3D, depth, surface normals<br>(室内场景)</td>
+<td></td>
+<td><a target="_blank" rel="noopener" href="https://github.com/alexsax/2D-3D-Semantics">alexsax&#x2F;2D-3D-Semantics: The data skeleton from Joint 2D-3D-Semantic Data for Indoor Scene Understanding (github.com)</a></td>
+</tr>
+<tr>
+<td>PASS</td>
+<td></td>
+<td>PASS: Panoramic annular semantic segmentation<br><strong>ITS 2019</strong></td>
+<td>共1050张，其中400张有标注</td>
+<td>semantic(街道场景)<br>类别: 4(扩展后+2)</td>
+<td>1. 视角360◦×75◦ (30◦-105◦)；分辨率2048×692<br>2. 在 4 个关键街道场景类别上进行了精细的标注：汽车、道路、人行横道和路缘<br>3. 后续<strong>扩展</strong>工作添加了Sidewalk 和 Person类别<br>4. 由中国杭州的一种可穿戴全景环状相机捕获的<br></td>
+<td><a target="_blank" rel="noopener" href="https://github.com/elnino9ykl/PASS">elnino9ykl&#x2F;PASS: Panoramic Annular Semantic Segmentation (github.com)</a></td>
+</tr>
+<tr>
+<td>SYNTHIA-PANO</td>
+<td>Semantic segmentation of panoramic images using a synthetic dataset<br><strong>AILMDA 2019</strong></td>
+<td>Semantic segmentation of panoramic images using a synthetic dataset<br><strong>AILMDA 2019</strong></td>
+<td>Seqs02-fall: 461<br>Seqs02-summer: 556<br>Seqs04-fall: 738<br>Seqs04-summer: 694<br>Seqs05-summer: 787<br>类别: 13</td>
+<td>semantic<br>(街道场景，虚拟)</td>
+<td>1. 从<strong>虚拟</strong>图像数据集<strong>SYNTHIA</strong>构建（包含精细标注的传统FoV图像）<br>2. 设法将从不同方向拍摄的图像拼接成全景图像，并连同它们的标注图像</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/Francis515/SYNTHIA-PANO">https://github.com/Francis515/SYNTHIA-PANO</a><br>1. SYNTHIA数据集是由计算机<strong>3D城市交通场景</strong>模型创建的，其中的所有图像都是<strong>虚拟图像</strong>。它包含一些称为SYNTHIA-Seqs的子集，其中的图像是由虚拟城市中移动汽车上的四个面向左、前、右和后方向的摄像机拍摄的。此外，还有不同城市场景、季节、天气条件等的图像。标签包含16个类别。我们所做的是将这四个方向的图像<strong>拼接</strong>成全景图像。<br>2. 由于是拼接的，<strong>存在盲区</strong>！</td>
+</tr>
+<tr>
+<td>Omni-SYNTHIA</td>
+<td>Orientation-Aware Semantic Segmentation on Icosahedron Spheres<br><strong>ICCV 2019</strong></td>
+<td>Orientation-Aware Semantic Segmentation on Icosahedron Spheres<br><strong>ICCV 2019</strong></td>
+<td>选择了所有五个地点的“夏季”序列<br>训练集: 1818<br>验证集: 451<br>类别: 13</td>
+<td>semantic<br>(街道场景，虚拟)</td>
+<td>1. 从<strong>虚拟</strong>图像数据集<strong>SYNTHIA</strong>构建（包含精细标注的传统FoV图像）<br>2. 使用插值对RGB数据；最近邻法对标签进行二十面体网格填充</td>
+<td>1. SYNTHIA数据集是由计算机<strong>3D城市交通场景</strong>模型创建的，其中的所有图像都是<strong>虚拟图像</strong>。它包含一些称为SYNTHIA-Seqs的子集，其中的图像是由虚拟城市中移动汽车上的四个面向左、前、右和后方向的摄像机拍摄的。此外，还有不同城市场景、季节、天气条件等的图像。标签包含16个类别。我们所做的是将这四个方向的图像<strong>拼接</strong>成全景图像。<br>2. 由于是拼接的，<strong>存在盲区</strong>！</td>
+</tr>
+<tr>
+<td>OmniScape</td>
+<td></td>
+<td>The OmniScape dataset<br><strong>ICRA 2020</strong></td>
+<td>见网站</td>
+<td>1. 论文中：从摩托车前两侧获取的立体鱼眼&#x2F;立体猫眼图像, depth, semantic, 相机参数, 摩托车运动参数<br>2. Github上：Optical Flow, <strong>Instance</strong>, 3D bounding boxes<br>(机动两轮车上捕获的街道数据集，虚拟)</td>
+<td>从 CARLA，GTA V 中捕获<br>方法细节：《Génération d’images omnidirectionnelles à partir d’un environnement virtuel》</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/ARSekkat/OmniScape">https://github.com/ARSekkat/OmniScape</a><br><br>全景图中间<strong>始终有一辆摩托车</strong>！</td>
+</tr>
+<tr>
+<td>WildPASS</td>
+<td>Is context-aware CNN ready for the surroundings? Panoramic semantic segmentation in the wild<br><strong>TIP 2021</strong><br>Capturing omni-range context for omnidirectional segmentation<br><strong>CVPR 2021</strong></td>
+<td>Is context-aware CNN ready for the surroundings? Panoramic semantic segmentation in the wild<br><strong>TIP 2021</strong></td>
+<td>500张全景图<br>类别: 6（来自全球25个城市）</td>
+<td>semantic(街道场景)</td>
+<td>1. 尺寸2048×400，视场70°×360°<br>2. 类别：汽车、道路、人行道、人行横道、路缘和行人<br>3. 使用Google Street View；为每个城市提取20个全景图</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/elnino9ykl/WildPASS">https://github.com/elnino9ykl/WildPASS</a></td>
+</tr>
+<tr>
+<td>DENSEPASS</td>
+<td>DensePASS: Dense panoramic semantic segmentation via unsupervised domain adaptation with attention-augmented context exchange<br><strong>ITSC 2021</strong></td>
+<td>DensePASS: Dense panoramic semantic segmentation via unsupervised domain adaptation with attention-augmented context exchange<br><strong>ITSC 2021</strong></td>
+<td>训练&#x2F;未标记: 2000<br>测试&#x2F;标记: 100<br>类别: 19</td>
+<td>semantic(街道场景)</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/chma1024/DensePASSFig">Page not found · GitHub</a><br>1. 专门为PINHOLE→PANORAMIC转移而构建<br>2. 尺寸2048×400<br>3. 使用Google Street View收集的，涵盖了来自不同大陆的图像（测试用25个不同城市，训练用40个）<br></td>
+<td></td>
+</tr>
+<tr>
+<td>WildPPS</td>
+<td>Panoramic Panoptic Segmentation - Towards Complete Surrounding Understanding via Unsupervised Contrastive Learning<br><strong>IVS 2021</strong></td>
+<td>Panoramic Panoptic Segmentation - Towards Complete Surrounding Understanding via Unsupervised Contrastive Learning<br><strong>IVS 2021</strong></td>
+<td>40张全景图（来自全球40个城市）<br>类别: 4</td>
+<td><strong>panoptic</strong><br>(街道场景)</td>
+<td>1. 尺寸为400 × 2048，视场为70°×360°<br>2. 标注了对<strong>街道场景</strong>理解最相关的类别，包括 stuff 类别<strong>街道</strong>和<strong>人行道</strong>以及 thing 类别<strong>人</strong>和<strong>车</strong><br></td>
+<td><a target="_blank" rel="noopener" href="https://github.com/alexanderjaus/PPS">https://github.com/alexanderjaus/PPS</a><br>对于有监督训练，我们依赖于已经存在的大量标注的针孔图像数据集，如Cityscapes和Mapillary Vistas</td>
+</tr>
+<tr>
+<td><strong>WOD:PVPS</strong></td>
+<td>Waymo Open Dataset: Panoramic Video Panoptic Segmentation<br><strong>ECCV 2022</strong></td>
+<td>Waymo Open Dataset: Panoramic Video Panoptic Segmentation<br><strong>ECCV 2022</strong></td>
+<td>100k相机照片<br>2,860条视频序列<br>类别：28<br><br>从6个城市，在各种时间、天气状况下采集<br>由两个数据集组成：<br>1. 感知数据集，包含高分辨率传感器数据和2030个分割的标签；<br>2. 运动数据集，包含对象轨迹和对应的103354个标签的3D地图<br></td>
+<td><strong>panoptic</strong><br><strong>video</strong><br>(街道场景)</td>
+<td><strong>WOD</strong>介绍：<br>包含1,150个场景，每个场景包含20秒的数据，以10 Hz的频率捕获<br>每个数据帧包括来自激光雷达设备的3D点云、来自五个摄像头（位于前、前左、前右、侧左和侧右）的图像，以及人类在激光雷达点云和摄像头图像中分别标注的3D和2D边界框的真实标签。每个边界框都包含一个在整个场景中对该对象唯一的ID。对于激光雷达数据，这允许在整个场景中进行跟踪。对于摄像头数据，这些ID仅在每个摄像头的图像内保持一致<br><br><br>基于Waymo Open Dataset (<strong>WOD</strong>)构建，由<strong>5个摄像头</strong>组成全景视频（<strong>220°</strong>），唯一一个<strong>在多个摄像头和时间上都一致</strong>的泛视觉分割注释的数据集。<br>拼接方法：<br>首先使用WOD提供的五个摄像头的外参和内参，将每个像素坐标反投影到3D空间。然后，我们设置一个位于所有五个摄像头中心的几何平均位置的虚拟摄像头[63]，并使用双线性采样从3D空间通过等矩形投影计算像素颜色。对于对应于多个摄像头视图的像素，我们根据每个像素在全景图中到每个摄像头视图边界的距离计算权重。对于泛视觉标签，我们使用五个摄像头和虚拟摄像头的相机参数，通过最近采样计算每个摄像头视图中的标签。然后我们使用Qiao等人[54]的方法来<strong>拼接全景图标签</strong>，以保持视图一致性。<br></td>
+<td><a target="_blank" rel="noopener" href="https://waymo.com/open/about/">About – Waymo Open Dataset</a><br>官网上有<strong>非常详细</strong>的介绍</td>
+</tr>
+<tr>
+<td>CVRG-Pano</td>
+<td>Semantic segmentation of outdoor panoramic images<br><strong>SIVP 2022</strong></td>
+<td>Semantic segmentation of outdoor panoramic images<br><strong>SIVP 2022</strong></td>
+<td>600张<br>(训练446, 验证48, 测试76)<br>类别: 20(属于7个组)</td>
+<td>semantic(街道场景)</td>
+<td>1. 属于匹兹堡的城市和郊区地区，从Google Street View下载，人工标注耗时约 500 man-hour<br>2. 训练中，还使用一种<strong>快速生成全景图像语义掩模</strong>的方法：首先，我们生成全景图像的立方体贴图。然后，每个立方体贴图的语义掩模是通过一个最先进的分割CNN模型生成的（我们使用了在Cityscapes上训练的HRNet-OCR[29]）。最后一步，我们将所有立方体贴图的语义掩模投影到全景图上。</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/semihorhan/semseg-outdoor-pano">semihorhan&#x2F;semseg-outdoor-pano: Semantic segmentation of outdoor panoramic images using UNet-stdconv and UNet-equiconv. CVRG-Pano: semantically annotated outdoor panoramic image dataset. (github.com)</a></td>
+</tr>
+<tr>
+<td>SynPASS</td>
+<td>Behind every domain there is a shift: Adapting distortion-aware vision transformers for panoramic semantic segmentation<br><strong>TPAMI 2024</strong></td>
+<td>Behind every domain there is a shift: Adapting distortion-aware vision transformers for panoramic semantic segmentation<br><strong>TPAMI 2024</strong></td>
+<td>9080张(cloudy, windy, foggy, sunny各2270张)<br>类别: 22</td>
+<td>semantic(街道场景)</td>
+<td>1. 尺寸1,024×2,048<br>2. 类别：Building  Fence Other  Pedestrian Pole  RoadLine Road  SideWalk  Vegetation  Vehicles Wall  TrafficSign Sky  Ground  Bridge  RailTrack  GroundRai  TrafficLight  Static  Dynamic Water Terrain<br>3. 使用CARLA模拟器创建，虚拟传感器套件由6个位于同一视点的针孔相机组成，以获得立方体全景图像，使用立方体贴图到等矩形投影算法将获得的立方体贴图全景重新投影到通用的等矩形格式中<br>4. 利用8个开源城市地图，并在每个地图中设置了100到120个初始收集点。我们的虚拟收集车辆按照模拟器的交通规则行驶。我们每50帧采样一次，并在每个初始收集点保留前10个关键帧图像。为了确保收集数据的多样性，我们调节了天气和时间条件</td>
+<td></td>
+</tr>
+</tbody></table>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.jpg" alt="AwayX 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>AwayX
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://awayx.online/2024/08/21/SOR%20datasets%20conclude/" title="SOR 领域数据集汇总">http://awayx.online/2024/08/21/SOR datasets conclude/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" rel="tag"><i class="fa fa-tag"></i> 论文笔记</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/08/21/SOR%20papers%20conclude/" rel="prev" title="SOR 领域论文阅读汇总">
+      <i class="fa fa-chevron-left"></i> SOR 领域论文阅读汇总
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC81OTUwMS8zNTk2Mw=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%BE%E5%83%8F"><span class="nav-number">1.</span> <span class="nav-text">图像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%86%E9%A2%91"><span class="nav-number">2.</span> <span class="nav-text">视频</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A8%E6%99%AF%E5%9B%BE"><span class="nav-number">3.</span> <span class="nav-text">全景图</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="AwayX"
+      src="/images/TheRightToCry.jpg">
+  <p class="site-author-name" itemprop="name">AwayX</p>
+  <div class="site-description" itemprop="description">嘿嘿</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/awaygithub" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;awaygithub" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:away2557103310@outlook.com" title="E-Mail → mailto:away2557103310@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://yoursite.com/" title="http:&#x2F;&#x2F;yoursite.com" rel="noopener" target="_blank">Title</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2024-02 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AwayX</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.4' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch-lite.umd.js"></script>
+<script src="//cdn.jsdelivr.net/npm/instantsearch.js@4/dist/instantsearch.production.min.js"></script>
+<script src="/js/algolia-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+</body>
+</html>

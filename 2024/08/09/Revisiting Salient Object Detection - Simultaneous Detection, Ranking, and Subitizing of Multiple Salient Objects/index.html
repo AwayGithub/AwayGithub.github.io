@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/infinite-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/infinite-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"awayx.online","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Abstract显著对象检测（salient object detection）是一个已经被详细研究并提出了许多解决方案的问题。在本文中，我们认为迄今为止的工作所解决的问题相对来说是定义不明确的。具体来说，当询问多个观察者时，对于什么构成显著对象并没有普遍的共识。这意味着某些对象比其他对象更有可能被判断为显著，这暗示显著对象之间存在一个相对的排名。本论文提出的解决方案解决了这个更广泛的问题，考虑了">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Revisiting Salient Object Detection - Simultaneous Detection, Ranking, and Subitizing of Multiple Salient Objects">
+<meta property="og:url" content="http://awayx.online/2024/08/09/Revisiting%20Salient%20Object%20Detection%20-%20Simultaneous%20Detection,%20Ranking,%20and%20Subitizing%20of%20Multiple%20Salient%20Objects/index.html">
+<meta property="og:site_name" content="AwaySpace">
+<meta property="og:description" content="Abstract显著对象检测（salient object detection）是一个已经被详细研究并提出了许多解决方案的问题。在本文中，我们认为迄今为止的工作所解决的问题相对来说是定义不明确的。具体来说，当询问多个观察者时，对于什么构成显著对象并没有普遍的共识。这意味着某些对象比其他对象更有可能被判断为显著，这暗示显著对象之间存在一个相对的排名。本论文提出的解决方案解决了这个更广泛的问题，考虑了">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://vip.helloimg.com/i/2024/08/08/66b4ce9f15548.png">
+<meta property="og:image" content="https://vip.helloimg.com/i/2024/08/08/66b4d31e798b4.png">
+<meta property="og:image" content="https://vip.helloimg.com/i/2024/08/08/66b4e3734dfdd.png">
+<meta property="og:image" content="https://vip.helloimg.com/i/2024/08/08/66b4e5e2b3c6a.png">
+<meta property="article:published_time" content="2024-08-08T16:38:11.000Z">
+<meta property="article:modified_time" content="2024-08-18T12:52:16.722Z">
+<meta property="article:author" content="AwayX">
+<meta property="article:tag" content="论文笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://vip.helloimg.com/i/2024/08/08/66b4ce9f15548.png">
+
+<link rel="canonical" href="http://awayx.online/2024/08/09/Revisiting%20Salient%20Object%20Detection%20-%20Simultaneous%20Detection,%20Ranking,%20and%20Subitizing%20of%20Multiple%20Salient%20Objects/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Revisiting Salient Object Detection - Simultaneous Detection, Ranking, and Subitizing of Multiple Salient Objects | AwaySpace</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">AwaySpace</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">5</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">42</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">32</span></a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container"></div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="algolia-results">
+  <div id="algolia-stats"></div>
+  <div id="algolia-hits"></div>
+  <div id="algolia-pagination" class="algolia-pagination"></div>
+</div>
+
+      
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://awayx.online/2024/08/09/Revisiting%20Salient%20Object%20Detection%20-%20Simultaneous%20Detection,%20Ranking,%20and%20Subitizing%20of%20Multiple%20Salient%20Objects/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/TheRightToCry.jpg">
+      <meta itemprop="name" content="AwayX">
+      <meta itemprop="description" content="嘿嘿">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AwaySpace">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Revisiting Salient Object Detection - Simultaneous Detection, Ranking, and Subitizing of Multiple Salient Objects
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-08-09 00:38:11" itemprop="dateCreated datePublished" datetime="2024-08-09T00:38:11+08:00">2024-08-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-08-18 20:52:16" itemprop="dateModified" datetime="2024-08-18T20:52:16+08:00">2024-08-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">论文笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/Computer-Vision/" itemprop="url" rel="index"><span itemprop="name">Computer Vision</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/Computer-Vision/Salient-Object-Ranking/" itemprop="url" rel="index"><span itemprop="name">Salient Object Ranking</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/Computer-Vision/Salient-Object-Ranking/image/" itemprop="url" rel="index"><span itemprop="name">image</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/Computer-Vision/Salient-Object-Ranking/image/2018/" itemprop="url" rel="index"><span itemprop="name">2018</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>显著对象检测（salient object detection）是一个已经被详细研究并提出了许多解决方案的问题。在本文中，我们认为迄今为止的工作所解决的问题相对来说是定义不明确的。具体来说，当询问多个观察者时，对于<strong>什么构成显著对象并没有普遍的共识</strong>。这意味着某些对象比其他对象更有可能被判断为显著，这<strong>暗示显著对象之间存在一个相对的排名</strong>。本论文提出的解决方案解决了这个更广泛的问题，考虑了相对排名，并且我们<strong>提出了适合在相对显著性背景下衡量成功的数据和指标</strong>。我们提出了一种<strong>基于相对显著性分层表示和逐阶段细化</strong>的创新深度学习解决方案。我们还展示了显著对象快速计数（subitizing）问题可以使用同一个网络来解决，并且我们的方法在所有考虑的指标上（包括传统的和新提出的）都超过了之前的任何工作。</p>
+<span id="more"></span>
+
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>大多数显著对象检测的研究要么考虑单一显著对象[37, 38, 7, 8, 31, 32, 9, 19, 17, 24, 39, 18]，要么考虑多个显著对象[13, 27, 36]，但并未考虑显著性可能因人而异的情况，以及某些对象在重要性上可能会获得更为普遍的一致认可。当前<strong>缺乏由多个观察者手动分割的显著对象数据</strong>。需要注意的是，由少数观察者（包括仅一个人）提供的标签，无法区分对象的重要性。基于注视数据（gaze data）的隐式显著性分配[33] 也存在困难，因为这种方法涉及的认知过程与手动标注时的深思熟虑决策不同[16]。此外，由于中心偏向、视觉运动限制和其他潜在因素[2, 1]，注视数据相对难以解释。</p>
+<p>因此，在本文中，我们更广泛地考虑了显著对象检测问题。这包括<strong>检测图像中的所有显著区域，并通过为不同的显著区域分配置信度来考虑观察者之间的差异</strong>。我们通过进一步处理<strong>PASCAL-S数据集</strong>[23]，提供了一种能够反映相对显著性的地面真值（ground truth）。我们不仅使用传统指标，还通过显著对象相对于地面真值的排序顺序来衡量算法的成功。</p>
+<p>最近的研究也关注了显著对象快速计数（subitizing）的问题。我们认为，提供显著对象检测的模型应该能够实现这一点（见图1）。我们还让我们的网络能够进行<strong>快速计数</strong>。总体而言，我们的工作在显著对象检测问题上进行了泛化，我们提出了一个新的模型，该模型能够根据传统方式进行显著对象检测、多个显著对象检测和相对排名以及快速计数。我们的结果表明，在所有所考虑的问题上，我们的模型均达到了最新的顶尖性能。</p>
+<p><img src="https://vip.helloimg.com/i/2024/08/08/66b4ce9f15548.png" alt="1.png|500"></p>
+<blockquote>
+<p>图1. 我们提出了一种深度神经网络的解决方案，用于检测显著对象，考虑这些对象显著性的相对排名，并预测显著对象的总数。从左到右依次为：输入图像、检测到的显著区域、显著对象的排序、显著对象数量的置信评分。不同颜色表示不同显著对象实例的排名顺序。</p>
+</blockquote>
+<h2 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h2><h3 id="Salient-Object-Detection"><a href="#Salient-Object-Detection" class="headerlink" title="Salient Object Detection"></a>Salient Object Detection</h3><p><strong>卷积神经网络</strong>（CNNs）在许多计算机视觉问题中，包括显著对象检测，显著提升了性能。与较早的手工设计特征相比，基于CNN的模型能够提取更具代表性和复杂性的特征[21, 34, 15]，这促使了它们的广泛应用。一些基于CNN的方法利用<strong>超像素</strong>（superpixel）和<strong>对象区域提议</strong>（object region proposals）来实现精确的显著对象检测[9, 19, 17, 22, 39, 18]。这些方法通常采用<strong>多分支架构</strong>，使用CNN在不同抽象层次上提取语义信息，以生成初始的显著性预测。随后，添加新的分支以获得超像素或对象区域提议，用于提高预测的精度。</p>
+<p>作为超像素和对象区域提议的替代方法，其他方法[26, 8, 37]通过聚合多层特征逐像素预测显著性（predict saliency per-pixel by  aggregating multi-level features）。Luo等人[26]通过<strong>将CNN结构化为多分辨率网格，整合局部和全局特征</strong>。Hou等人[8]在<strong>浅层和深层特征图之间实现了逐阶段的短连接</strong>，以实现更精确的检测，并仅考虑中间层特征来推断最终的显著性图。Zhang等人[37]将多层特征作为线索来生成并递归微调多分辨率显著性图，这些显著性图通过保持边界的细化块进行细化，然后融合以生成最终的预测。</p>
+<p>其他方法[24, 31, 38]使用<strong>端到端的编码器-解码器架构</strong>（end-to-end encoder-decoder architecture），生成初步的粗略显著性图，然后逐阶段细化以更好地定位显著对象。Liu和Han[24]提出了一种网络，通过逐步将局部上下文信息与粗略的显著性图结合。Wang等人[31]提出了一种用于显著性检测的递归全卷积网络，包含用于修正初始显著性检测错误的先验知识。Zhang等人[38]在特定的卷积层后引入了重新设计的dropout，以量化卷积特征的不确定性，并采用一种新的上采样方法来减少反卷积的伪影，从而获得更好的显著对象检测边界。</p>
+<p>与上述方法相比，我们通过应用新机制来控制网络中的信息流，并引入了一种<strong>堆叠策略</strong>（stacking strategy），以隐含地<strong>携带确定相对显著性所需的信息</strong>，从而实现了<strong>逐阶段细化</strong>的空间精度。</p>
+<h3 id="Salient-Object-Subitizing"><a href="#Salient-Object-Subitizing" class="headerlink" title="Salient Object Subitizing"></a>Salient Object Subitizing</h3><p>最近的研究[35, 7]也探讨了图像中显著对象快速计数（subitizing）的问题。这项任务涉及计算显著对象的数量，而不考虑它们的重要性或语义类别。文献[35]中提出的第一个显著对象快速计数网络<strong>采用前馈CNN将这一问题视为分类任务</strong>。He等人[7]<strong>通过探索数值和空间表示之间的相互作用（by exploring the  interaction between numeric and spatial representations），将快速计数任务与检测结合在一起</strong>。我们的提议不仅具体确定了显著对象的数量，还识别了这一数量的<strong>变化性</strong>（variability），并以反映这种变化性的分布形式提供输出。</p>
+<h2 id="Proposed-Network-Architecture"><a href="#Proposed-Network-Architecture" class="headerlink" title="Proposed Network Architecture"></a>Proposed Network Architecture</h2><p>我们提出了一个新的端到端框架，用于解决<strong>检测多个显著对象并根据其显著性程度对这些对象进行排名的问题</strong>。我们提出的显著对象检测网络受到<strong>卷积-反卷积流水线</strong>[28, 24, 12]（convolution-deconvolution pipelines）成功的启发，这种流水线包括一个<strong>用于初步粗略预测的前馈网络</strong>。然后，我们提供了一种<strong>逐阶段细化机制，通过该机制逐步恢复精细结构的预测</strong>。图2展示了我们提出的网络的总体架构。编码器阶段作为特征提取器，将输入图像转换为丰富的特征表示，而细化阶段则试图恢复丢失的上下文信息，以产生准确的预测和排名。</p>
+<p>我们首先在第3.1节中描述了如何生成初步的粗略显著性图。接着，在第3.2节和第3.3节中，分别详细介绍了逐阶段细化网络和多阶段显著性图融合。</p>
+<p><img src="https://vip.helloimg.com/i/2024/08/08/66b4d31e798b4.png" alt="1.png"></p>
+<blockquote>
+<p>图2. 我们提出的网络架构示意图。在编码器网络中，输入图像经过前馈编码器处理，生成一个粗略的嵌套相对显著性堆栈（$S_\theta^t$）。我们在 $S_\theta^t$ 之上添加了一个堆叠卷积模块（SCM），以获得粗略的显著性图（$S_m^t$）。然后，逐阶段细化网络由<strong>感知排名</strong>的细化单元（图中的虚线框）组成，逐步细化每个前面的NRSS（$S_\theta^t$），并生成一个精细化的NRSS（$S_\theta^{t+1}$）。融合层将所有阶段的预测结合起来，生成最终的显著性图（$S_m^T$）。我们在每个细化阶段的输出（$S_\theta^t, S_m^t$）处提供监督信号（$\Delta_{S_\theta}^t, \Delta_{S_m}^t$）。这种<strong>基于堆叠表示的迭代细化架构</strong>能够有效地检测多个显著对象。</p>
+</blockquote>
+<h3 id="Feed-forward-Network-for-Coarse-Prediction"><a href="#Feed-forward-Network-for-Coarse-Prediction" class="headerlink" title="Feed-forward Network for Coarse Prediction"></a>Feed-forward Network for Coarse Prediction</h3><p>最近应用于高层视觉任务（如图像分类[6, 30]、对象检测[29]）的前馈深度学习模型采用了由重复的卷积阶段和空间池化组成的级联结构。通过池化进行的下采样使得模型能够在编码的最深阶段获得非常详细的语义特征表示，但空间分辨率相对较差，此时滤波器的空间覆盖范围也大大增加。对于识别问题而言，空间分辨率的丧失并不是问题；然而，像素级标注任务（如语义分割、显著对象检测）需要像素级的精确信息来生成准确的预测。因此，我们选择了<strong>Resnet-101</strong>[6]<strong>作为我们的编码器网络</strong>（基础构建模块），因为它在分类和分割任务中表现出色。根据先前在像素级标注方面的研究[3, 12]，我们使用了<strong>扩张ResNet-101</strong>[3]<strong>来平衡语义上下文和细节</strong>，从而生成缩小了8倍的输出特征图。更具体地说，给定一个输入图像$I \in \mathbb{R}^{h\times w\times d}$，我们的编码器网络生成一个大小为$\lfloor \frac{h}{8}, \frac{w}{8} \rfloor$的特征图。</p>
+<p>为了增强编码器网络的骨干网络，并结合自顶向下的细化网络，我们首先附加了一个3×3卷积核和12个通道的卷积层，以获得<strong>嵌套相对显著性堆栈</strong>（Nested Relative Salience Stack, <strong>NRSS</strong>）。然后，我们附加了一个<strong>堆叠卷积模块</strong>（Stacked Convolutional Module, <strong>SCM</strong>）来计算每个像素的粗略显著性得分。值得注意的是，我们的编码器网络足够灵活，可以替换为任何其他基准网络，如VGG-16[30]、DenseNet-101[10]。此外，我们利用了扩张金字塔池化（atrous pyramid pooling）[3]来获取更多的全局上下文信息。这些操作可以表示为：</p>
+<p>$$<br>S_\theta^t&#x3D;\mathcal{C}_{3\times3}(\mathcal{F}_s(I;\mathcal{W});\Theta),\ \ S_m^t&#x3D;\xi(S_\theta^t)<br>$$</p>
+<p>其中，$I$是输入图像，$(\mathcal{W},\Theta)$表示卷积$\mathcal{C}$的参数。$S_\theta^t$是阶段$t$的粗略级别NRSS，包含了各个像素的不同显著性程度（类似于认为某对象显著的观察者的比例），$S_m^t$指的是粗略级别显著性图，$\xi$表示SCM。$\mathcal{F}_s(\cdot)$表示由编码器网络生成的输出特征图。SCM由三个卷积层组成，用于生成所需的显著性图。初始卷积层有6个通道，使用3×3的卷积核，接下来是两个使用3×3卷积核的卷积层，分别有3个通道和1个通道，每个通道在SCM中学习NRSS中每个空间位置的软权重（soft weight），以根据像素属于显著对象的置信度对其进行标注。</p>
+<h3 id="Stage-wise-Refinement-Network"><a href="#Stage-wise-Refinement-Network" class="headerlink" title="Stage-wise Refinement Network"></a>Stage-wise Refinement Network</h3><p>大多数现有的成功的显著对象检测工作[24, 32, 37, 8]通常共享一种逐阶段解码（stage-wise decoding）的结构，以恢复每个像素的分类。虽然编码器的最深层具有最丰富的特征表示，但仅依赖卷积和解池化在解码阶段恢复丢失的信息可能会降低预测质量[12]。因此，最深层丢失的空间分辨率可以从早期表示中逐渐恢复。这一直觉出现在<strong>包括编码器和解码器层之间的跳跃连接</strong>[25, 12, 37, 8]的细化模型中。然而，<strong>如何有效地结合局部和全局上下文信息</strong>仍然是一个值得进一步分析的领域。受细化方法成功的启发[25, 11, 12]，我们提出了一种<strong>基于多阶段融合的细化网络，通过将初步的粗略表示与早期层表示的更精细特征结合，在解码阶段恢复丢失的上下文信息</strong>。细化网络由一系列逐步的感知排名的细化单元（successive stages of  rank-aware refinement units）组成，这些单元试图在每个细化阶段恢复缺失的空间细节，并保持显著对象的相对排名顺序。每个阶段的细化单元以前面的NRSS和早期更精细尺度的表示作为输入，并执行一系列操作以生成一个精细化的NRSS，从而为获得精细的显著性图做出贡献。需要注意的是，细化层次化的NRSS意味着细化单元利用SCM在不同层次下的一致性程度来迭代地提高相对排名和整体显著性的置信度。作为最后一步，由SCM生成的精细显著性图被融合以获得整体显著性图。</p>
+<h4 id="Rank-Aware-Refinement-Unit"><a href="#Rank-Aware-Refinement-Unit" class="headerlink" title="Rank-Aware Refinement Unit"></a>Rank-Aware Refinement Unit</h4><p>之前的显著性检测网络[32, 24]通过直接整合来自早期特征的表示在不同层次上进行了细化。遵循[12]的思路，我们在感知排名的细化单元中集成了门控单元（integrate  gate units in our rank-aware refinement unit），以控制传递的信息，过滤掉与图形-背景和显著对象相关的模糊性。由前馈编码器生成的初始NRSS（$S_\theta^t$）作为第一个细化单元的输入。需要注意的是，可以将$S_\theta^t$解释为解码过程中预测的显著性图，但我们的模型<strong>强制通道维度与参与标注显著对象的参与者数量相同</strong>（forces the channel dimension to be the same as the  number of participants involved in labeling salient objects）。细化单元将门控单元[12]生成的门控特征图（gated feature map）$G^t$作为第二个输入。如[12]所建议，我们通过将编码器网络中两个连续的特征图（$f_\theta^t$和$f_\theta^{t+1}$）结合来获得$G_t$（见图2中的虚线框）。我们首先将前面的$S_\theta^t$上采样，以将其大小加倍。然后，对上采样后的$S_\theta^t$和$G^t$应用一个由一系列操作组成的变换函数$\mathcal{T}_f$，以获得精细化的NRSS（$S_\theta^{t+1}$）。接着，我们在$S_\theta^{t+1}$上附加SCM模块，以生成精细化的显著性图$S_m^{t+1}$。最后，预测的$S_\theta^{t+1}$被输入到下一个阶段的感知排名细化单元。需要注意的是，我们只将NRSS传递到下一个阶段，从而允许网络学习对显著对象不同置信度层次之间的对比（learn contrast between  different levels of confidence for salient objects）。与其他方法不同，我们对精细化的NRSS和精细化的显著性图都应用了监督。所有阶段获得精细化NRSS和精细化显著性图的过程是相同的。上述操作可以总结如下：</p>
+<p>$$<br>S_\theta^{t+1}&#x3D;w^b * \mathcal{T}_f (G^t, u(S_\theta^t)),\ \ S_m^{t+1}&#x3D;w_s^b * \xi(S_\theta^{t+1})<br>$$</p>
+<p>其中，$u$表示上采样操作；$w^b$和$w_s^b$分别表示变换函数$\mathcal{T}_f$和SCM（方程中的$\xi$）的参数。注意，$t$指的是细化过程的特定阶段。</p>
+<h3 id="Multi-Stage-Saliency-Map-Fusion"><a href="#Multi-Stage-Saliency-Map-Fusion" class="headerlink" title="Multi-Stage Saliency Map Fusion"></a>Multi-Stage Saliency Map Fusion</h3><p>在细化单元的不同阶段，预测的显著性图能够找到显著区域的位置，并逐渐形成更加清晰的边界。由于所有的感知排名细化单元是堆叠在一起的，网络允许每个阶段学习在细化过程中有价值的特定特征。这种现象促使我们<strong>将不同层次的SCM预测进行结合</strong>，因为它们之间的内部连接在网络结构中并没有显式存在。为了促进交互，我们在网络的末尾添加了一个融合层，将不同阶段的预测显著性图进行拼接，从而生成一个融合特征图$S_m^{\hat{f}}$。然后，我们应用一个1×1卷积层$\Upsilon$，以产生我们网络的最终预测显著性图$S_m^T$。需要注意的是，我们的网络有$T$个预测，包括一个融合预测和$T-1$个逐阶段预测。我们可以将操作写为：</p>
+<p>$$<br>S_m^{\hat{f}}&#x3D;\eth(S_m^t,S_m^{t+1},\dots,S_m^{T-1}),\ \ S_m^T&#x3D;w^f * \Upsilon(S_m^{\hat{f}})<br>$$</p>
+<p>其中，$\eth$表示跨通道拼接；$w^f$是获得最终预测的参数。</p>
+<h3 id="Stacked-Representation-of-Ground-truth"><a href="#Stacked-Representation-of-Ground-truth" class="headerlink" title="Stacked Representation of Ground-truth"></a>Stacked Representation of Ground-truth</h3><p><strong>显著对象检测或分割的真值包含一组数字，定义每个像素的显著性程度</strong>。<strong>传统生成二进制掩码的方法是通过阈值处理，这意味着没有相对显著性的概念</strong>。由于我们的目标是显式建模观察者的一致性，因此使用传统的二进制真实标签掩码是不合适的。为了解决这个问题，我们提出<strong>生成一组堆叠的真实标签图，这些图对应于不同的显著性水平</strong>（由观察者之间的一致性定义）（we propose to  generate a set of stacked ground-truth maps that corresponds  to different levels of saliency (defined by inter-observer  agreement)）。给定一个真实的显著性图$G_m$，我们获得一个包含$N$个真实标签图的堆叠$G_\theta (G_i, G_{i+1},\dots,G_N)$，其中每个图$G_i$包含一个二进制指示，表明<strong>至少</strong>有$i$个观察者判断一个对象是显著的（在像素级别）。$N$是参与标注显著对象的参与者的数量。<strong>堆叠的真实显著性图$G_\theta$为多个显著对象提供了更好的分离</strong>（provides better separation for multiple salient objects），<strong>并且自然地作为相对排名</strong>，使网络能够关注显著性程度。需要注意的是堆叠的真实标签的嵌套特性，即$G_{i+1} \subseteq G_i$。这在概念上是重要的，因为：$G_i &#x3D; 1$ ⇐⇒ 恰好有$i$个观察者同意时，真实标签堆叠中会出现零层，并且一致性程度的小差异会导致真实标签的大变化。<br><img src="https://vip.helloimg.com/i/2024/08/08/66b4e3734dfdd.png" alt="1.png|475"></p>
+<h3 id="Salient-Object-Subitizing-Network"><a href="#Salient-Object-Subitizing-Network" class="headerlink" title="Salient Object Subitizing Network"></a>Salient Object Subitizing Network</h3><p>以往的研究 [35, 7] 将显著对象的计数视为一个简单的分类任务。与我们的多显著对象检测网络类似，计数网络也是基于ResNet-101 [6]，但我们去掉了最后一个模块。在最后添加一个全连接层，以生成输入图像中存在0、1、2、3和4+个显著对象的置信度分数，接着又添加一个全连接层以生成每个类别的最终置信度分数。这背后的理由是，<strong>单层可以累积与显著性相关的置信度，而两层则允许对相对显著性进行推理</strong>。我们使用预训练的检测模型来训练计数网络。作为一个分类器，计数网络通过计算地面真实数据中显著对象数量n与总预测对象之间的两个交叉熵损失 $\mathcal{l}<em>{sub}^1(c,n)$和 $\mathcal{l}</em>{sub}^f(c_f,n)$ 来降低损失。</p>
+<h4 id="A-New-Dataset-for-Salient-Object-Subitizing"><a href="#A-New-Dataset-for-Salient-Object-Subitizing" class="headerlink" title="A New Dataset for Salient Object Subitizing"></a>A New Dataset for Salient Object Subitizing</h4><p>由于显著对象计数不是一个广泛关注的问题，因此创建的数据集数量有限 [35]。为了促进在更复杂场景中对这个问题的研究，我们为<strong>Pascal-S数据集</strong> [23] 创建了显著对象计数的真实标签，提供逐实例的计数作为标签。Pascal-S数据集中不同类别的图像分布如表1所示。从表中可以明显看出，有相当数量的图像中存在两个以上的显著对象，但只有少数图像中存在超过7个显著对象。我们最初在标注过程中包括所有显著对象的实例。为了减少不同类别之间的不平衡，我们创建了另一个真实标签集，仅将图像分类为1、2、3和4+个显著对象。</p>
+<p><img src="https://vip.helloimg.com/i/2024/08/08/66b4e5e2b3c6a.png" alt="1.png|575"></p>
+<blockquote>
+<p>表1. Pascal-S数据集中不同数量显著对象对应的图像数量和百分比。</p>
+</blockquote>
+<h3 id="Training-the-Network"><a href="#Training-the-Network" class="headerlink" title="Training the Network"></a>Training the Network</h3><p>我们提出的网络在每个精细化阶段生成一系列嵌套的相对显著性堆栈（NRSS）和显著性图；然而，我们<strong>主要关注的是最终的融合显著性图</strong>。网络的每个阶段都被鼓励通过利用先前的NRSS表示，重复生成越来越精细的NRSS和显著性图。我们在每个精细化阶段的输出上应用辅助损失（an auxiliary loss），同时在网络末尾应用整体主损失（an overall master loss）。这<strong>两个损失有助于优化过程</strong>。更具体而言，设$I\in \mathbb{R}^{h\times w\times 3}$为一张训练图像，具有地面真值显著性图$G_m \in \mathbb{R}^{h\times w}$。如第3.4节所述，我们生成地面真值显著性图堆栈$G_\theta\in \mathbb{R}^{h\times w\times 12}$。为了对NRSS（$S_\theta^t$）和显著性图$S_m^t$进行监督，我们首先将$G_\theta$和$G_m$下采样到每个阶段生成的$S_\theta^t$的大小，从而得到$G_\theta^t$和$G_m^t$。然后，在每个精细化阶段，我们定义像素级的欧几里得损失$\Delta_{S_\theta}^t$和$\Delta_{S_m}^t$，以分别衡量$(S_\theta^t, G_\theta^t)$和$(S_m^t,G_m^t)$之间的差异。我们可以将这些操作总结为：</p>
+<p>$$<br>\begin{align*}<br>\Delta_{S_\theta}^t(W)&#x3D;\frac{1}{2dN}\sum_{i&#x3D;1}^d\sum_{z&#x3D;1}^N(x_i(z)-y_i(z))^2 \<br>\Delta_{S_m}^t(W)&#x3D;\frac{1}{2d}\sum_{i&#x3D;1}^d(x_i-y_i)^2 \<br>L_{aux}^t(W)&#x3D;\Delta_{S_\theta}^t+\Delta_{S_m}^t<br>\end{align*}<br>$$</p>
+<p>其中，$x\in\mathbb{R}^d$ 和 $y\in\mathbb{R}^d$（$d$表示空间分辨率）是向量化的地面真值和预测显著性图。$x_i$和$y_i$分别表示$S_\theta^t$和$G_\theta^t$的特定像素。$W$表示整个网络的参数，$N$表示地面真值切片的总数（在我们的例子中，$N &#x3D; 12$）。网络的最终损失函数结合主损失和辅助损失可以写为：</p>
+<p>$$<br>L_{final}(W)&#x3D;L_{mas}(W)+\sum_{t&#x3D;1}^{T-1}\lambda_tL_{aux}^t(W)<br>$$</p>
+<p>其中，$L_{mas}(W)$表示在最终预测显著性图$S_m^T$上计算的欧几里得损失函数。我们将$\lambda_t$设置为1，以平衡损失，这样损失函数保持连续可微。每个阶段的预测包含与两个预测相关的信息，允许我们的网络从深层传播监督信息。这也始于将权重与初始粗略表示对齐，从而导致粗到细的学习过程。融合的预测通常比其他阶段的预测效果要好，因为它包含来自所有精细化阶段的聚合信息。对于显著性推断，我们可以简单地将任意大小的图像输入到网络中，并使用融合预测作为最终的显著性图。</p>
+<h2 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h2><p>我们模型的核心遵循基于ResNet-101 [6] 的结构，并使用预训练的权重初始化编码器部分。我们提出了一些基本架构的变体，并报告以下描述的变体的结果：</p>
+<ul>
+<li><strong>RSDNet</strong>：该网络包括膨胀的ResNet-101 [3]、NRSS和SCM。</li>
+<li><strong>RSDNet-A</strong>：该网络与RSDNet相同，但地面真值的缩放因子为1000，鼓励网络显式学习更深的对比度。</li>
+<li><strong>RSDNet-B</strong>：该结构遵循RSDNet，但增加了一个空洞金字塔池化模块。</li>
+<li><strong>RSDNet-C</strong>：RSDNet-B + 地面真值缩放。</li>
+<li><strong>RSDNet-R</strong>：RSDNet，具有阶段性排名感知精细化单元 + 多阶段显著性图融合。</li>
+</ul>
+<h3 id="Datasets-and-Evaluation-Metrics"><a href="#Datasets-and-Evaluation-Metrics" class="headerlink" title="Datasets and Evaluation Metrics"></a>Datasets and Evaluation Metrics</h3><p><strong>数据集</strong>：<strong>Pascal-S</strong> 数据集包含 850 张来自 <strong>PASCAL VOC 2012 验证集</strong> [4] 的多复杂物体的自然图像。我们随机将 Pascal-S 数据集分为两个子集（425 张用于训练，425 张用于测试）。<strong>在这个数据集中，显著物体标签是基于 12 名参与者标记显著物体的实验</strong>。几乎所有现有的显著物体分割或检测方法都通过阈值处理地面真值显著性图以获得二值显著性图。这种操作似乎有些任意，因为阈值可能需要 k 个观察者的一致意见，而 k 的值在不同研究中有所不同。尽管这是最常用的显著物体分割数据集之一，但由于有多个显式标记的显著区域且由合理数量的观察者提供，因此是独一无二的。由于本工作的一个关键目标是对图像中的显著物体进行排名，因此我们使用原始地面真值图（<strong>每个像素的值对应于认为该像素是显著物体的观察者数量</strong>），而不是尝试基于一个有争议的阈值处理过程来预测二值输出。</p>
+<p><strong>评估指标</strong>：对于多显著物体检测任务，我们使用四个不同的标准指标来衡量性能，包括精确率-召回率（PR）曲线、F-measure（曲线上的最大值）、ROC曲线下的面积（AUC）和平均绝对误差（MAE）。由于其中一些依赖于二元决策，我们根据认为某个物体显著的参与者数量对地面真值显著性图进行阈值处理，从而得到 12 张二值地面真值图。对于每张二值地面真值图，多种阈值的预测显著性图允许计算真实阳性率（TPR）、假阳性率（FPR）、精确率和召回率，以及相应的 ROC 和 PR 曲线。考虑到在本工作之前的方法是基于不同阈值进行训练并考虑二值地面真值图，因此分数是基于产生最佳 AUC 或 F-measure 分数的二值地面真值图报告的（相应的曲线也会显示）。我们还报告了最大 F-measure、平均 F-measure 和中位 F-measure，以提供性能随所选阈值变化的感觉。我们还报告了 MAE 分数，即预测显著性图与产生最低分数的二值地面真值图之间的平均像素级差异。为了评估显著物体的排名顺序，我们引入了显著物体排名（SOR）指标，定义为<strong>地面真值排名顺序与预测显著物体排名顺序之间的斯皮尔曼等级相关性</strong>。为了便于解释，SOR 分数被归一化到 [0, 1]。分数是基于考虑整个数据集的每种方法的平均 SOR 分数报告的。</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.jpg" alt="AwayX 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>AwayX
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://awayx.online/2024/08/09/Revisiting%20Salient%20Object%20Detection%20-%20Simultaneous%20Detection,%20Ranking,%20and%20Subitizing%20of%20Multiple%20Salient%20Objects/" title="Revisiting Salient Object Detection - Simultaneous Detection, Ranking, and Subitizing of Multiple Salient Objects">http://awayx.online/2024/08/09/Revisiting Salient Object Detection - Simultaneous Detection, Ranking, and Subitizing of Multiple Salient Objects/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" rel="tag"><i class="fa fa-tag"></i> 论文笔记</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/08/06/Hexo%20guides/" rel="prev" title="guides">
+      <i class="fa fa-chevron-left"></i> guides
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/08/09/Understanding%20Diffusion%20Models%20-%20A%20Unified%20Perspective/" rel="next" title="Understanding Diffusion Models - A Unified Perspective">
+      Understanding Diffusion Models - A Unified Perspective <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC81OTUwMS8zNTk2Mw=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Abstract"><span class="nav-number">1.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-number">2.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Background"><span class="nav-number">3.</span> <span class="nav-text">Background</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Proposed-Network-Architecture"><span class="nav-number">4.</span> <span class="nav-text">Proposed Network Architecture</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Experiments"><span class="nav-number">5.</span> <span class="nav-text">Experiments</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="AwayX"
+      src="/images/TheRightToCry.jpg">
+  <p class="site-author-name" itemprop="name">AwayX</p>
+  <div class="site-description" itemprop="description">嘿嘿</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/awaygithub" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;awaygithub" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:away2557103310@outlook.com" title="E-Mail → mailto:away2557103310@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://yoursite.com/" title="http:&#x2F;&#x2F;yoursite.com" rel="noopener" target="_blank">Title</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2024-02 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AwayX</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.4' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch-lite.umd.js"></script>
+<script src="//cdn.jsdelivr.net/npm/instantsearch.js@4/dist/instantsearch.production.min.js"></script>
+<script src="/js/algolia-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+</body>
+</html>

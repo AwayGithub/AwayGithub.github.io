@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/infinite-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/infinite-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"awayx.online","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="CVPR 2022   github：GrassBro&#x2F;OCOR: Bi-directional Object-context Prioritization Learning for Saliency Ranking (github.com)  Abstract最近提出了显著性排名任务，以研究人类在视觉上通常如何根据不同物体的显著性程度来转移注意力。现有的方法主要关注学习物体-物体或物">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Bidirectional object-context prioritization learning for saliency ranking">
+<meta property="og:url" content="http://awayx.online/2024/08/17/Bidirectional%20object-context%20prioritization%20learning%20for%20saliency%20ranking/index.html">
+<meta property="og:site_name" content="AwaySpace">
+<meta property="og:description" content="CVPR 2022   github：GrassBro&#x2F;OCOR: Bi-directional Object-context Prioritization Learning for Saliency Ranking (github.com)  Abstract最近提出了显著性排名任务，以研究人类在视觉上通常如何根据不同物体的显著性程度来转移注意力。现有的方法主要关注学习物体-物体或物">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://vip.helloimg.com/i/2024/08/17/66c066b018691.png">
+<meta property="article:published_time" content="2024-08-17T09:03:53.000Z">
+<meta property="article:modified_time" content="2024-08-18T12:51:35.881Z">
+<meta property="article:author" content="AwayX">
+<meta property="article:tag" content="论文笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://vip.helloimg.com/i/2024/08/17/66c066b018691.png">
+
+<link rel="canonical" href="http://awayx.online/2024/08/17/Bidirectional%20object-context%20prioritization%20learning%20for%20saliency%20ranking/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Bidirectional object-context prioritization learning for saliency ranking | AwaySpace</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">AwaySpace</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">5</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">42</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">32</span></a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container"></div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="algolia-results">
+  <div id="algolia-stats"></div>
+  <div id="algolia-hits"></div>
+  <div id="algolia-pagination" class="algolia-pagination"></div>
+</div>
+
+      
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://awayx.online/2024/08/17/Bidirectional%20object-context%20prioritization%20learning%20for%20saliency%20ranking/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/TheRightToCry.jpg">
+      <meta itemprop="name" content="AwayX">
+      <meta itemprop="description" content="嘿嘿">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AwaySpace">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Bidirectional object-context prioritization learning for saliency ranking
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-08-17 17:03:53" itemprop="dateCreated datePublished" datetime="2024-08-17T17:03:53+08:00">2024-08-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-08-18 20:51:35" itemprop="dateModified" datetime="2024-08-18T20:51:35+08:00">2024-08-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">论文笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/Computer-Vision/" itemprop="url" rel="index"><span itemprop="name">Computer Vision</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/Computer-Vision/Salient-Object-Ranking/" itemprop="url" rel="index"><span itemprop="name">Salient Object Ranking</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/Computer-Vision/Salient-Object-Ranking/image/" itemprop="url" rel="index"><span itemprop="name">image</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/Computer-Vision/Salient-Object-Ranking/image/2022/" itemprop="url" rel="index"><span itemprop="name">2022</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
+<p><strong>CVPR 2022</strong></p>
+</blockquote>
+<blockquote>
+<p><strong>github</strong>：<a target="_blank" rel="noopener" href="https://github.com/GrassBro/OCOR">GrassBro&#x2F;OCOR: Bi-directional Object-context Prioritization Learning for Saliency Ranking (github.com)</a></p>
+</blockquote>
+<h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>最近提出了显著性排名任务，以研究人类在视觉上通常如何根据不同物体的显著性程度来转移注意力。现有的方法主要关注学习物体-物体或物体-场景关系。这种策略遵循了心理学中的基于物体的注意力概念，但<strong>往往倾向于关注具有强语义的物体（例如，人），从而导致不切实际的显著性排名</strong>。我们观察到空间注意力与基于物体的注意力在人的视觉识别系统中是同时工作的。在识别过程中，人类的空间注意力机制会在不同的区域（即上下文，context-to-context）之间移动、参与和脱离，这启发我们在显著性排名中<strong>除了物体级的推理外，还需要建模区域级的交互</strong>。因此，我们提出了一种新的<strong>双向方法</strong>，<strong>将空间注意力与基于物体的注意力统一用于显著性排名</strong>。我们的模型包含两个新模块：（1）选择性物体显著性（SOS）模块，通过推断显著物体的语义表示来建模基于物体的注意力；（2）物体-上下文-物体关系（OCOR）模块，通过共同建模显著物体的物体-上下文和上下文-物体交互来分配显著性排名。大量实验表明，我们的方法优于现有的最先进方法。代码和预训练模型可在 <a target="_blank" rel="noopener" href="https://github.com/GrassBro/OCOR">https://github.com/GrassBro/OCOR</a> 获取。</p>
+<span id="more"></span>
+
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>显著性检测是计算机视觉中的一个基础任务。以前的工作主要集中在显著物体&#x2F;实例检测任务[9, 17, 38]和注视预测任务[33]上。最近，Siris 等人[34]提出了一种新的任务，称为显著性排名，旨在同时检测显著实例并推断它们的显著性排名。通过<strong>模拟人类如何根据显著性排名在场景中改变注意力</strong>，显著性排名可以为许多下游视觉任务提供帮助，例如图像处理[6, 49]、场景理解[37]、重要人物识别[24]及其交互推理[10]。</p>
+<img src="https://vip.helloimg.com/i/2024/08/17/66c066b018691.png" />
+
+<blockquote>
+<p>图1. 现有的显著性排名方法 [19, 28, 34] 产生了不切实际的显著性排名。(b) RSDNet [19] 是一种像素级方法，不能很好地预测物体级显著性排名。(c) ASSR [34] 和 (d) IRSR [28] 探索了物体-物体和物体-场景关系来推断显著性排名。然而，它们倾向于偏向具有强语义的物体，并且往往将人分配较高的显著性排名。(e) 我们的方法通过双向物体-上下文优先级学习公式，探索了空间和基于物体的注意力，产生了真实的显著性排名结果。</p>
+</blockquote>
+<p>Islam 等人[19]提出了首个显著性排名工作，直接预测一个相对显著性图，其中不同的像素值表示不同的显著性程度，如图1(b)所示。然而，这种方法<strong>仅研究像素的相对显著性</strong>。随后，Siris 等人[34]提出了研究显著物体排名的方法，模拟人类如何从一个物体转移注意力到另一个物体。他们提出通过建模物体与全局上下文之间的关系来推理它们的排名。Liu 等人[28]进一步提出了一种<strong>基于神经图的方法</strong>，学习物体与局部上下文之间的关系以及物体之间的关系。然而，这两种方法[28, 34]<strong>往往偏向于具有强语义的物体（例如，人），如图1所示，导致显著性排名不正确</strong>。例如，在图1(c,d)的第一行和第二行中，他们将人分配最高的显著性排名，尽管在第一个例子中绿色屏幕的视觉显著性和第二个例子中相对较大的马的视觉显著性更高。在最后一行中，这两种方法甚至没有将滑板车考虑为显著物体。</p>
+<p>在本文中，我们解决了显著性排名问题，基于心理学研究[2,8]揭示的观察结果，即<strong>空间注意力和基于物体的注意力在人的视觉系统中是同时工作的</strong>。虽然基于物体的注意力通过对场景的预注意分割将我们的视线引导到候选物体或感知组[8]，但人类的空间注意力机制使我们能够通过基于低级视觉刺激（例如丰富的颜色）、物体功能和物体间的交互来顺序处理场景。这启发我们<strong>联合利用空间注意力和基于物体的注意力来进行显著性排名</strong>。基于这一观察，我们提出了一种双向物体-上下文优先级学习方法，以建模区域级和物体级的关系。我们首先提出了选择性物体显著性（SOS）模块，通过推断和丰富显著物体的语义表示来建模基于物体的注意力。然后，我们提出了物体-上下文-物体关系（OCOR）模块，通过在物体-上下文和上下文-物体双向方式中推理，利用空间注意力机制。我们构建了一个多头注意力机制，以建模物体及其上下文如何与其他物体及其上下文进行交互。如图1(e)所示，我们的方法在显著性排名上优于现有的最先进方法。例如，我们的方法能够根据视觉显著性检测到屏幕（第一行）和马（第二行）作为最显著的物体。在第三行，我们的方法能够检测并排名滑板车，通过建模其与人的交互来实现。</p>
+<p>总结来说，本工作有三个主要贡献：1）受心理学研究启发，我们提出了一种新颖的双向物体-上下文优先级学习方法，通过联合利用空间和基于物体的注意力机制进行显著性排名。2）我们提出了一个新颖的选择性物体显著性（SOS）模块用于建模基于物体的注意力，并提出了一个新颖的物体-上下文-物体关系（OCOR）模块，通过推理物体在双向物体-上下文和上下文-物体中的关系来建模空间注意力。3）我们进行了大量实验来分析我们的方法，并验证其在性能上优于现有的最先进方法。</p>
+<h2 id="Related-Work"><a href="#Related-Work" class="headerlink" title="Related Work"></a>Related Work</h2><h3 id="Saliency-Ranking"><a href="#Saliency-Ranking" class="headerlink" title="Saliency Ranking"></a>Saliency Ranking</h3><p>显著性排名是一个新任务。它研究了这样一个视觉现象：在日常场景中，物体通常具有不同的显著性程度，这会使观察者顺序地将注意力转移到这些物体上。Islam 等人[19]对此问题进行了初步尝试，但他们只研究了像素级的相对显著性。这一点在他们的数据收集步骤中很明显，有时多个物体被标注为相同的显著性排名。Siris 等人[34]提出了一个新的数据集和模型来促进这一任务的研究。具体来说，他们利用物体上注视的统计数据构建了一个大规模数据集，并设计了一个带有物体-上下文关系模块的网络来学习显著性排名。Liu 等人[28]进一步提出了另一个标注噪声较少的数据集，并研究了物体-物体关系。类似地，Fang 等人[12]也提出了建模物体-物体关系的方法，但在学习过程中将物体的空间坐标作为空间线索嵌入其中。</p>
+<p>通过建模基于物体的注意力，上述方法可以利用学到的物体语义表示。然而，它们往往会产生不合理的显著性排名，例如，<strong>它们倾向于将人类的显著性排名高于视觉上具有显著色调的物体</strong>。相比之下，本文提出了一种双向物体-上下文优先级方法，将空间注意力与基于物体的注意力结合起来进行显著性排名。</p>
+<h3 id="Salient-Object-Detection-SOD"><a href="#Salient-Object-Detection-SOD" class="headerlink" title="Salient Object Detection (SOD)"></a>Salient Object Detection (SOD)</h3><h3 id="Salient-Instance-Detection-SID"><a href="#Salient-Instance-Detection-SID" class="headerlink" title="Salient Instance Detection (SID)"></a>Salient Instance Detection (SID)</h3><h2 id="Methdology"><a href="#Methdology" class="headerlink" title="Methdology"></a>Methdology</h2><h2 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h2><h3 id="Experimental-Setups"><a href="#Experimental-Setups" class="headerlink" title="Experimental Setups"></a>Experimental Setups</h3><p><strong>数据集和评估指标</strong>：我们的实验在公开可用的<strong>ASSR</strong> [34]和<strong>IRSR</strong> [28]数据集上进行。ASSR [34]基于顺序的眼动信息对每张图像的5个显著物体进行排名。它提供了7,464张、1,436张和2,418张图像用于训练、验证和测试。IRSR [28]考虑了眼动序列和眼动持续时间来标注显著性排名，同时手动过滤掉不适当的标注。在IRSR中，每张图像涉及最多8个具有排名的显著物体。该数据集包含8,988张图像，其中6,059张用于训练，2,929张用于测试。</p>
+<p>我们采用了三种评估指标，即显著物体排名（SOR）[19, 34]、分割感知SOR（SA-SOR）[28]和平均绝对误差（MAE），来评估我们的方法。SOR计算预测和真实显著性排名顺序之间的Spearman等级相关性。这一指标表示物体之间相对显著性的预测质量，而不是物体的特定显著性排名数字。SA-SOR计算预测和真实显著性排名之间的Pearson相关性，同时对检测非显著物体和错误排名进行惩罚。MAE测量预测和真实显著性图之间的每像素平均差异。因此，它还帮助衡量一个物体的排名质量，具体取决于其与真实值的重叠程度。</p>
+<p><strong>实现细节</strong>：我们的网络建立在多阶段查询检测器 [14, 36] 之上。根据他们的设置，阶段数量T设为6，查询数量N设为100。我们使用在ImageNet [20] 上预训练的Swin Transformer [29] 作为骨干网络。在SOS模块中，H和W最初设为7，然后在OCOR模块中减小为2。我们将α设置为1&#x2F;2，C设置为256。我们实验性地将SOS和OCOR模块的R设置为4，P设置为8。</p>
+<p>我们在每个数据集上训练模型60个epoch。学习率从2.5 × 10^−5开始，在第25和45个epoch时除以10。为了优化模型，我们采用AdamW优化器，权重衰减为1 × 10^−4。图像被调整为800 × 800的分辨率。我们使用随机翻转进行数据增强。训练批次大小设置为16，使用4张Tesla GPU卡进行训练。我们使用集合预测损失 [14, 36] 和显著性排名损失 [28] 训练排名头，使用Dice损失 [30] 训练掩膜头。我们在单张Tesla GPU卡上对800 × 800分辨率的图像进行测试。</p>
+<h3 id="Baselines"><a href="#Baselines" class="headerlink" title="Baselines"></a>Baselines</h3><h3 id="Main-Results"><a href="#Main-Results" class="headerlink" title="Main Results"></a>Main Results</h3><h3 id="Module-Analysis"><a href="#Module-Analysis" class="headerlink" title="Module Analysis"></a>Module Analysis</h3><h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>在本文中，我们研究了显著性排名问题。我们观察到人类视觉系统利用空间注意力和基于物体的注意力来处理视觉输入。因此，我们提出了一种双向物体-上下文优先级学习方法用于显著性排名。我们提出了一个选择性物体显著性模块，通过捕捉和增强物体的语义表示来建模基于物体的注意力。同时，我们提出了一个<strong>物体-上下文-物体关系模块</strong>，通过研究<strong>一个物体及其区域上下文如何与其他物体及其区域上下文互动</strong>来建模空间注意力。大量实验验证了我们的方法在显著性排名任务中相较于最先进方法的有效性。</p>
+<p>我们的工作确实存在一定的局限性。当<strong>场景中出现功能相同的物体且上下文狭窄时</strong>，我们的模型可能无法正确推断显著性排名。图6展示了两个例子。在第一行中，左侧和右侧的屏幕与全局上下文对称互动。在第二行中，这些甜甜圈在视觉上都很吸引人。<strong>我们怀疑在这些场景中，即使是人类也可能无法给出一致的排名</strong>。未来，我们希望深入研究人类视觉系统，以获取更多线索来帮助显著性排名任务。</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.jpg" alt="AwayX 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>AwayX
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://awayx.online/2024/08/17/Bidirectional%20object-context%20prioritization%20learning%20for%20saliency%20ranking/" title="Bidirectional object-context prioritization learning for saliency ranking">http://awayx.online/2024/08/17/Bidirectional object-context prioritization learning for saliency ranking/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" rel="tag"><i class="fa fa-tag"></i> 论文笔记</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/08/17/Instance-level%20relative%20saliency%20ranking%20with%20graph%20reasoning/" rel="prev" title="Instance-level relative saliency ranking with graph reasoning">
+      <i class="fa fa-chevron-left"></i> Instance-level relative saliency ranking with graph reasoning
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/08/17/Partitioned%20Saliency%20Ranking%20with%20Dense%20Pyramid%20Transformers/" rel="next" title="Partitioned Saliency Ranking with Dense Pyramid Transformers">
+      Partitioned Saliency Ranking with Dense Pyramid Transformers <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC81OTUwMS8zNTk2Mw=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Abstract"><span class="nav-number">1.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-number">2.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Related-Work"><span class="nav-number">3.</span> <span class="nav-text">Related Work</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Methdology"><span class="nav-number">4.</span> <span class="nav-text">Methdology</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Experiments"><span class="nav-number">5.</span> <span class="nav-text">Experiments</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Conclusion"><span class="nav-number">6.</span> <span class="nav-text">Conclusion</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="AwayX"
+      src="/images/TheRightToCry.jpg">
+  <p class="site-author-name" itemprop="name">AwayX</p>
+  <div class="site-description" itemprop="description">嘿嘿</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/awaygithub" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;awaygithub" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:away2557103310@outlook.com" title="E-Mail → mailto:away2557103310@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://yoursite.com/" title="http:&#x2F;&#x2F;yoursite.com" rel="noopener" target="_blank">Title</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2024-02 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AwayX</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.4' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch-lite.umd.js"></script>
+<script src="//cdn.jsdelivr.net/npm/instantsearch.js@4/dist/instantsearch.production.min.js"></script>
+<script src="/js/algolia-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+</body>
+</html>

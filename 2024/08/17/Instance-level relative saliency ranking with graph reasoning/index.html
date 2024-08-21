@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/infinite-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/infinite-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"awayx.online","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="TPAMI 2021  Abstract传统的显著物体检测模型无法区分不同显著物体的重要性。最近，已有两项工作提出通过为不同物体分配不同程度的显著性来检测显著性排序。然而，这些模型中的一个无法区分物体实例，而另一个则更多关注于顺序注意力转移的推断。本文探讨了一种实际问题设置，该设置要求同时对显著实例进行分割并推断其相对显著性排名。我们提出了一种新型的统一模型，作为第一个端到端的解决方案，其中改进">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Instance-level relative saliency ranking with graph reasoning">
+<meta property="og:url" content="http://awayx.online/2024/08/17/Instance-level%20relative%20saliency%20ranking%20with%20graph%20reasoning/index.html">
+<meta property="og:site_name" content="AwaySpace">
+<meta property="og:description" content="TPAMI 2021  Abstract传统的显著物体检测模型无法区分不同显著物体的重要性。最近，已有两项工作提出通过为不同物体分配不同程度的显著性来检测显著性排序。然而，这些模型中的一个无法区分物体实例，而另一个则更多关注于顺序注意力转移的推断。本文探讨了一种实际问题设置，该设置要求同时对显著实例进行分割并推断其相对显著性排名。我们提出了一种新型的统一模型，作为第一个端到端的解决方案，其中改进">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://vip.helloimg.com/i/2024/08/17/66c053ef6789e.png">
+<meta property="og:image" content="https://vip.helloimg.com/i/2024/08/17/66c058146d55f.png">
+<meta property="og:image" content="https://vip.helloimg.com/i/2024/08/17/66c05b785059b.png">
+<meta property="og:image" content="https://vip.helloimg.com/i/2024/08/17/66c05b69b4196.png">
+<meta property="og:image" content="https://vip.helloimg.com/i/2024/08/17/66c05b7263437.png">
+<meta property="article:published_time" content="2024-08-17T08:27:30.000Z">
+<meta property="article:modified_time" content="2024-08-18T12:51:55.358Z">
+<meta property="article:author" content="AwayX">
+<meta property="article:tag" content="论文笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://vip.helloimg.com/i/2024/08/17/66c053ef6789e.png">
+
+<link rel="canonical" href="http://awayx.online/2024/08/17/Instance-level%20relative%20saliency%20ranking%20with%20graph%20reasoning/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Instance-level relative saliency ranking with graph reasoning | AwaySpace</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">AwaySpace</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">5</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">42</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">32</span></a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container"></div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="algolia-results">
+  <div id="algolia-stats"></div>
+  <div id="algolia-hits"></div>
+  <div id="algolia-pagination" class="algolia-pagination"></div>
+</div>
+
+      
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://awayx.online/2024/08/17/Instance-level%20relative%20saliency%20ranking%20with%20graph%20reasoning/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/TheRightToCry.jpg">
+      <meta itemprop="name" content="AwayX">
+      <meta itemprop="description" content="嘿嘿">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AwaySpace">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Instance-level relative saliency ranking with graph reasoning
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-08-17 16:27:30" itemprop="dateCreated datePublished" datetime="2024-08-17T16:27:30+08:00">2024-08-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-08-18 20:51:55" itemprop="dateModified" datetime="2024-08-18T20:51:55+08:00">2024-08-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">论文笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/Computer-Vision/" itemprop="url" rel="index"><span itemprop="name">Computer Vision</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/Computer-Vision/Salient-Object-Ranking/" itemprop="url" rel="index"><span itemprop="name">Salient Object Ranking</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/Computer-Vision/Salient-Object-Ranking/image/" itemprop="url" rel="index"><span itemprop="name">image</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/Computer-Vision/Salient-Object-Ranking/image/2021/" itemprop="url" rel="index"><span itemprop="name">2021</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
+<p><strong>TPAMI 2021</strong></p>
+</blockquote>
+<h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>传统的显著物体检测模型无法区分不同显著物体的重要性。最近，已有两项工作提出通过为不同物体分配不同程度的显著性来检测显著性排序。然而，这些模型中的一个无法区分物体实例，而另一个则更多关注于顺序注意力转移的推断。本文探讨了一种实际问题设置，该设置要求同时对显著实例进行分割并推断其相对显著性排名。我们提出了一种<strong>新型的统一模型</strong>，作为第一个端到端的解决方案，其中改进的 <strong>Mask R-CNN 用于分割显著实例，随后添加了一个显著性排名分支来推断相对显著性</strong>。对于相对显著性排名，我们构建了一个<strong>新的图推理模块</strong>，通过结合四种图来分别融入实例交互关系、局部对比、全局对比和高层语义先验。此外，我们还提出了一种<strong>新颖的损失函数</strong>来有效训练显著性排名分支。除了这些，我们还为这一任务提出了一个<strong>新数据集和评价指标</strong>，旨在推动这一领域的研究。最后，实验结果表明，我们提出的模型比以前的方法更有效。我们还展示了其在自适应图像重定向中的实际应用示例。</p>
+<span id="more"></span>
+
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>显著物体检测（SOD）旨在检测视觉场景中吸引人们注意的物体。为此任务已经提出了各种模型。近年来，基于深度学习的模型，特别是[1]、[2]、[3]、[4]、[5]、[6]，取得了非常有前景的结果。SOD任务以绝对方式定义显著性，其中真实标签（GT）显著性图是二值的，即属于显著物体的像素标记为1，而背景像素标记为0。因此，之前的模型学习检测图像中的所有显著物体，但没有明确区分它们的不同显著性程度。</p>
+<img src="https://vip.helloimg.com/i/2024/08/17/66c053ef6789e.png" width="80%"/>
+
+<blockquote>
+<p>图 1. 不同显著性模型的比较。显著物体检测模型在每张图像中对所有显著物体进行均等突出，如列 (c) 所示。本文旨在检测实例级别的相对显著性排名，即为不同的显著物体分配不同的显著性值，以表示它们的显著性程度。 (a) 和 (b): 三张示例图像及其对应的 GT 显著性图。 (d): 在 [12] 中，作者预测了像素级的显著性排名，但并没有实际区分物体实例。 (e): 在 [13] 中，显著性排名是基于注意力转移推断的，仅考虑了少于五个物体。 (f): 我们的模型对于相对显著性排名展示了更准确和实际的结果。为了方便区分不同的排名顺序，我们还在每个显著实例上标注了排名顺序。</p>
+</blockquote>
+<p>然而，在视觉场景中，不同物体通常具有明显不同的显著性程度。作为人类，我们很容易判断一个物体是否比另一个物体更显著，这被称为相对显著性。与之前工作的绝对显著性建模相比，采用相对显著性更接近人类视觉注意机制，在这种机制中，多个刺激会导致视觉皮层神经元相互竞争[7]、[8]、[9]、[10]。一些例子如图1所示，其中列（b）显示了相对显著性图。请注意，掩模越浅，物体越显著。预测相对显著性也更为实际，因为它使我们能够清楚地区分哪个物体最显著，并了解物体之间的相对重要性，从而有利于更高层次的图像理解[11]。这可以推动视觉显著性研究领域的发展。尽管当前的绝对显著性模型在生成不同图像区域的显著性值方面能够预测相对显著性，但由于缺乏明确的学习，其结果不准确且不完整，如图1列（c）所示。</p>
+<p>作为开创性工作，Islam 等人[12] 提出了明确预测具有不同显著性值的相对显著性图，如图1列（d）所示。然后，他们根据每个GT实例掩模内的平均显著性值对每张图像中的显著物体进行排名。他们将此任务定义为相对显著性排序。我们认为他们的方法是<strong>像素级的相对显著性解决方案</strong>，而不是物体级的，因为它预测的是像素级显著性，并且没有区分物体实例。他们<strong>不得不使用GT实例分割图来获得物体级的相对显著性排名结果，这在实际使用中是不切实际的</strong>。在[13]中，Siris 等人提出通过推断人类注意力转移来预测显著性排序，这描述了人类如何顺序地选择并将注意力从一个物体转移到另一个物体。然而，<strong>一个物体的显著性主要取决于凝视的持续时间，而不是物体关注的顺序</strong>。因此，注意力转移与相对显著性大相径庭，更接近扫描路径预测任务[14]。因此，这种方法的显著性排名机制和应用有所不同，如图1列（e）所示。</p>
+<p>在本文中，我们沿用[12]的方法推断相对显著物体排名。这个问题的挑战主要体现在两个方面。首先，如何建模整个问题。[12] 将其建模为像素级回归问题，并使用像素级欧几里得回归损失训练深度网络。这种方式对于分割和排名结果都不尽如人意，因为像素级训练无法保证实例结构，而回归方案无法获得准确的排名顺序。相比之下，我们沿用[13]的方法，采用<strong>两阶段方案，首先分割显著实例，然后对其进行排名</strong>。具体而言，我们改进了最先进的实例分割模型 Mask R-CNN [15] 用于显著实例分割。随后，我们添加了一个显著性排名分支来排名每个分割实例的相对显著性。这一方案保证了分割结果，并专注于显著性排名问题。[13] 使用实例分类作为显著性排名问题的替代方案来训练其模型，这种方法是不理想的，因为它不能直接优化原始的显著性排名问题。此外，这样做需要固定的实例数量，这在实际应用中不够灵活。因此，我们提出了直接优化显著性排名顺序的改进排名损失[16]，该损失函数分别提高和抑制高度排名和低排名实例的分数，从而比[12]、[13]中使用的传统损失更适合且有效用于这一新任务。</p>
+<p>第二个挑战是如何有效地推断相对显著性。[12] 直接使用卷积-解卷积网络回归相对显著性，而未利用任何显式的显著性线索。[13] 考虑了物体-场景关系注意力和物体的空间属性。然而，他们的模型忽略了更重要的显著性线索。在本研究中，受到[7]、[8]、[9]中的生物学证据启发，我们将<strong>不同实例之间的刺激互动和竞争关系</strong>（stimuli interaction and competition relation）视为推断相对显著性的最重要线索。然而，这在传统CNN中无法显式建模。因此，我们构建了一个<strong>图推理模型</strong>来实现这一目标，使用图神经网络（GNNs）[17]，这些是建模关系和在节点之间传播上下文信息的强大工具，因此非常适合我们的任务。此外，考虑到区域的显著性与其<strong>局部对比度、全局对比度</strong>[18]、[19]和<strong>高层语义先验</strong>（high-level semantic priors）[18]高度相关，我们建议构建<strong>另外三个图</strong>来建模这些显著性因素。一方面，这样做构建了一个统一的基于GNN的显著性排名模型。另一方面，使用GNN进行对比推断是合理且直接的。不同于之前的工作[18]、[19]，它们通过拼接和全连接（FC）层组合中心特征和上下文特征，我们<strong>将中心实例和上下文视为图节点，并使用GNN挖掘它们之间的对比关系</strong>，这是一种既新颖又更强大的方式。</p>
+<p>此外，现有的数据集和评价指标对于这一新问题设置和实际应用也不尽如人意。[12]中使用的PASCAL-S数据集[20] <strong>图像规模较小</strong>。COCO-SalRank数据集[21] 使用<strong>复杂的人为设计规则来确定显著实例，但无法保证注释的准确性</strong>。[13]中提出的数据集<strong>主要关注注意力转移，并为每张图像中的固定数量物体生成注释，而不是区分显著物体和非显著物体</strong>，因此不适合相对显著性排名任务和实际应用。为此，我们构建了一个<strong>新的相对显著性排名数据集，具有大规模图像和人工注释的显著物体</strong>。至于评价指标，[12]、[13]、[21]中使用的显著物体排名（SOR）指标主要关注排名性能，完全或部分忽略了显著物体检测和分割性能。因此，我们<strong>提出了一种改进的SOR指标</strong>，全面涵盖三种性能的评估。我们提出的数据集和评价指标更适合这一新任务，并能大大推动未来的研究。</p>
+<p>最后，实验结果表明，本研究中考虑的显著性因素比之前的工作更为合适，我们提出的图模型和损失函数在相对显著性排名推断中也更为有效。因此，我们的整体模型在与以往方法的比较中表现出色，无论是在我们自己的数据集还是现有的数据集上。我们还展示了我们提出的模型在自适应图像重定向问题上的成功应用，以证明其实际使用效果。</p>
+<p>总结起来，本工作的贡献如下：</p>
+<ul>
+<li>我们通过在显著实例分割模型中增加一个显著性排名推断分支，提出了第一个端到端的相对显著物体排名解决方案。</li>
+<li>我们提出了一种新颖的图神经推理模块，旨在同时融入刺激互动和竞争关系、局部对比度、全局对比度以及高层语义先验，用于显著性排名推断。同时引入了一种新的排名损失函数来训练该模块。</li>
+<li>与之前的显著性排名数据集相比，我们构建了一个新的大规模数据集，具有人工标注的显著物体，从而提供了更准确的训练和测试数据。</li>
+<li>考虑到以往评价指标的局限性，我们提出了一种新的评价指标，全面考虑了显著实例检测、分割和排名性能。</li>
+<li>实验结果验证了我们提出的显著性线索和模型的有效性。我们还展示了我们的模型在所有现有数据集上的优越性能，并演示了其在自适应图像重定向任务中的应用。</li>
+</ul>
+<h2 id="RELATED-WORK"><a href="#RELATED-WORK" class="headerlink" title="RELATED WORK"></a>RELATED WORK</h2><h3 id="Salient-Object-Detection"><a href="#Salient-Object-Detection" class="headerlink" title="Salient Object Detection"></a>Salient Object Detection</h3><h3 id="Eye-Fixation-Prediction"><a href="#Eye-Fixation-Prediction" class="headerlink" title="Eye Fixation Prediction"></a>Eye Fixation Prediction</h3><h3 id="Salient-Instance-Segmentation"><a href="#Salient-Instance-Segmentation" class="headerlink" title="Salient Instance Segmentation"></a>Salient Instance Segmentation</h3><h3 id="Graph-Neural-Network"><a href="#Graph-Neural-Network" class="headerlink" title="Graph Neural Network"></a>Graph Neural Network</h3><h2 id="PROPOSED-DATASET"><a href="#PROPOSED-DATASET" class="headerlink" title="PROPOSED DATASET"></a>PROPOSED DATASET</h2><img src="https://vip.helloimg.com/i/2024/08/17/66c058146d55f.png" />
+
+<blockquote>
+<p>图 2. 以往显著性排名数据集的局限性。我们展示了 PASCAL-S 数据集 [20] 在前四列中的局限性，以及 Siris 的数据集 [13] 在最后四列中的局限性。第二行和第三行分别表示它们的显著性排名注释和眼动注视显著性图。</p>
+</blockquote>
+<p>在[12]中，Islam 等人对 PASCAL-S [20] 数据集进行了相对显著性排名检测的模型训练和评估。然而，由于几个原因，<strong>这个数据集并不是理想的选择</strong>。首先，它仅包含 850 张图片，其中 40.4% 的图片中只有一个显著性排名，如图 2(a) 所示。这些图片不能用于训练和评估显著性排名模型，而剩下的图片数量又太少，无法用于训练深度模型。其次，这个数据集中许多图片存在两个问题。第一个是同一图片中的多个实例被标注为相同的排名，如图 2(b) 所示。另一个是一些实例被过度分割为多个具有不同排名值的区域，例如图 2(c) 中的狗。这两种情况都不适合实例级显著性排名检测任务。第三，数据集中一些标注的显著物体实际上属于“物体”类别，这些类别是相似纹理或材质的无定形区域，如图 2(d) 中的树木、山脉和被子。这些类别通常是不可计数的，因此很难为它们定义“实例”。</p>
+<p>为了解决这些问题，[21] 和 [13] 中的作者分别利用现有的 MS-COCO [66] 数据集和 SALICON [67] 数据集构建了新的显著性排名基准数据集。前者拥有超过 10 万张图片和 80 类的像素级实例掩码标注。后者包含 10,000 张训练图片和 5,000 张验证图片，所有图片均从 MS-COCO 中抽样，且具有通过鼠标跟踪获得的注视数据。因此，直观上，应该很容易使用 SALICON 的注视数据来对 MS-COCO 的对象实例进行排名。然而，<strong>结合这两个数据集并非易事</strong>，因为存在几个挑战。首先，<strong>由于 MS-COCO 仅有 80 类标注的对象实例，因此有些图片中的对象实例虽然有足够的注视数据，但没有掩码标注</strong>。第二个挑战是<strong>许多 COCO 图片中有数十个标注实例</strong>，而我们不能使用所有实例进行显著性排名。这是因为显著性感知非常主观，甚至对于人类来说，也很难毫无疑问地对许多物体的显著性进行排名，特别是对于显著性较低的物体。因此，<strong>需要从复杂的背景中选择一些显著实例，而忽略非显著实例</strong>。第三个挑战是 <strong>MS-COCO 中存在多个标注错误，例如过度分割或欠分割的图片</strong>。这些挑战都阻碍了这两个数据集的直接使用。</p>
+<p>考虑到上述问题，在[21]中，Kalash 等人使用了复杂的手工设计规则并配备可调参数来筛选不合适的图片和选择显著物体实例以构建数据集。通过使用宽松和严格的参数，他们分别构建了一个噪声数据集和一个干净数据集。尽管他们仔细调整了参数并在小规模数据上进行了验证，但他们的<strong>手工设计规则不能适用于所有场景</strong>，特别是在复杂的视觉场景中。在[13]中，Siris 等人简单地筛除了没有对象标注的图片，以及那些包含完全被较大物体包围的小物体的图片。这种<strong>简单的预处理引入了显著的噪声</strong>，尤其是因为他们未能筛除包含在 80 类 MS-COCO 类别之外的显著物体的图片，如图 2(e) 中的建筑物。此外，<strong>他们根据注意力转移生成了显著性排名注释，这使得他们的数据集非常接近扫描路径预测任务（scanpath prediction task），而不是相对显著性排名任务</strong>。例如，他们将图 2(f) 中的船排名为最显著的，因为它位于图片的中心，人们通常首先查看的地方，尽管根据第三行展示的眼动研究，人物比船显著得多。最后，与[21]和我们的数据集不同，他们<strong>没有在每张图片中定义显著物体和非显著物体</strong>。他们的数据集只是排名前五的最显著实例，因此包括一些非显著物体（如图 2(g) 所示）或忽略了一些显著物体（如图 2(h) 所示）。因此，它在定义显著物体时不仅不够合理，而且在实际使用中也不够灵活。</p>
+<p>在本文中，我们构建了一个<strong>更准确标注的相对显著实例排名任务数据集</strong>。我们首先从 MS-COCO 数据集中找到 15,000 张 SALICON 图片，并提取其实例分割掩码。然后，我们将每张图片及其实例注释展示给不同的受试者，并要求他们挑选合适的图片和选择显著物体。受试者包括<strong>五名</strong>年龄在 20 到 30 岁的研究生，其中四名男性和一名女性。图片和显著物体选择的规则如下：i) 对于每张展示的图片，每个受试者选择他&#x2F;她认为显著的物体。ii) 如果图片中有在 MS-COCO 实例注释中未显示的显著物体，则应标记为不合适。iii) 如果图片中存在明显的分割错误，例如有过度分割或欠分割的实例，则应标记为不合适。iv) 如果图片中的显著实例超过八个或少于两个，或者没有明显的显著物体，则应标记为不合适。我们将显著实例的最大数量限制为八个，遵循 PASCAL-S 数据集的标准，<strong>该数据集中每张图片最多有七个显著性排名</strong>，并考虑到 MS-COCO 图片中物体数量相对较多。<strong>经过人工选择和标注，我们筛除了被三名以上受试者标记为不合适的图片</strong>。类似地，对于剩余的图片，我们将<strong>被三名以上受试者标记为显著物体的对象标记为显著物体</strong>。然后，对于每张图片中的显著性排名，我们遵循[21]，<strong>利用 SALICON 数据集提供的显著性图，而不是注视点</strong>。然而，我们不是使用每个实例中的平均显著性值，而是<strong>根据每个实例掩码中的最大显著性值对标记的显著物体进行排名</strong>，因为物体的显著性程度主要取决于其独特的部分。</p>
+<p>最终，我们获得了总共 8,988 张图片，其中 6,059 张用于训练，2,929 张用于测试，按照 SALICON 的训练和验证拆分进行划分。与 PASCAL-S 数据集类似，我们将实例分割和相对显著性排名可视化为显著性图。然而，与 PASCAL-S 不同的是，对于每张图片，我们通过<strong>均匀地将</strong> [0,255] <strong>划分为其显著性排名顺序</strong>来分配不同显著实例掩码中的显著性值。图 3 显示了我们提出的数据集中三张示例图片，包括标注的显著实例、SALICON 显著性图和生成的显著性排名图。</p>
+<img src="https://vip.helloimg.com/i/2024/08/17/66c05b785059b.png" width="70%"/>
+
+<blockquote>
+<p>图 3. 我们提出的数据集示例。对于每张图像，我们展示了标注的显著实例和来自 SALICON [67] 数据集的显著性图。基于这两种注释，我们生成了相对显著性排名图，如最后一列所示。</p>
+</blockquote>
+<p><strong>统计分析</strong>：表 1 显示了我们提出的数据集、PASCAL-S [20] 和 Siris 的数据集 [13] 之间的统计比较。如表中所示，我们的数据集具有大规模的图像数据，类似于 Siris 的数据集。PASCAL-S 中有许多图片只有一个显著实例，这些图片不能用于显著性排名。Siris 的数据集中最多有五个显著实例，其中恰好有五个实例的图片占比高达 63.6%，因此偏离了实际应用场景。相比之下，我们的数据集更加平衡。许多图片有两个或三个显著实例，超过 30% 的图片有四个或更多。值得注意的是，我们发现约 9% 的图片根据人工注释有超过五个显著实例。因此，相较于现有的两个数据集 [13]、[21]，我们的数据集<strong>需要考虑更大的显著实例数量限制</strong>，这一发现也展示了我们数据集的难度。</p>
+<img src="https://vip.helloimg.com/i/2024/08/17/66c05b69b4196.png" />
+
+<blockquote>
+<p>表1. 三种显著性排名数据集的统计比较。我们提供了关于总图像数量和不同显著实例数量分布的比较。</p>
+</blockquote>
+<p>考虑到显著性程度也受到物体类别信息的很大影响，例如，在 [18]、[40]、[41] 中发现人脸、文本、汽车和人比其他物体更显著，我们还调查了我们提出的数据集中<strong>不同物体类别的平均显著性程度</strong>。具体来说，对于每个排名 $i$，其中 $i\in {1,2,\dots,8}$ 表示降序排名，我们统计每个 COCO 类别 $j$ 的比例为 $p_{i,j}$。然后，我们为排名 $i$ 赋一个相反的分数 $9 − i$，从而为较高的排名赋予较大的分数。最后，类别 $j$ 的平均显著性分数可以计算为： $S_j &#x3D; \sum_{i&#x3D;1}^{8} (9 - i)p_{i,j}$。 我们在图 4 中提供了 80 个 COCO 类别的平均显著性分数的可视化比较。如图所示，“人”类别是最显著的，其分数远高于其他类别。这一观察结果也与 [18]、[40]、[41] 中的发现相符。</p>
+<img src="https://vip.helloimg.com/i/2024/08/17/66c05b7263437.png" />
+
+<blockquote>
+<p>图 4. 在我们提出的数据集中，80 个 COCO 类别的平均显著性得分比较。为了更好的可视化，我们绘制了每个类别 j 的 log(1 + Sj) 直方图。</p>
+</blockquote>
+<h2 id="PROPOSED-MODEL"><a href="#PROPOSED-MODEL" class="headerlink" title="PROPOSED MODEL"></a>PROPOSED MODEL</h2><h3 id="Mask-R-CNN-for-Salient-Instance-Segmentation"><a href="#Mask-R-CNN-for-Salient-Instance-Segmentation" class="headerlink" title="Mask R-CNN for Salient Instance Segmentation"></a>Mask R-CNN for Salient Instance Segmentation</h3><h3 id="Saliency-Ranking-Branch"><a href="#Saliency-Ranking-Branch" class="headerlink" title="Saliency Ranking Branch"></a>Saliency Ranking Branch</h3><h4 id="Interaction-Relation-Graph"><a href="#Interaction-Relation-Graph" class="headerlink" title="Interaction Relation Graph"></a>Interaction Relation Graph</h4><h4 id="Local-Contrast-Graph"><a href="#Local-Contrast-Graph" class="headerlink" title="Local Contrast Graph"></a>Local Contrast Graph</h4><h4 id="Global-Contrast-Graph"><a href="#Global-Contrast-Graph" class="headerlink" title="Global Contrast Graph"></a>Global Contrast Graph</h4><h4 id="Incorporating-Person-Prior"><a href="#Incorporating-Person-Prior" class="headerlink" title="Incorporating Person Prior"></a>Incorporating Person Prior</h4><h4 id="Graph-Updating-and-Saliency-Ranking-Inference"><a href="#Graph-Updating-and-Saliency-Ranking-Inference" class="headerlink" title="Graph Updating and Saliency Ranking Inference"></a>Graph Updating and Saliency Ranking Inference</h4><h3 id="Loss-Function"><a href="#Loss-Function" class="headerlink" title="Loss Function"></a>Loss Function</h3><h2 id="EXPERIMENTS"><a href="#EXPERIMENTS" class="headerlink" title="EXPERIMENTS"></a>EXPERIMENTS</h2><h3 id="Implementation-Details"><a href="#Implementation-Details" class="headerlink" title="Implementation Details"></a>Implementation Details</h3><h3 id="Evaluation-Metric"><a href="#Evaluation-Metric" class="headerlink" title="Evaluation Metric"></a>Evaluation Metric</h3><h3 id="Ablation-Study"><a href="#Ablation-Study" class="headerlink" title="Ablation Study"></a>Ablation Study</h3><h4 id="Effectiveness-on-the-Proposed-Graph-Models"><a href="#Effectiveness-on-the-Proposed-Graph-Models" class="headerlink" title="Effectiveness on the Proposed Graph Models"></a>Effectiveness on the Proposed Graph Models</h4><h4 id="Influence-of-the-Subgraph-Number"><a href="#Influence-of-the-Subgraph-Number" class="headerlink" title="Influence of the Subgraph Number"></a>Influence of the Subgraph Number</h4><h4 id="Influence-of-the-Number-of-Global-Context-Nodes"><a href="#Influence-of-the-Number-of-Global-Context-Nodes" class="headerlink" title="Influence of the Number of Global Context Nodes"></a>Influence of the Number of Global Context Nodes</h4><h4 id="Effectiveness-on-the-Proposed-Ranking-Loss"><a href="#Effectiveness-on-the-Proposed-Ranking-Loss" class="headerlink" title="Effectiveness on the Proposed Ranking Loss"></a>Effectiveness on the Proposed Ranking Loss</h4><h3 id="Comparison-with-State-of-the-Art-Methods"><a href="#Comparison-with-State-of-the-Art-Methods" class="headerlink" title="Comparison with State-of-the-Art Methods"></a>Comparison with State-of-the-Art Methods</h3><h4 id="Comparison-with-Saliency-Ranking-Methods"><a href="#Comparison-with-Saliency-Ranking-Methods" class="headerlink" title="Comparison with Saliency Ranking Methods"></a>Comparison with Saliency Ranking Methods</h4><h4 id="Comparison-with-Salient-Object-Detection-and-Eye-Fixation-Prediction-Methods"><a href="#Comparison-with-Salient-Object-Detection-and-Eye-Fixation-Prediction-Methods" class="headerlink" title="Comparison with Salient Object Detection and Eye Fixation Prediction Methods"></a>Comparison with Salient Object Detection and Eye Fixation Prediction Methods</h4><h3 id="Analysis-and-Discussion"><a href="#Analysis-and-Discussion" class="headerlink" title="Analysis and Discussion"></a>Analysis and Discussion</h3><h3 id="Application-Adaptive-Image-Retargeting"><a href="#Application-Adaptive-Image-Retargeting" class="headerlink" title="Application: Adaptive Image Retargeting"></a>Application: Adaptive Image Retargeting</h3><h2 id="CONCLUSION"><a href="#CONCLUSION" class="headerlink" title="CONCLUSION"></a>CONCLUSION</h2><p>尽管实例级相对显著性排名检测具有实际应用价值，但这一任务尚未得到充分研究。本文首次提出了这一任务的端到端解决方案。具体而言，我们首先改进了 Mask R-CNN 并用于显著实例分割。随后，加入了一个基于图神经网络的分支用于显著性排名推断。我们研究了模型有效性的几个方面，并识别了一些重要的考虑因素，如不同的显著性线索、模型设计和损失函数。为了更好地训练和评估模型，我们还提出了一个新的数据集和评估指标，以推动未来的研究。最终的实验结果展示了我们提出模型的有效性，包括其实际应用的一个示例。我们还分析了模型的局限性和可能的未来工作方向。</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.jpg" alt="AwayX 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>AwayX
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://awayx.online/2024/08/17/Instance-level%20relative%20saliency%20ranking%20with%20graph%20reasoning/" title="Instance-level relative saliency ranking with graph reasoning">http://awayx.online/2024/08/17/Instance-level relative saliency ranking with graph reasoning/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" rel="tag"><i class="fa fa-tag"></i> 论文笔记</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/08/17/Salient%20object%20ranking%20with%20position-preserved%20attention/" rel="prev" title="Salient object ranking with position-preserved attention">
+      <i class="fa fa-chevron-left"></i> Salient object ranking with position-preserved attention
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/08/17/Bidirectional%20object-context%20prioritization%20learning%20for%20saliency%20ranking/" rel="next" title="Bidirectional object-context prioritization learning for saliency ranking">
+      Bidirectional object-context prioritization learning for saliency ranking <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC81OTUwMS8zNTk2Mw=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Abstract"><span class="nav-number">1.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-number">2.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RELATED-WORK"><span class="nav-number">3.</span> <span class="nav-text">RELATED WORK</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PROPOSED-DATASET"><span class="nav-number">4.</span> <span class="nav-text">PROPOSED DATASET</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PROPOSED-MODEL"><span class="nav-number">5.</span> <span class="nav-text">PROPOSED MODEL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#EXPERIMENTS"><span class="nav-number">6.</span> <span class="nav-text">EXPERIMENTS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CONCLUSION"><span class="nav-number">7.</span> <span class="nav-text">CONCLUSION</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="AwayX"
+      src="/images/TheRightToCry.jpg">
+  <p class="site-author-name" itemprop="name">AwayX</p>
+  <div class="site-description" itemprop="description">嘿嘿</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/awaygithub" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;awaygithub" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:away2557103310@outlook.com" title="E-Mail → mailto:away2557103310@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://yoursite.com/" title="http:&#x2F;&#x2F;yoursite.com" rel="noopener" target="_blank">Title</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2024-02 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AwayX</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.4' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch-lite.umd.js"></script>
+<script src="//cdn.jsdelivr.net/npm/instantsearch.js@4/dist/instantsearch.production.min.js"></script>
+<script src="/js/algolia-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+</body>
+</html>

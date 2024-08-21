@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/infinite-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/infinite-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"awayx.online","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="ACMMM 2019  Abstract近年来，视频显著目标检测引起了越来越多的研究兴趣。然而，视频中显著目标的定义一直存在争议，这成为视频显著目标检测的关键瓶颈。具体来说，视频中包含的序列信息导致目标之间具有相对显著性排序，而不是特定的显著性。这意味着简单地将目标区分为显著或非显著，无法全面地表示显著性信息。为了解决这个问题，本文提出了一个全新的视频显著目标定义——显著目标排序，它结合了相对显">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ranking Video Salient Object Detection">
+<meta property="og:url" content="http://awayx.online/2024/08/18/Ranking%20Video%20Salient%20Object%20Detection/index.html">
+<meta property="og:site_name" content="AwaySpace">
+<meta property="og:description" content="ACMMM 2019  Abstract近年来，视频显著目标检测引起了越来越多的研究兴趣。然而，视频中显著目标的定义一直存在争议，这成为视频显著目标检测的关键瓶颈。具体来说，视频中包含的序列信息导致目标之间具有相对显著性排序，而不是特定的显著性。这意味着简单地将目标区分为显著或非显著，无法全面地表示显著性信息。为了解决这个问题，本文提出了一个全新的视频显著目标定义——显著目标排序，它结合了相对显">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://vip.helloimg.com/i/2024/08/18/66c1ec9579f4c.png">
+<meta property="og:image" content="https://vip.helloimg.com/i/2024/08/18/66c1ec914592d.png">
+<meta property="og:image" content="https://vip.helloimg.com/i/2024/08/18/66c1ec9f31fb9.png">
+<meta property="og:image" content="https://vip.helloimg.com/i/2024/08/18/66c1ec9a86d82.png">
+<meta property="article:published_time" content="2024-08-18T12:48:27.000Z">
+<meta property="article:modified_time" content="2024-08-18T12:55:01.861Z">
+<meta property="article:author" content="AwayX">
+<meta property="article:tag" content="论文笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://vip.helloimg.com/i/2024/08/18/66c1ec9579f4c.png">
+
+<link rel="canonical" href="http://awayx.online/2024/08/18/Ranking%20Video%20Salient%20Object%20Detection/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Ranking Video Salient Object Detection | AwaySpace</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">AwaySpace</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">5</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">42</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">32</span></a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container"></div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="algolia-results">
+  <div id="algolia-stats"></div>
+  <div id="algolia-hits"></div>
+  <div id="algolia-pagination" class="algolia-pagination"></div>
+</div>
+
+      
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://awayx.online/2024/08/18/Ranking%20Video%20Salient%20Object%20Detection/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/TheRightToCry.jpg">
+      <meta itemprop="name" content="AwayX">
+      <meta itemprop="description" content="嘿嘿">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AwaySpace">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Ranking Video Salient Object Detection
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-08-18 20:48:27 / 修改时间：20:55:01" itemprop="dateCreated datePublished" datetime="2024-08-18T20:48:27+08:00">2024-08-18</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">论文笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/Computer-Vision/" itemprop="url" rel="index"><span itemprop="name">Computer Vision</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/Computer-Vision/Salient-Object-Ranking/" itemprop="url" rel="index"><span itemprop="name">Salient Object Ranking</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/Computer-Vision/Salient-Object-Ranking/video/" itemprop="url" rel="index"><span itemprop="name">video</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/Computer-Vision/Salient-Object-Ranking/video/2019/" itemprop="url" rel="index"><span itemprop="name">2019</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
+<p><strong>ACMMM 2019</strong></p>
+</blockquote>
+<h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>近年来，视频显著目标检测引起了越来越多的研究兴趣。然而，视频中显著目标的定义一直存在争议，这成为视频显著目标检测的关键瓶颈。具体来说，视频中包含的序列信息导致目标之间具有相对显著性排序，而不是特定的显著性。这意味着简单地将目标区分为显著或非显著，无法全面地表示显著性信息。为了解决这个问题，本文提出了一个全新的视频显著目标定义——显著目标排序，它结合了相对显著性排序和眼动追踪点。基于这一定义，<strong>构建了一个排序视频显著目标数据集（RVSOD）</strong>。利用我们的RVSOD，<strong>构建了一个名为合成视频显著性网络（SVSNet）的新型神经网络，用于检测视频中的传统显著目标和人眼运动</strong>。最后，<strong>排序显著性模块（RSM）将SVSNet的结果作为输入，以生成显著性排序图</strong>。我们希望我们的方法能作为基准，并在视频显著性研究领域引领一种全新的概念性研究。</p>
+<span id="more"></span>
+
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>视频显著目标检测在多媒体应用中占据着越来越重要的地位。许多视频捕捉设备，如监控器、摄像机等，能够获取大量的视频数据，因此从视频中提取显著目标是非常必要的。然而，视频中显著目标的定义存在争议，这已成为视频显著目标检测的关键瓶颈。一些研究使用视频目标分割或运动跟踪数据集作为标准，将单一前景目标或移动目标直接视为视频中的显著目标，这种做法显得模糊不清[11, 39]。而其他研究则提出了不同的解决方案，旨在重新组织各种辨别性显著性线索。[9, 18] 提出<strong>利用眼动追踪来检测视频中的显著目标</strong>，这与显著目标检测的任务定义一致，能够真正检测出感兴趣的目标，而不仅仅是移动目标或特定类别的目标。</p>
+<p>然而，上述研究仅将目标区分为显著或非显著，这不足以充分反映视频中的显著性信息。原因如下：首先，真实世界的视频通常包含不止一个显著目标，而这些目标总是吸引不同程度的注意力。其次，<strong>与图像相比，视频包含更丰富的上下文信息，这带来了更多的显著性规律，例如首次出现的人物通常会获得更多的关注</strong>。换句话说，<strong>随着时间的推移，同一目标在视频中的关注度会有所不同</strong>。</p>
+<p>因此，本文引入了显著性相对排序的概念，以重新审视这一问题。我们首次提出了视频中的排序显著目标检测，这一方法结合了排序、眼动追踪和显著目标，以全面反映显著性规律。具体而言，我们通过<strong>计算每一帧中落在每个目标上的眼动追踪点的数量比例，来衡量目标之间的相对显著性排序</strong>。眼动追踪点越多，显著性程度越高。从概念上讲，同一目标在视频不同帧中的显著性排序将根据上下文信息而变化，而不是始终保持不变，这能够更全面和科学地反映视频中的显著性信息，其结果也将具有更大的实际应用价值。基于此定义，我们构建了一个<strong>排序视频显著目标数据集</strong>（<strong>RVSOD</strong>）。在该数据集中，不同的灰度值用于反映目标的不同显著性等级，从而为我们的新定义提供了标准。随后，我们设计了一种名为<strong>合成视频显著性网络</strong>（<strong>SVSNet</strong>）的新型神经网络，用于基于我们的数据集同时检测传统的显著目标和眼动追踪点。最后，将SVSNet的结果输入一个名为<strong>排序显著性模块</strong>（<strong>RSM</strong>）的算法，以生成相应的显著性排序图。我们期望，本文中引入的新概念将使我们的研究成为视频显著性研究的基准。</p>
+<p>总之，我们的贡献有以下四个方面：<br>∙ 一个全新的视频显著目标定义——视频排序显著目标，该定义考虑了相对显著性，并结合了眼动追踪点。<br>∙ 一个创新的数据集——排序视频显著目标数据集（RVSOD），通过不同的灰度值反映目标的不同显著性等级。<br>∙ 一种新型的神经网络——合成视频显著性网络（SVSNet），能够同时检测视频中的传统显著目标和眼动追踪点。<br>∙ 一个名为排序显著性模块（RSM）的算法，用于处理SVSNet的结果，并生成带有排序的显著目标图。</p>
+<h2 id="RELATED-WORK"><a href="#RELATED-WORK" class="headerlink" title="RELATED WORK"></a>RELATED WORK</h2><h3 id="Video-Salient-Object-Detection"><a href="#Video-Salient-Object-Detection" class="headerlink" title="Video Salient Object Detection"></a>Video Salient Object Detection</h3><p>随着图像显著目标检测技术的成熟发展，研究人员开始将关注点转向视频显著目标检测。例如，[29] 提出了一种基于梯度流场和能量优化的新型时空显著性检测方法，用于估计视频中的显著区域。[39] 采用<strong>局部估计和时空优化</strong>方法来检测具有复杂运动和场景的视频中的显著目标。[12] 则提出了一种基于视频的显著目标检测方法，通过充分挖掘视频内容中的<strong>时空差异和一致性</strong>来实现。然而，这些方法都使用<strong>视频目标分割或运动跟踪数据集</strong>作为标准，直接将单一前景目标或移动目标视为视频中的显著目标。这种视频中显著目标的定义后来受到质疑。[9] 认为运动可能不是确定视频中目标重要性的良好指标，并探讨了<strong>利用眼动追踪来提取场景中多个有趣目标</strong>的可行性。[4] 则通过<strong>使用目标提议</strong>来进行视频显著性检测。针对现有视频显著目标检测训练数据的质疑也在一些研究中出现。[27, 34]。其中，[27] 提出了一种新颖的数据增强技术，通过现有标注图像数据集模拟视频训练数据。利用他们的合成视频数据和真实视频，他们提出了一种全卷积网络来检测视频中的显著目标。与此同时，[34] 提供了一个新开发的视频视觉显著性真值数据集。</p>
+<p>然而，在本文中，我们认为视频中显著目标的定义仍不完善。这些研究<strong>仅将目标区分为显著和非显著，无法充分反映它们的显著性信息</strong>。因此，视频显著目标的定义仍需进一步优化。</p>
+<h3 id="Fixation-Prediction"><a href="#Fixation-Prediction" class="headerlink" title="Fixation Prediction"></a>Fixation Prediction</h3><p>注视点预测不同于显著目标检测，它仅识别出人在观看视频时注意到的注视点。早期的显著性模型[15, 6, 8] 基于对比假设，通过在多个空间尺度上计算颜色、边缘和方向等多种视觉特征来生成显著图。后来，基于深度学习的显著性模型[20, 16, 26, 10, 1]，凭借端到端的学习能力，取得了很大的进展。其中一些模型[1, 10] 是双流网络（two-stream networks），而另一些模型[26] 则使用LSTM来提取上下文信息，这些方法都表现出了更好的性能。</p>
+<h3 id="Ranking-Salient-Object-Detection"><a href="#Ranking-Salient-Object-Detection" class="headerlink" title="Ranking Salient Object Detection"></a>Ranking Salient Object Detection</h3><p>这并不是首次提出在显著目标检测中引入排序的必要性。[7] 表明一些物体比其他物体更容易被判断为显著，并提出了一种考虑相对排序的解决方案。然而，我们与其研究存在三个明显的区别：1) 研究目标不同：前者基于图像，而我们的工作基于视频。2) 排序的测量方式不同：前人的研究真值是由十二位观察者在观察目标分割数据集后手动标注的，而我们的真值则是从现有的眼动追踪数据集中计算得出的，不存在任何先验偏差。这种方法更科学，更符合人类视觉系统的规律。3) 排序的表示方式不同：前人的研究提出生成一组对应不同显著性等级的叠加真值图，而我们则通过不同的灰度值来表示排序，这与落在每个目标上的眼动追踪点数量比例相对应。通过这种方式，目标之间的相对显著性关系可以得到更充分的反映。</p>
+<h2 id="RANKING-VIDEO-SALIENT-OBJECT-DATASET"><a href="#RANKING-VIDEO-SALIENT-OBJECT-DATASET" class="headerlink" title="RANKING VIDEO SALIENT OBJECT DATASET"></a>RANKING VIDEO SALIENT OBJECT DATASET</h2><h3 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h3><img src="https://vip.helloimg.com/i/2024/08/18/66c1ec9579f4c.png" width="60%" />
+
+<blockquote>
+<p><strong>Table 1</strong>: 目前用于视频显著目标检测的数据集统计信息</p>
+</blockquote>
+<p>目前用于视频显著目标检测的数据集包括FBMS [2]、DAVIS [17] 和 SegTrack V2 [13]。在表1中，我们列出了它们的统计信息。从中可以观察到以下三个问题：</p>
+<p>∙ <strong>数量不足</strong>：这些数据集的规模不够大，而且帧之间存在高度的相关性，无法满足深度模型训练的要求。<br>∙ <strong>不适当的真值</strong>：上述数据集主要用于视频分割，而不是显著目标检测。这些数据集的真值并非专门为显著目标设计，因此网络无法从这些数据集中学习到真正的显著性信息。更具体地说，SegTrack V2 主要用于视频运动分割。然而，目标的运动属性不能被视为判断这些目标是否显著的正确指标。换句话说，视频中的移动目标不一定显著，反之亦然。<br>∙ <strong>显著性信息不完整</strong>：迄今为止，视频显著性检测研究仅将目标区分为显著和非显著。即使在包含多个目标的场景中，这些数据集中的目标显著值都被设为1，没有任何区别。但实际上，由于视频帧中的上下文信息以及目标的大小、颜色和类型，这些目标具有不同程度的显著性。例如，新出现的人物通常会吸引更多注意力；在同时存在人和物的场景中，人往往更为显著。这些客观规律在以往的显著目标研究和数据集中尚未得到反映。</p>
+<p>因此，提出一个专门针对显著目标检测的大规模视频显著目标数据集，并能反映目标之间显著性差异，是非常必要的。</p>
+<h3 id="RVSOD"><a href="#RVSOD" class="headerlink" title="RVSOD"></a>RVSOD</h3><img src="https://vip.helloimg.com/i/2024/08/18/66c1ec914592d.png" width="60%" />
+
+<blockquote>
+<p><strong>Table 2</strong>: 典型动态眼动追踪数据集的统计信息</p>
+</blockquote>
+<p>在本文中，我们建立了一个<strong>排序显著目标数据集</strong>，称为<strong>RVSOD</strong>（Ranking Video Salient Object Dataset），该数据集基于现有的眼动追踪数据集：UCF sports [21] 和 HOLLYWOOD2 [21] 进行标注。在表2中，我们列出了它们的统计信息。在RVSOD中，<strong>眼动追踪点的数量用于确定每个目标的显著程度，并根据显著程度的高低为这些目标分配不同的灰度值</strong>。眼动追踪点越多，我们认为该目标越显著，其灰度值越接近1。<strong>该数据集包含了300多个精心挑选的视频序列。我们每五帧标注一帧，共标注了10,000张帧图像</strong>。那些在UCF sports和HOLLYWOOD2数据集中表现相似且不适合显著目标检测的视频序列被移除（例如特写人物的视频序列或没有主体目标的视频序列）。我们的RVSOD包含了具有不同数量目标、目标类型、运动信息和场景复杂度的视频序列。此外，RVSOD为显著性研究的新定义——排序视频显著目标检测，提供了一个基准数据集。图1展示了RVSOD中的示例帧。</p>
+<img src="https://vip.helloimg.com/i/2024/08/18/66c1ec9f31fb9.png" />
+
+<blockquote>
+<p><strong>Figure 1</strong>: 排序视频显著目标数据集中的示例帧</p>
+</blockquote>
+<h3 id="Labeling-process"><a href="#Labeling-process" class="headerlink" title="Labeling process"></a>Labeling process</h3><img src="https://vip.helloimg.com/i/2024/08/18/66c1ec9a86d82.png" width="55%" />
+
+<p>标注过程的算法总结如下，见算法1。我们首先手动标记每一帧中具有眼动追踪点的目标为O1、O2、…On。之后，根据眼动追踪点的标注文件，计算每个标记目标在每一帧中的眼动追踪点数量$PointNum_i$。然后我们根据$PointNum_i$对目标进行排序。最后，<strong>排序结果决定了给目标分配的灰度值</strong>。眼动追踪点数量最多的目标被认为是最显著的目标，其像素的灰度值设置为1。其余目标的像素灰度值则根据它们的眼动追踪点数量与最显著目标的眼动追踪点数量的比例来设置。通过这种方式，每个视频帧中显著目标的灰度值被分布在0到1之间。目标上的眼动追踪点越多，显著性越高，像素的灰度值越接近1；相反，它们越接近0。</p>
+<h2 id="PROPOSED-ALGORITHM"><a href="#PROPOSED-ALGORITHM" class="headerlink" title="PROPOSED ALGORITHM"></a>PROPOSED ALGORITHM</h2><h2 id="EXPERIMENT"><a href="#EXPERIMENT" class="headerlink" title="EXPERIMENT"></a>EXPERIMENT</h2><h3 id="Experimental-Setup"><a href="#Experimental-Setup" class="headerlink" title="Experimental Setup"></a>Experimental Setup</h3><p><strong>测试数据集</strong>：我们使用了三个数据集来测试我们的模型，包括排序视频显著目标检测数据集（RVSOD）、密集标注视频分割数据集（DAVIS）和弗赖堡-伯克利运动分割数据集（FBMS）。RVSOD 提供了注视点预测（FP）和显著目标检测（SOD）的注释。DAVIS 和 FBMS 是目前最受欢迎的显著目标检测基准数据集。因此，我们报告了在 RVSOD、DAVIS 和 FBMS 测试集上的性能。</p>
+<p><strong>评估标准</strong>：对于传统的显著目标检测任务，我们选择了三个典型的评估指标，即精度-召回率（PR）曲线、F-measure 和平均绝对误差（MAE）分数，用于评估我们的方法以及其他最先进模型的性能。具体来说，精度值定义为检测出的显著区域中真实显著像素的比例。召回率值对应于预测的显著像素与所有真实显著区域的百分比。这些曲线是对每个视频序列的平均值。F-measure 表示精度和召回率的加权调和平均值，用于整体评估。<br>……</p>
+<h3 id="Performance-Comparison-for-Traditional-SOD"><a href="#Performance-Comparison-for-Traditional-SOD" class="headerlink" title="Performance Comparison for Traditional SOD"></a>Performance Comparison for Traditional SOD</h3><h3 id="Performance-Comparison-for-Ranking-Saliency-Detection"><a href="#Performance-Comparison-for-Ranking-Saliency-Detection" class="headerlink" title="Performance Comparison for Ranking Saliency Detection"></a>Performance Comparison for Ranking Saliency Detection</h3><h3 id="Analysis-of-the-Proposed-Approach"><a href="#Analysis-of-the-Proposed-Approach" class="headerlink" title="Analysis of the Proposed Approach"></a>Analysis of the Proposed Approach</h3><h2 id="CONCLUSION"><a href="#CONCLUSION" class="headerlink" title="CONCLUSION"></a>CONCLUSION</h2><p>在本文中，我们提出了一个全新的视频显著目标定义——排序显著目标，该定义基于目标的眼动追踪数据，考虑了目标之间的相对显著性排名。基于这一定义，我们构建了一个排序视频显著目标数据集（RVSOD），通过不同的灰度值反映目标的不同显著性等级。此外，我们设计了一个新颖的神经网络——合成视频显著性网络（SVSNet），用于同时检测视频中的传统显著目标和眼动追踪点。最后，我们设计了一种名为排序显著性模块（RSM）的方法，用于生成反映视频中目标不同显著性等级的排序显著性图。我们希望我们的方法能够成为基准，并引领视频显著性领域的全新研究方向。</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.jpg" alt="AwayX 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>AwayX
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://awayx.online/2024/08/18/Ranking%20Video%20Salient%20Object%20Detection/" title="Ranking Video Salient Object Detection">http://awayx.online/2024/08/18/Ranking Video Salient Object Detection/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" rel="tag"><i class="fa fa-tag"></i> 论文笔记</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/08/18/Simultaneously%20Localize,%20Segment%20and%20Rank%20the%20Camouflaged%20Objects/" rel="prev" title="Simultaneously Localize, Segment and Rank the Camouflaged Objects">
+      <i class="fa fa-chevron-left"></i> Simultaneously Localize, Segment and Rank the Camouflaged Objects
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/08/18/Rethinking%20Video%20Salient%20Object%20Ranking/" rel="next" title="Rethinking Video Salient Object Ranking">
+      Rethinking Video Salient Object Ranking <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC81OTUwMS8zNTk2Mw=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Abstract"><span class="nav-number">1.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-number">2.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RELATED-WORK"><span class="nav-number">3.</span> <span class="nav-text">RELATED WORK</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RANKING-VIDEO-SALIENT-OBJECT-DATASET"><span class="nav-number">4.</span> <span class="nav-text">RANKING VIDEO SALIENT OBJECT DATASET</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PROPOSED-ALGORITHM"><span class="nav-number">5.</span> <span class="nav-text">PROPOSED ALGORITHM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#EXPERIMENT"><span class="nav-number">6.</span> <span class="nav-text">EXPERIMENT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CONCLUSION"><span class="nav-number">7.</span> <span class="nav-text">CONCLUSION</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="AwayX"
+      src="/images/TheRightToCry.jpg">
+  <p class="site-author-name" itemprop="name">AwayX</p>
+  <div class="site-description" itemprop="description">嘿嘿</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/awaygithub" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;awaygithub" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:away2557103310@outlook.com" title="E-Mail → mailto:away2557103310@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://yoursite.com/" title="http:&#x2F;&#x2F;yoursite.com" rel="noopener" target="_blank">Title</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2024-02 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AwayX</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.4' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch-lite.umd.js"></script>
+<script src="//cdn.jsdelivr.net/npm/instantsearch.js@4/dist/instantsearch.production.min.js"></script>
+<script src="/js/algolia-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+</body>
+</html>

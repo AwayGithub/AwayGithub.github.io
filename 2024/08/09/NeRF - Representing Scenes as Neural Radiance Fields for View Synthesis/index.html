@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/infinite-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/infinite-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"awayx.online","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="摘要我们提出了一种方法，通过优化一个基于连续体积场函数的底层模型，利用稀疏的输入视图集合，实现了复杂场景的新视角合成，并取得了最先进的结果。我们的算法使用一个全连接（非卷积）深度网络来表示场景，其输入是一个连续的5D坐标（空间位置(x, y, z)和观察方向(θ, φ)），输出是该空间位置的体密度和视角相关的辐射发射率。我们通过沿着相机光线查询5D坐标来合成视图，并使用经典的体积渲染技术将输出颜色">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NeRF - Representing Scenes as Neural Radiance Fields for View Synthesis">
+<meta property="og:url" content="http://awayx.online/2024/08/09/NeRF%20-%20Representing%20Scenes%20as%20Neural%20Radiance%20Fields%20for%20View%20Synthesis/index.html">
+<meta property="og:site_name" content="AwaySpace">
+<meta property="og:description" content="摘要我们提出了一种方法，通过优化一个基于连续体积场函数的底层模型，利用稀疏的输入视图集合，实现了复杂场景的新视角合成，并取得了最先进的结果。我们的算法使用一个全连接（非卷积）深度网络来表示场景，其输入是一个连续的5D坐标（空间位置(x, y, z)和观察方向(θ, φ)），输出是该空间位置的体密度和视角相关的辐射发射率。我们通过沿着相机光线查询5D坐标来合成视图，并使用经典的体积渲染技术将输出颜色">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://vip.helloimg.com/i/2024/08/09/66b5efc948142.jpg">
+<meta property="og:image" content="https://vip.helloimg.com/i/2024/08/09/66b5efe1bad37.png">
+<meta property="og:image" content="https://vip.helloimg.com/i/2024/08/09/66b5eff79fc7b.jpg">
+<meta property="og:image" content="https://vip.helloimg.com/i/2024/08/09/66b5f00f0affa.jpg">
+<meta property="og:image" content="https://vip.helloimg.com/i/2024/08/09/66b5f020d79d0.png">
+<meta property="og:image" content="https://vip.helloimg.com/i/2024/08/09/66b5f02f7d8c6.jpg">
+<meta property="article:published_time" content="2024-08-09T10:35:11.000Z">
+<meta property="article:modified_time" content="2024-08-12T13:38:20.330Z">
+<meta property="article:author" content="AwayX">
+<meta property="article:tag" content="论文笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://vip.helloimg.com/i/2024/08/09/66b5efc948142.jpg">
+
+<link rel="canonical" href="http://awayx.online/2024/08/09/NeRF%20-%20Representing%20Scenes%20as%20Neural%20Radiance%20Fields%20for%20View%20Synthesis/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>NeRF - Representing Scenes as Neural Radiance Fields for View Synthesis | AwaySpace</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">AwaySpace</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">5</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">42</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">32</span></a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container"></div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="algolia-results">
+  <div id="algolia-stats"></div>
+  <div id="algolia-hits"></div>
+  <div id="algolia-pagination" class="algolia-pagination"></div>
+</div>
+
+      
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://awayx.online/2024/08/09/NeRF%20-%20Representing%20Scenes%20as%20Neural%20Radiance%20Fields%20for%20View%20Synthesis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/TheRightToCry.jpg">
+      <meta itemprop="name" content="AwayX">
+      <meta itemprop="description" content="嘿嘿">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AwaySpace">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          NeRF - Representing Scenes as Neural Radiance Fields for View Synthesis
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-08-09 18:35:11" itemprop="dateCreated datePublished" datetime="2024-08-09T18:35:11+08:00">2024-08-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-08-12 21:38:20" itemprop="dateModified" datetime="2024-08-12T21:38:20+08:00">2024-08-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">论文笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/Computer-Vision/" itemprop="url" rel="index"><span itemprop="name">Computer Vision</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/Computer-Vision/NeRF/" itemprop="url" rel="index"><span itemprop="name">NeRF</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>我们提出了一种方法，通过优化一个基于连续体积场函数的底层模型，利用稀疏的输入视图集合，实现了复杂场景的新视角合成，并取得了最先进的结果。我们的算法使用一个全连接（非卷积）深度网络来表示场景，其输入是一个连续的5D坐标（空间位置(x, y, z)和观察方向(θ, φ)），输出是该空间位置的体密度和视角相关的辐射发射率。我们通过沿着相机光线查询5D坐标来合成视图，并使用经典的体积渲染技术将输出颜色和密度投影到图像中。由于体积渲染是自然可微的，我们优化表示的唯一输入是具有已知相机姿态的图像集合。我们描述了如何有效地优化神经辐射场以渲染具有复杂几何和外观的逼真新视角，并展示了在神经渲染和视角合成方面超越先前工作的结果。</p>
+<span id="more"></span>
+
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>在这项工作中，我们通过直接优化连续5D场景表示的参数，来解决视角合成的长期问题，以最小化渲染一组捕获图像的误差。我们将静态场景表示为一个连续的5D函数，该函数在空间中每个点(x, y, z)输出每个方向(θ, φ)发射的辐射亮度，并在每个点处输出一个密度，该密度像微分不透明度一样控制通过(x, y, z)点的射线累积了多少辐射亮度。我们的方法通过优化一个没有卷积层的深度全连接神经网络（通常称为多层感知机或MLP）来表示这个函数，从一个单一的5D坐标(x, y, z, θ, φ)回归到一个单一的体积密度和视角相关的RGB颜色。为了从特定视角渲染这个神经辐射场（NeRF），我们：1）沿着相机光线穿过场景，生成一组采样的3D点，2）使用这些点及其对应的2D观察方向作为输入到神经网络，生成一组颜色和密度输出，3）使用经典的体积渲染技术将这些颜色和密度累积到一个2D图像中。由于这个过程是自然可微的，我们可以使用梯度下降来优化这个模型，通过最小化每个观察图像与我们表示渲染的对应视角之间的误差。在多视角上最小化这个误差，鼓励网络通过将高体积密度和准确颜色分配给包含真实场景内容的位置，来预测一个一致的场景模型。图2展示了这个整体流程。我们发现，对于复杂场景，仅仅基本实现优化神经辐射场表示并不足以收敛到高分辨率表示，并且在每条相机光线所需的样本数上效率低下。我们通过使用位置编码来转换输入的5D坐标，使MLP能够表示更高频率的函数，并提出了分层采样过程，以减少充分采样这种高频场景表示所需的查询数。我们的方法继承了体积表示的优点：都能够表示复杂的现实世界几何和外观，并且非常适合使用投影图像进行基于梯度的优化。重要的是，我们的方法克服了在高分辨率下建模复杂场景时离散化体素网格的存储成本过高的问题。总之，我们的技术贡献包括：</p>
+<ul>
+<li>一种将复杂几何和材料的连续场景表示为5D神经辐射场的方法，其参数化为基本的MLP网络。</li>
+<li>基于经典体积渲染技术的可微渲染过程，用于从标准RGB图像优化这些表示。这包括一种分层采样策略，将MLP的容量分配给空间中可见的场景内容。</li>
+<li>一种位置编码方法，将每个输入的5D坐标映射到更高维空间，这使我们能够成功地优化神经辐射场以表示高频率的场景内容。<br>我们展示了我们得到的神经辐射场方法在定量和定性上优于最先进的视角合成方法，包括将神经3D表示拟合到场景以及训练深度卷积网络预测采样体积表示。据我们所知，这篇论文首次提出了一种能够从自然环境中捕获的RGB图像中渲染出高分辨率逼真新视角的连续神经场景表示。</li>
+</ul>
+<h2 id="论文作者的讲解视频"><a href="#论文作者的讲解视频" class="headerlink" title="论文作者的讲解视频"></a>论文作者的讲解视频</h2><p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=dPWLybp4LL0">youtube.com&#x2F;watch?v&#x3D;dPWLybp4LL0</a></p>
+<h2 id="Bilibili讲解"><a href="#Bilibili讲解" class="headerlink" title="Bilibili讲解"></a>Bilibili讲解</h2><p><img src="https://vip.helloimg.com/i/2024/08/09/66b5efc948142.jpg" alt="10.jpg"></p>
+<h3 id="输入输出"><a href="#输入输出" class="headerlink" title="输入输出"></a>输入输出</h3><p>一个NeRF模型只能<strong>隐式</strong>存储一个物体的信息</p>
+<p><img src="https://vip.helloimg.com/i/2024/08/09/66b5efe1bad37.png" alt="11.png"></p>
+<p>输入：相机位姿</p>
+<ul>
+<li>相机位置：$(x,y,z)$</li>
+<li>相机方向：$(\theta,\phi)$</li>
+</ul>
+<p>输出：像素点<strong>对应射线上的一组采样点</strong>的颜色值$(R,G,B)$和不透明度$(\sigma)$，在射线方向上对这些采样点进行<strong>特定的积分</strong>才得到像素点的颜色值（<strong>第一次出现波峰</strong>对该像素点着色影响最大）</p>
+<p>一个神经网络模型需要40M左右来储存<strong>3D模型</strong>内容</p>
+<p>训练资料：像素点对应的射线和相机位置（而非整张图）</p>
+<h3 id="采样点"><a href="#采样点" class="headerlink" title="采样点"></a>采样点</h3><p>重新理解输入：对相机位姿进一步计算，得到采样点位置和观测角度</p>
+<p>position：$\mathbf{r}(t)&#x3D;\mathbf{O}+t\mathbf{d}$，其中$\mathbf{d}$为观测方向单位向量<br>direction：$(\theta,\phi)$，不过在代码中通过$(x,y,z)$向量表示</p>
+<p><img src="https://vip.helloimg.com/i/2024/08/09/66b5eff79fc7b.jpg" alt="15.jpg"></p>
+<p><strong>分层采样</strong></p>
+<p><img src="https://vip.helloimg.com/i/2024/08/09/66b5f00f0affa.jpg" alt="16.jpg"></p>
+<p>在密度（首次）变化最大的地方多采样一些点，密度比较小（或已经被遮挡）的地方少采样一些点</p>
+<ul>
+<li>粗网络：均匀采样64个点（会存在浪费、欠采样问题）</li>
+<li>精细网络：基于粗网络的结果权重逆变换采样128个点+粗网络64个点&#x3D;192个点<ul>
+<li>权重：基于粗网络中输出的密度值$\sigma$，可看作射线的分段常数概率密度函数</li>
+</ul>
+</li>
+</ul>
+<h3 id="位置编码"><a href="#位置编码" class="headerlink" title="位置编码"></a>位置编码</h3><p>主要目的：将图像中的高频信息体现出来，大幅提高细节质量</p>
+<p><img src="https://vip.helloimg.com/i/2024/08/09/66b5f020d79d0.png" alt="12.png"></p>
+<blockquote>
+<p>去除视角依赖性会阻止模型在推土机履带上重新创建镜面反射。去除位置编码会显著降低模型表示高频几何和纹理的能力，导致外观过度平滑化。</p>
+</blockquote>
+<p>每个维度增加10组，20维位置编码项，共21维；3个维度共63维<br>相当于一种特征增强，有效增加采样点坐标和图片像素间的高频信息</p>
+<p>$F_\Theta&#x3D;F_\Theta^{\prime}\circ\gamma$<br>$\gamma(p)&#x3D;(sin(2^0\pi p),cos(2^0\pi p),…,sin(2^{L-1}\pi p),cos(2^{L-1}\pi p))$</p>
+<h3 id="网络结构"><a href="#网络结构" class="headerlink" title="网络结构"></a>网络结构</h3><p><img src="https://vip.helloimg.com/i/2024/08/09/66b5f02f7d8c6.jpg" alt="14.jpg"></p>
+<p>MLP结构，全连接，无卷积</p>
+<p>注意相机角度输入，每维增加了8位位置编码</p>
+<p>认为不透明度与观测角度无关，可以根据个人理解修改</p>
+<h3 id="Volume-Render（体渲染）"><a href="#Volume-Render（体渲染）" class="headerlink" title="Volume Render（体渲染）"></a>Volume Render（体渲染）</h3><p>将采样点的颜色值和不透明度转换到图片中<br>理想情况下通过积分计算像素点颜色值：</p>
+<p>$$<br>C(\mathbf{r})&#x3D;\int_{t_n}^{t_f}T(t)\sigma(\mathbf{r}(t))\mathbf{c}(\mathbf{r}(t,\mathbf{d}))dt,\quad where\ T(t)&#x3D;exp(-\int_{t_n}^{t}\sigma(\mathbf{r}(s))ds)<br>$$</p>
+<p>其中，$t_n$为$t_{near}$，$t_f$为$t_{far}$<br>算法实际计算：</p>
+<p>$$<br>\hat{C}(\mathbf{r})&#x3D;\sum_{i&#x3D;1}^{N}T_i(1-exp(-\sigma_i\delta_i))\mathbf{c}<em>i,\quad where\ T_i&#x3D;exp(-\sum</em>{j&#x3D;1}^{i&#x3D;1}\sigma_j\delta_j),\ \delta_i&#x3D;t_{i+1}-t_i<br>$$</p>
+<p>其中，$T$可以理解为不透光率，是将采样点的密度值$\sigma*$影响范围$\delta$累加起来，越叠不透光率越高，且只关注“前面”的不透光率；$\sigma(\mathbf{r}(t))$为当前的不透明度，只与位置有关；$\mathbf{c}(\mathbf{r}(t),\mathbf{d})$为颜色，与位置和观测角度都有关</p>
+<h3 id="LOSS定义（均方差MSE）"><a href="#LOSS定义（均方差MSE）" class="headerlink" title="LOSS定义（均方差MSE）"></a>LOSS定义（均方差MSE）</h3><p>$$<br>\mathcal{L}&#x3D;\sum_{\mathbf{r}\in\mathcal{R}}[||\hat{C}_c(\mathbf{r})-C(\mathbf{r})||_2^2+||\hat{C}_f(\mathbf{r})-C(\mathbf{r})||_2^2]<br>$$</p>
+<p>$$<br>\mathcal{L}&#x3D;\sum_{\mathbf{r}\in\mathcal{R}}||\hat{C}(\mathbf{r})-C(\mathbf{r})||_2^2<br>$$</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.jpg" alt="AwayX 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>AwayX
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://awayx.online/2024/08/09/NeRF%20-%20Representing%20Scenes%20as%20Neural%20Radiance%20Fields%20for%20View%20Synthesis/" title="NeRF - Representing Scenes as Neural Radiance Fields for View Synthesis">http://awayx.online/2024/08/09/NeRF - Representing Scenes as Neural Radiance Fields for View Synthesis/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" rel="tag"><i class="fa fa-tag"></i> 论文笔记</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/08/09/Understanding%20Diffusion%20Models%20-%20A%20Unified%20Perspective/" rel="prev" title="Understanding Diffusion Models - A Unified Perspective">
+      <i class="fa fa-chevron-left"></i> Understanding Diffusion Models - A Unified Perspective
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/08/09/Linear%20Algebra/" rel="next" title="Linear Algebra">
+      Linear Algebra <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC81OTUwMS8zNTk2Mw=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-number">1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-number">2.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BA%E6%96%87%E4%BD%9C%E8%80%85%E7%9A%84%E8%AE%B2%E8%A7%A3%E8%A7%86%E9%A2%91"><span class="nav-number">3.</span> <span class="nav-text">论文作者的讲解视频</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bilibili%E8%AE%B2%E8%A7%A3"><span class="nav-number">4.</span> <span class="nav-text">Bilibili讲解</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="AwayX"
+      src="/images/TheRightToCry.jpg">
+  <p class="site-author-name" itemprop="name">AwayX</p>
+  <div class="site-description" itemprop="description">嘿嘿</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/awaygithub" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;awaygithub" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:away2557103310@outlook.com" title="E-Mail → mailto:away2557103310@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://yoursite.com/" title="http:&#x2F;&#x2F;yoursite.com" rel="noopener" target="_blank">Title</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2024-02 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AwayX</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.4' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch-lite.umd.js"></script>
+<script src="//cdn.jsdelivr.net/npm/instantsearch.js@4/dist/instantsearch.production.min.js"></script>
+<script src="/js/algolia-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/infinite-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/infinite-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"awayx.online","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="CVPR 2021 github：JingZhang617&#x2F;COD-Rank-Localize-and-Segment (github.com)  Abstract伪装（Camouflage）是许多物种生存的关键防御机制。常见的伪装策略包括背景匹配，即模仿环境的颜色和图案，以及破坏性着色，即隐藏身体轮廓[37]。伪装目标检测 (COD) 的目标是分割隐藏在环境中的伪装物体。现有的 CO">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Simultaneously Localize, Segment and Rank the Camouflaged Objects">
+<meta property="og:url" content="http://awayx.online/2024/08/18/Simultaneously%20Localize,%20Segment%20and%20Rank%20the%20Camouflaged%20Objects/index.html">
+<meta property="og:site_name" content="AwaySpace">
+<meta property="og:description" content="CVPR 2021 github：JingZhang617&#x2F;COD-Rank-Localize-and-Segment (github.com)  Abstract伪装（Camouflage）是许多物种生存的关键防御机制。常见的伪装策略包括背景匹配，即模仿环境的颜色和图案，以及破坏性着色，即隐藏身体轮廓[37]。伪装目标检测 (COD) 的目标是分割隐藏在环境中的伪装物体。现有的 CO">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://vip.helloimg.com/i/2024/08/18/66c1df89d6c6a.png">
+<meta property="og:image" content="https://vip.helloimg.com/i/2024/08/18/66c1df83c1bdb.png">
+<meta property="article:published_time" content="2024-08-18T11:55:23.000Z">
+<meta property="article:modified_time" content="2024-08-18T12:52:43.016Z">
+<meta property="article:author" content="AwayX">
+<meta property="article:tag" content="论文笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://vip.helloimg.com/i/2024/08/18/66c1df89d6c6a.png">
+
+<link rel="canonical" href="http://awayx.online/2024/08/18/Simultaneously%20Localize,%20Segment%20and%20Rank%20the%20Camouflaged%20Objects/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Simultaneously Localize, Segment and Rank the Camouflaged Objects | AwaySpace</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">AwaySpace</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">5</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">42</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">32</span></a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container"></div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="algolia-results">
+  <div id="algolia-stats"></div>
+  <div id="algolia-hits"></div>
+  <div id="algolia-pagination" class="algolia-pagination"></div>
+</div>
+
+      
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://awayx.online/2024/08/18/Simultaneously%20Localize,%20Segment%20and%20Rank%20the%20Camouflaged%20Objects/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/TheRightToCry.jpg">
+      <meta itemprop="name" content="AwayX">
+      <meta itemprop="description" content="嘿嘿">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AwaySpace">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Simultaneously Localize, Segment and Rank the Camouflaged Objects
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-08-18 19:55:23 / 修改时间：20:52:43" itemprop="dateCreated datePublished" datetime="2024-08-18T19:55:23+08:00">2024-08-18</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">论文笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/Computer-Vision/" itemprop="url" rel="index"><span itemprop="name">Computer Vision</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/Computer-Vision/Salient-Object-Ranking/" itemprop="url" rel="index"><span itemprop="name">Salient Object Ranking</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/Computer-Vision/Salient-Object-Ranking/image/" itemprop="url" rel="index"><span itemprop="name">image</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/Computer-Vision/Salient-Object-Ranking/image/2021/" itemprop="url" rel="index"><span itemprop="name">2021</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
+<p><strong>CVPR 2021</strong></p>
+<p><strong>github</strong>：<a target="_blank" rel="noopener" href="https://github.com/JingZhang617/COD-Rank-Localize-and-Segment">JingZhang617&#x2F;COD-Rank-Localize-and-Segment (github.com)</a></p>
+</blockquote>
+<h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>伪装（Camouflage）是许多物种生存的关键防御机制。常见的伪装策略包括背景匹配，即模仿环境的颜色和图案，以及破坏性着色，即隐藏身体轮廓[37]。伪装目标检测 (COD) 的目标是分割隐藏在环境中的伪装物体。现有的 COD 模型基于二元的地面实况，用于分割伪装目标，但未能体现伪装的程度。在本文中，我们重新审视了这一任务，并提出明确地<strong>建模伪装物体在特定背景下的显著性</strong>，不仅能更好地理解动物的伪装与进化，还能为设计更复杂的伪装技术提供指导。此外，我们观察到伪装物体的某些特定部分使它们对捕食者而言是可检测的。基于对伪装物体的上述理解，我们提出了<strong>首个基于排序的 COD 网络 (Rank-Net)，能够同时定位、分割和排序伪装物体</strong>。定位模型旨在找到使伪装物体显眼的辨别区域；分割模型用于分割伪装物体的整体范围；排序模型则推断出不同伪装物体的可检测性。此外，我们<strong>贡献了一个大型的 COD 测试集</strong>，以评估 COD 模型的泛化能力。实验结果表明，我们的模型实现了新的最先进技术，构建了一个更具解释性的 COD 网络。</p>
+<span id="more"></span>
+
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>伪装是最重要的反捕食防御机制之一，能够防止猎物被捕食者识别[43]。猎物通常使用两种主要策略来实现伪装：背景匹配和破坏性着色[37]。依赖背景匹配的猎物通常与其栖息地的颜色或图案相似，而在复杂的栖息地中，背景匹配反而可能增加它们的可见性。破坏性着色则在复杂环境中表现得更好，猎物通过进化在身体边缘形成高对比度的标记，以打破其轮廓。</p>
+<p>背景匹配和破坏性着色的共同目标是使猎物隐藏在环境中，或大幅降低其显著性，这与感知者的知觉和认知密切相关。通过深入研究伪装物体检测过程，可以细致地探究人类视觉系统的机制。此外，有效的伪装物体检测模型在农业领域可以用于害虫控制，在医学图像分割中可以检测感染或肿瘤区域[11, 12]。它还可以提升一般物体检测的性能，尤其是在物体与背景相似的情况下[10]。</p>
+<img src="https://vip.helloimg.com/i/2024/08/18/66c1df89d6c6a.png" />
+
+<blockquote>
+<p><strong>Figure 1</strong>: 传统的“二进制”真值仅提供伪装对象的范围。我们提供了额外的注释，包括“注视”（“Fixation”）和“排名”（“Ranking”），前者发现使伪装对象可检测的区域，后者突出伪装的难度等级。在“排名”中，蓝色表示更高的排名（更难的伪装）。</p>
+</blockquote>
+<p>现有的伪装物体检测模型[10, 22, 61, 33, 25]基于二元的伪装物体数据集[22, 10, 44]，如图1所示，这些模型只能揭示伪装物体的存在，而<strong>无法说明伪装的程度</strong>。我们认为，对伪装物体与其周围环境的显著性进行估计，有助于更好地理解动物的进化。此外，了解伪装的程度有助于设计更复杂的伪装技术[37]，从而使猎物避免被捕食者检测到。为了模拟伪装物体的可检测性，我们<strong>引入了首个伪装排序模型来推断伪装的程度</strong>。与现有的基于二元地面实况的模型[10, 22, 62]不同，我们能够生成基于实例的排序伪装物体预测，指示人类观察伪装物体的总体难度。</p>
+<p>此外，由于大多数伪装物体在低级特征上与背景缺乏明显对比[46]，伪装物体的检测可能依赖于一些“辨别性模式”的特征，例如面部、眼睛或触角。我们认为正是这些“辨别性模式”使猎物对捕食者来说变得显眼。对于背景匹配来说，这些模式的颜色与周围环境不同；对于破坏性着色来说，它们是在复杂栖息地中低对比度的身体轮廓。为了更好地理解猎物的伪装属性，我们还提出<strong>揭示伪装物体最显著区域</strong>的任务，即伪装物体辨别区域定位。</p>
+<p>由于目前还不存在基于排序的伪装物体检测数据集，我们使用眼动追踪技术重新标注了现有的伪装物体数据集[10, 22]，记录每个伪装实例的检测延迟（我们将<strong>多个观察者注意到每个伪装实例的时间中位数</strong>定义为该实例的检测延迟。）。我们假设观察者注意到伪装物体所需的时间越长，这个伪装实例的级别就越高。<strong>基于眼动追踪伪装物体检测数据集，我们获得了基于检测延迟的排序数据集</strong>，如图1所示。同时，这个眼动追踪数据集还可以用来<strong>估计伪装物体的辨别区域</strong>。</p>
+<p>据我们所知，目前<strong>仅存在一个大型的伪装物体测试数据集，即 COD10K</strong> [10]，而其他测试数据集[22, 44]的规模都少于300张图片。我们<strong>贡献了另一个伪装物体测试数据集，称为NC4K</strong>，包含了从互联网上下载的4,121张图片。这个新测试数据集可以用于评估现有模型的泛化能力。</p>
+<p>我们的主要贡献可以总结如下：1) 我们引入了伪装物体排序（COR）和伪装物体定位（COL）作为两个新任务，用于估计伪装物体的难度并识别使伪装物体显眼的区域。2) 我们为上述两个任务提供了相应的训练和测试数据集，并贡献了最大的伪装物体检测测试数据集。3) 我们提出了一个三重任务学习模型，可以同时对伪装物体进行定位、分割和排序。</p>
+<h2 id="Related-Work"><a href="#Related-Work" class="headerlink" title="Related Work"></a>Related Work</h2><h3 id="Camouflaged-object-detection-dataset"><a href="#Camouflaged-object-detection-dataset" class="headerlink" title="Camouflaged object detection dataset"></a>Camouflaged object detection dataset</h3><p>目前主要有三个伪装物体检测数据集，分别是 CAMO [22] 数据集、CHAMELEON [44] 数据集和 COD10K [8, 10] 数据集。CAMO 数据集 [22] 包含 1,250 张伪装图像，分为八类，其中 1,000 张用于训练，其余 250 张用于测试。CHAMELEON 数据集 [44] 包含从互联网上下载的 76 张测试图像。Fan 等人 [10] 提供了一个更具挑战性的数据集，称为 <strong>COD10K</strong>。他们发布了 <strong>3,040 张用于训练的伪装图像和 2,026 张用于测试的图像</strong>。与仅包含二进制真值的现有伪装物体数据集相比，我们提供了额外的基于排名和判别区域的注释。此外，我们提供了一个<strong>包含 4,121 张图像的最大测试数据集</strong>，以实现有效的模型评估。</p>
+<h3 id="Camouflaged-object-detection"><a href="#Camouflaged-object-detection" class="headerlink" title="Camouflaged object detection"></a>Camouflaged object detection</h3><p>伪装是动物用来躲避他人视觉检测的一种有效技术 [34, 48]。在早期研究中，大多数方法使用低级特征，包括纹理、边缘、亮度和颜色特征来区分背景中的物体 [3, 56, 47, 57, 26, 36]。然而，这些方法通常会陷入伪装的陷阱，因为伪装中低级特征通常会被破坏，以欺骗观察者。因此，最近的研究通常依赖于深度网络的巨大容量来识别伪装的更复杂属性。其中，Le 等人 [22] 引入了联合图像分类和伪装物体分割框架。Yan 等人 [58] 提出了使用翻转图像作为输入的对抗性分割流，以增强主分割流对伪装物体检测的判别能力。Fan 等人 [10] 提出了 SINet 来逐渐定位并搜索伪装物体。以上所有方法都试图模拟观察者在伪装物体上执行的感知和认知过程。然而，他们忽略了一个重要属性：观察者在搜索伪装物体上花费的时间范围很广，并且严重依赖于伪装的有效性 [48]。因此，他们未能考虑到<strong>在检测具有不同伪装程度的物体时所使用的特征也是不同的，这在伪装研究中是一个有用的指标</strong> [37]。为了揭示伪装程度，并发现使伪装物体可检测的区域，我们引入了<strong>第一个伪装物体排名方法和伪装物体判别区域定位解决方案</strong>，以有效分析伪装的属性。</p>
+<h3 id="Ranking-based-dense-prediction-models"><a href="#Ranking-based-dense-prediction-models" class="headerlink" title="Ranking based dense prediction models"></a>Ranking based dense prediction models</h3><p>对于一些属性，例如显著性，自然会在标注中引入排名，以更好地理解任务。Islam 等人 [2] 认为，当询问多个观察者时，显著性是一个相对的概念。为此，他们基于 PASCAL-S 数据集 [27] 收集了一个显著性排名数据集，其中包含 12 名观察者标注的 850 张图像。在此数据集的基础上，他们设计了一种编码器-解码器模型，以预测不同级别的显著性掩码，从而实现最终的排名预测。受此启发，Yildirim 等人 [60] 基于自然图像中的物体被感知为具有不同重要性水平的假设，评估了显著性排名。Siris 等人 [42] 通过推断人们查看图像时注意力转移的顺序来定义排名。他们的数据集基于 SALICON [18] 提供的注视数据。据我们所知，目前<strong>尚不存在伪装物体排名模型</strong>。与显著性相似，伪装物体具有等级，背景匹配或破坏性着色水平较高的伪装物体可能在环境中隐藏得更好，这表明它们具有更高的伪装水平。基于此，我们基于排名的解决方案可以更好地理解动物的进化。不同于显著性排名在单一图像内的相对性，我们将伪装排名定义为跨整个数据集的相对和渐进的，它是<strong>基于多个观察者的中位注视时间生成的</strong>。</p>
+<h3 id="Discriminative-region-localization-technique"><a href="#Discriminative-region-localization-technique" class="headerlink" title="Discriminative region localization technique"></a>Discriminative region localization technique</h3><h2 id="Our-Method"><a href="#Our-Method" class="headerlink" title="Our Method"></a>Our Method</h2><p>由于目前没有基于定位或排名的伪装数据集，我们将首先讨论我们的新数据集，然后介绍我们的模型。</p>
+<h3 id="The-new-dataset"><a href="#The-new-dataset" class="headerlink" title="The new dataset"></a>The new dataset</h3><p><strong>数据集收集</strong>：为了实现伪装目标的定位和排名，我们首先<strong>对现有伪装目标检测数据集 CAMO</strong> [22] 和 <strong>COD10K</strong> [10] <strong>中的一些图像进行重新标注</strong>，使其具有定位（注视点）标注和排名标注。我们将重新处理的数据集称为 <strong>CAM-FR</strong>。基本假设是，观众找到伪装目标所需的时间越长，伪装目标的级别越高 [48]。基于此，我们记录每个伪装目标的检测延迟，并将其作为伪装排名的指标。</p>
+<p>为了实现这一目标，我们使用眼动追踪器（SMI RED250）并记录每个伪装目标被注意到的时间。SMI RED250 提供三个采样率，分别为 60Hz、120Hz 和 250Hz，代表了记录的检测延迟的精度。在我们的实验中，我们使用了 <strong>250Hz 的采样率</strong>。操作距离为 60-80cm，这是观众与伪装图像之间的距离。运动范围在水平方向上为 40cm，垂直方向上为 20cm，这是观众为了发现伪装目标而移动的范围。</p>
+<p>在现有的伪装目标检测训练数据集（例如 COD10K [10] 和 CAMO 数据集 [22]）的基础上，我们邀请<strong>六位观众</strong>观察每张图像，并进行伪装目标检测的任务3。我们将不同观众的中位观察时间定义为每个伪装实例的检测延迟，并借助实例级标注进行计算。具体来说，我们将第 $j$ 个观众对第 $i$ 个实例的观察时间定义为：</p>
+<p>$$<br>\Delta t_{ij} &#x3D; \text{median}(\delta t_{ij}), \delta t_{ij} &#x3D; {t_{ij}^k - t_{j}^0}_{k&#x3D;1}^{K}<br>$$</p>
+<p>其中，$K$ 是实例上的注视点数，$t_{j}^0$ 是观众 $j$ 开始观看图像的时间，$t_{ij}^k$ 是观众 $j$ 对实例 $i$ 的第 $k$ 个注视点的时间。为了避免极端高或低的注视时间的影响，我们使用中位数而不是平均值：</p>
+<p>$$<br>\text{median}(\mathbf{x})&#x3D;\left{<br>\begin{matrix}<br> x_{(n+1)&#x2F;2}, &amp; n&#x2F;2\ne0 \<br> \frac{x_{\left \lfloor n&#x2F;2 \right \rfloor }+x_{\left\lfloor n&#x2F;2 \right\rfloor+1}}{2}, &amp; n&#x2F;2&#x3D;0<br>\end{matrix}\right.<br>$$</p>
+<p>其中，$\mathbf{x}&#x3D;{ x_l }_{l&#x3D;1}^n$ 是一个按升序索引的集合。考虑到观众的不同感知能力，我们将实例 $i$ 的最终检测延迟定义为六个观众的中位数： $\Delta t_i &#x3D; \text{median}<em>j(\Delta t</em>{ij})$ ，随后我们使用这些数据来生成我们的排名数据集。</p>
+<p>出现两种情况可能导致伪装目标区域没有注视点。第一种情况是由于眼动追踪器的机械故障或观众操作不当引起的。第二种情况是由于伪装程度较高，使得伪装目标难以被检测。我们设置了一个阈值来区分这两种情况。<strong>如果超过一半的观众忽略了该实例，我们将其视为难样本，搜索时间设置为 1（经过归一化处理）。否则，将删除相应观众的值，并从剩余的检测延迟中计算中位数。</strong></p>
+<p><strong>数据集信息</strong>：我们的数据集 CAM-FR 包含 <strong>2,000 张用于训练的图像和 280 张用于测试的图像</strong>。训练集包括 1,711 张来自 COD10K-CAM 训练集 [10] 的图像，以及 289 张来自 CAMO 训练集 [22] 的图像。然后，我们将 238 张来自 COD10K-CAM 训练集的图像和 42 张来自 CAMO 训练集的图像重新标注为测试集。在 CAM-FR 中，我们有不同的排名（排名 0 是背景），其中排名 1 是最困难的级别，排名 2 是中等，排名 3 是最简单的级别。</p>
+<p><strong>基于新数据集的模型设计</strong>：基于我们的新数据集，我们提出了一个同时定位、分割和排名伪装目标的方法。给定输入图像，前两个任务分别回归注视图和分割图，而第三个任务涉及实例分割（伪装目标检测）和分类（伪装目标排名）。我们在一个统一的框架中构建这三个任务，如图 2 所示，其中定位网络和分割网络集成在一个联合学习框架中。排名模型与联合学习框架共享骨干网络，以生成伪装排名。</p>
+<img src="https://vip.helloimg.com/i/2024/08/18/66c1df83c1bdb.png" />
+
+<blockquote>
+<p><strong>Figure 2</strong>: 提出的网络概述。我们的框架中有两个主要任务，即伪装目标排名，这一任务由排名地面真值和每个排名基于的二进制分割图监督；以及伪装目标区分区域定位和分割的联合学习框架。通过输入图像，我们的模型通过端到端训练来生成区分区域定位、伪装目标分割和伪装排名。图中的“FPN”和“RPN”分别表示特征金字塔网络 [28] 和区域提议网络 [39]。</p>
+</blockquote>
+<h3 id="Joint-localization-and-segmentation"><a href="#Joint-localization-and-segmentation" class="headerlink" title="Joint localization and segmentation"></a>Joint localization and segmentation</h3><h3 id="Inferring-the-ranks-of-camouflaged-objects"><a href="#Inferring-the-ranks-of-camouflaged-objects" class="headerlink" title="Inferring the ranks of camouflaged objects"></a>Inferring the ranks of camouflaged objects</h3><h2 id="Experimental-Results"><a href="#Experimental-Results" class="headerlink" title="Experimental Results"></a>Experimental Results</h2><h3 id="Setup"><a href="#Setup" class="headerlink" title="Setup"></a>Setup</h3><p><strong>数据集</strong>：我们使用 <strong>CAM-FR 训练集</strong>来训练我们的框架，提供一个基准，以同时实现伪装目标检测（Ours cod new）、区分区域定位（Ours fix new）和伪装排名（Ours rank new），并在 CAM-FR 测试集上进行测试。此外，为了与基准模型进行性能比较，我们进一步训练了一个单一的伪装目标检测模型（Ours cod full），该模型使用包含 3,040 张来自 COD10K 和 1,000 张来自 CAMO 的图像的传统训练数据集，并在现有测试数据集上进行测试，包括 CAMO [22]、COD10K [10]、CHAMELEMON [44] 和我们的 NC4K 测试数据集。</p>
+<p><strong>训练细节</strong>：我们使用预训练的 ResNet50 [16] 作为我们的骨干网络。在训练过程中，输入图像被调整为 352 × 352。候选边界框跨越三种尺度（4、8、16）和三种纵横比（0.5、1.0、2.0）从每个像素中选择。在排名模型的 RPN 模块中，与地面真值的 IoU 阈值设置为 0.7，用于确定候选边界框在下一个检测阶段是否为正样本（IoU &gt; 0.7）或负样本（IoU &lt; 0.7）。IoU 阈值设置为 0.5，以确定是否检测到伪装实例，仅将正样本传递到分割分支。图 2 中的模型在一台 GPU（Nvidia RTX 1080 Ti）上训练了 10,000 次迭代（14 小时），每次小批量训练 10 张图像，使用 Adam 优化器，学习率为 5e-5。</p>
+<p><strong>评估指标</strong>：传统上，伪装目标检测被定义为二进制分割任务，常用的评估指标包括平均绝对误差（Mean Absolute Error）、平均 F 测度（Mean F-measure）、平均 E 测度（Mean E-measure）和 S 测度（S-measure），分别表示为 M、F mean β、Emean ξ 和 Sα。<br>…</p>
+<h3 id="Performance-comparison"><a href="#Performance-comparison" class="headerlink" title="Performance comparison"></a>Performance comparison</h3><h3 id="Ablation-Study"><a href="#Ablation-Study" class="headerlink" title="Ablation Study"></a>Ablation Study</h3><h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>我们为伪装物体检测引入了两个新任务，即伪装物体的判别区域定位和伪装物体排名，并重新标注了相应的数据集。前者旨在找到使伪装物体可检测的判别区域，而后者则试图解释伪装的程度。我们在一个联合学习框架中构建了我们的网络，以<strong>同时定位、分割和排名伪装物体</strong>。实验结果表明，我们提出的联合学习框架能够实现最先进的性能。此外，生成的判别区域和排名图为理解伪装的本质提供了新的见解。此外，我们新的测试数据集 NC4K 能够更好地评估伪装物体检测模型的泛化能力。</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.jpg" alt="AwayX 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>AwayX
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://awayx.online/2024/08/18/Simultaneously%20Localize,%20Segment%20and%20Rank%20the%20Camouflaged%20Objects/" title="Simultaneously Localize, Segment and Rank the Camouflaged Objects">http://awayx.online/2024/08/18/Simultaneously Localize, Segment and Rank the Camouflaged Objects/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" rel="tag"><i class="fa fa-tag"></i> 论文笔记</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/08/18/Domain%20Separation%20Graph%20Neural%20Networks%20for%20Saliency%20Object%20Ranking/" rel="prev" title="Domain Separation Graph Neural Networks for Saliency Object Ranking">
+      <i class="fa fa-chevron-left"></i> Domain Separation Graph Neural Networks for Saliency Object Ranking
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/08/18/Ranking%20Video%20Salient%20Object%20Detection/" rel="next" title="Ranking Video Salient Object Detection">
+      Ranking Video Salient Object Detection <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC81OTUwMS8zNTk2Mw=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Abstract"><span class="nav-number">1.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-number">2.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Related-Work"><span class="nav-number">3.</span> <span class="nav-text">Related Work</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Our-Method"><span class="nav-number">4.</span> <span class="nav-text">Our Method</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Experimental-Results"><span class="nav-number">5.</span> <span class="nav-text">Experimental Results</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Conclusion"><span class="nav-number">6.</span> <span class="nav-text">Conclusion</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="AwayX"
+      src="/images/TheRightToCry.jpg">
+  <p class="site-author-name" itemprop="name">AwayX</p>
+  <div class="site-description" itemprop="description">嘿嘿</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/awaygithub" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;awaygithub" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:away2557103310@outlook.com" title="E-Mail → mailto:away2557103310@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://yoursite.com/" title="http:&#x2F;&#x2F;yoursite.com" rel="noopener" target="_blank">Title</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2024-02 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AwayX</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.4' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch-lite.umd.js"></script>
+<script src="//cdn.jsdelivr.net/npm/instantsearch.js@4/dist/instantsearch.production.min.js"></script>
+<script src="/js/algolia-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+</body>
+</html>
