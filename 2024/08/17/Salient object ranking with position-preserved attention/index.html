@@ -14,20 +14,21 @@
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
   <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"awayx.online","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"awayx.online","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="ICCV 2021   github: https:&#x2F;&#x2F;github.com&#x2F;EricFH&#x2F;SOR  Abstract实例分割可以检测图像中物体的位置，但难以理解它们之间的关系。我们关注一个典型的关系：相对显著性。一个密切相关的任务是显著物体检测，它预测一个二值图，突出显示视觉上显著的区域，但难以区分多个物体。通过后处理直接将两个任务结合起来也会导致较差的性能。目前对相对显著性的研究不足，限制了">
+  <meta name="description" content="ICCV 2021 github: https:&#x2F;&#x2F;github.com&#x2F;EricFH&#x2F;SOR  Abstract实例分割可以检测图像中物体的位置，但难以理解它们之间的关系。我们关注一个典型的关系：相对显著性。一个密切相关的任务是显著物体检测，它预测一个二值图，突出显示视觉上显著的区域，但难以区分多个物体。通过后处理直接将两个任务结合起来也会导致较差的性能。目前对相对显著性的研究不足，限制了内容">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Salient object ranking with position-preserved attention">
 <meta property="og:url" content="http://awayx.online/2024/08/17/Salient%20object%20ranking%20with%20position-preserved%20attention/index.html">
 <meta property="og:site_name" content="AwaySpace">
-<meta property="og:description" content="ICCV 2021   github: https:&#x2F;&#x2F;github.com&#x2F;EricFH&#x2F;SOR  Abstract实例分割可以检测图像中物体的位置，但难以理解它们之间的关系。我们关注一个典型的关系：相对显著性。一个密切相关的任务是显著物体检测，它预测一个二值图，突出显示视觉上显著的区域，但难以区分多个物体。通过后处理直接将两个任务结合起来也会导致较差的性能。目前对相对显著性的研究不足，限制了">
+<meta property="og:description" content="ICCV 2021 github: https:&#x2F;&#x2F;github.com&#x2F;EricFH&#x2F;SOR  Abstract实例分割可以检测图像中物体的位置，但难以理解它们之间的关系。我们关注一个典型的关系：相对显著性。一个密切相关的任务是显著物体检测，它预测一个二值图，突出显示视觉上显著的区域，但难以区分多个物体。通过后处理直接将两个任务结合起来也会导致较差的性能。目前对相对显著性的研究不足，限制了内容">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://vip.helloimg.com/i/2024/08/17/66c0396ecc1ad.png">
 <meta property="og:image" content="https://vip.helloimg.com/i/2024/08/17/66c039c75c7f8.png">
@@ -133,17 +134,17 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">5</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">42</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">44</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">32</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">35</span></a>
 
   </li>
         <li class="menu-item menu-item-sitemap">
@@ -281,23 +282,18 @@
       
         <blockquote>
 <p><strong>ICCV 2021</strong></p>
-</blockquote>
-<blockquote>
 <p><strong>github</strong>: <a target="_blank" rel="noopener" href="https://github.com/EricFH/SOR">https://github.com/EricFH/SOR</a></p>
 </blockquote>
 <h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>实例分割可以检测图像中物体的位置，但难以理解它们之间的关系。我们关注一个典型的关系：<strong>相对显著性</strong>。一个密切相关的任务是显著物体检测，它预测一个二值图，突出显示视觉上显著的区域，但难以区分多个物体。通过后处理直接将两个任务结合起来也会导致较差的性能。目前对相对显著性的研究不足，限制了内容感知图像裁剪、视频摘要和图像标注等实际应用。在本文中，我们研究了<strong>显著物体排序（SOR）任务</strong>，该任务旨在根据视觉显著性为每个检测到的物体分配一个排序顺序。我们提出了<strong>第一个端到端的 SOR 任务框架</strong>（end-to-end framework），并以<strong>多任务学习</strong>（multi-task learning fashion）的方式解决该问题。该框架<strong>同时处理实例分割和显著物体排序</strong>。在这个框架中，<strong>SOR 分支是独立的，可以灵活地与不同的检测方法配合使用</strong>，因此易于用作插件。我们还为 SOR 分支引入了一个专门设计的<strong>位置保留注意力（PPA）模块</strong>。该模块由位置嵌入阶段和特征交互阶段组成。考虑到位置在显著性比较中的重要性，我们在 ROI 池化操作中保留了物体的绝对坐标，然后在第一阶段将位置信息与语义特征融合。在特征交互阶段，我们应用注意力机制来获得建议框的上下文表示，以预测它们的相对排序顺序。我们在 <strong>ASR 数据集</strong>上进行了广泛的实验。在没有复杂技巧的情况下，我们提出的方法显著优于之前的最先进方法。代码将公开发布，网址为 <a target="_blank" rel="noopener" href="https://github.com/EricFH/SOR%E3%80%82">https://github.com/EricFH/SOR。</a></p>
 <span id="more"></span>
-
 <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>近年来，实例分割取得了巨大的进展[14, 28]。为了更深入地理解图像，在检测物体位置后探索它们之间的关系对研究人员来说具有重要意义。一个典型的关系是相对显著性，即比较哪个物体比另一个更具吸引力。显著物体检测（SOD）是一个密切相关的任务，旨在定位吸引人类视觉注意力的区域。大多数工作将此任务表述为像素级二值预测任务[54, 55, 16, 19, 43, 45, 20, 29, 26, 32, 36, 53]。由于 SOD 预测的是像素级的显著区域，而不是实例级，因此在区分真实场景中的多个物体时存在局限性（如图 1 所示）。</p>
-<img src="https://vip.helloimg.com/i/2024/08/17/66c0396ecc1ad.png" width="55%" />
-
+<p><img src="https://vip.helloimg.com/i/2024/08/17/66c0396ecc1ad.png" width="55%" /></p>
 <blockquote>
 <p>图 1. 显著物体排序（SOR）任务根据视觉显著性为每个检测到的物体分配排序顺序。实例分割可以检测物体，但无法获取它们之间的关系。同时，显著物体检测可以突出显示最吸引人的区域，但无法区分这些区域。（最佳效果请在彩色显示下查看。）</p>
 </blockquote>
 <p>显著物体排序（SOR）是最近由[22]提出的一个新问题，处理多物体场景。它根据物体的视觉显著性为每个检测到的物体分配一个唯一的排序顺序。图像中物体的显著性排序反映了人类注意力转移的过程[39]，这有助于研究人员探索人类如何解释图像。同时，大量的下游应用对 SOR 具有巨大的需求。典型的例子包括内容感知图像裁剪[56, 7]、图像解析[25, 40]和图像描述[50, 51]，这些都无法通过当前的物体检测和 SOD 方法得到很好地解决。</p>
 <p>关于 SOR 任务的研究有限。我们可以<strong>将其分为基于 FCN 的方法</strong>[22, 47]和<strong>基于检测的方法</strong>[39]。基于 FCN 的方法像 SOD 一样<strong>逐像素预测显著性排序</strong>。在同一实例中的像素可能会被预测为不同的排序顺序，这<strong>不符合 SOR 的要求，因为 SOR 旨在为同一物体分配相同的排序顺序</strong>。尽管复杂的后处理与其他检测模型结合可以缓解这一问题，但性能不稳定。Siris 等人[39]提出了一种基于检测的方法。它首先训练一个检测器，提取每个候选区域的特征。然后，它将自顶向下和自底向上的信息与候选区域的特征结合起来，以预测它们的排序顺序。然而，该网络<strong>无法端到端训练，检测损失和 SOR 损失难以共同优化</strong>。上述方法<strong>未能充分利用位置信息，而位置信息是排序物体显著性的一个重要因素</strong>。也就是说，中心的物体往往比角落的物体更具吸引力。此外，规模较大的物体通常比较小的物体更吸引眼球。另一个重要因素是<strong>物体之间的相关性</strong>。一个更具吸引力的物体会降低其他物体的视觉显著性（如图 3 所示）。</p>
-<img src="https://vip.helloimg.com/i/2024/08/17/66c039c75c7f8.png" width="60%" />
-
+<p><img src="https://vip.helloimg.com/i/2024/08/17/66c039c75c7f8.png" width="60%" /></p>
 <blockquote>
 <p>图 3. 说明了除了语义信息之外影响物体显著性排名的关键因素，其中直方图表示对应图像中的显著性排序。在图中，(a) 和 (b) 分别展示了位置和尺度对显著性排名的影响。(c) 和 (d) 显示了物体 A 的存在会影响物体 B 的排名顺序。</p>
 </blockquote>
@@ -321,13 +317,11 @@
 <li><strong>检测分支（Detection branch）</strong>：该分支可以使用现成的检测方法，如 [14, 28]。该分支的目标是检测物体并预测它们的位置、类别和掩码。在这个分支中，不使用每个提议的位置信息。</li>
 <li><strong>SOR 分支（SOR branch）</strong>：SOR 分支旨在根据视觉显著性为每个提议分配一个排序顺序。SOR 分支的目标是对提议进行排序，而不是检测它们的存在。PPA 模块在此分支中发挥了主要作用，包含位置嵌入阶段和特征交互阶段。在第一阶段，将语义信息和位置信息融合以获得视觉标记（visual tokens）。然后将这些视觉标记传递到特征交互阶段，为每个提议获取上下文表示。最后，通过一个全连接层来预测每个提议的排序顺序。</li>
 </ol>
-<img src="https://vip.helloimg.com/i/2024/08/17/66c0489ce140d.png" />
-
+<p><img src="https://vip.helloimg.com/i/2024/08/17/66c0489ce140d.png" /></p>
 <blockquote>
 <p>图 2. 提出的端到端显著目标排序（SOR）架构基于多任务学习框架。来自共享特征提取器的语义特征在 ROI 池化之前与位置坐标图拼接。然后，检测分支（蓝色框中显示）预测实例分割结果。SOR 分支（绿色框中显示）将语义特征与位置嵌入结合，并在提议之间进行特征交互。它采用一种新颖的位置保留注意力（Position-Preserved Attention, PPA）模块来获得上下文表示，并通过全连接层（FC 层）进行最终排序预测。</p>
 </blockquote>
-<img src="https://vip.helloimg.com/i/2024/08/17/66c048e4b7f96.png" width="70%" />
-
+<p><img src="https://vip.helloimg.com/i/2024/08/17/66c048e4b7f96.png" width="70%" /></p>
 <blockquote>
 <p>图 4. PPA 模块是 SOR 分支的核心。它具体包括位置嵌入阶段（红色块）和特征交互阶段（蓝色块）。位置嵌入阶段通过位置坐标信息丰富语义特征，并输出向量化的视觉令牌。特征交互阶段利用提议之间的互信息，通过 Transformer 编码器 [41] 进行处理。最终，PPA 模块输出每个提议的上下文表示，用于排序预测。</p>
 </blockquote>
@@ -491,20 +485,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-count">35</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-count">44</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -598,6 +592,8 @@
   
   <script color='0,0,255' opacity='0.4' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
   <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 

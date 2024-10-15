@@ -14,12 +14,13 @@
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
   <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"awayx.online","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"awayx.online","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
   <meta name="description" content="TIM 2022  Abstract随着高速通信和人工智能技术的快速发展，人类对真实世界场景的感知不再局限于使用小视场（FoV）和低维场景检测设备。全景成像技术作为下一代环境感知和测量的创新智能仪器应运而生。然而，全景成像仪器在满足大视场摄影成像需求的同时，还应具备高分辨率、无盲区、小型化和多维智能感知的特点，并能与人工智能方法相结合，成为下一代智能仪器，使人类能够更深入地理解和更全面地感知36">
@@ -131,17 +132,17 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">5</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">42</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">44</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">32</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">35</span></a>
 
   </li>
         <li class="menu-item menu-item-sitemap">
@@ -284,13 +285,11 @@
 </blockquote>
 <h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>随着高速通信和人工智能技术的快速发展，人类对真实世界场景的感知不再局限于使用小视场（FoV）和低维场景检测设备。全景成像技术作为下一代环境感知和测量的创新智能仪器应运而生。然而，全景成像仪器在满足大视场摄影成像需求的同时，还应具备高分辨率、无盲区、小型化和多维智能感知的特点，并能与人工智能方法相结合，成为下一代智能仪器，使人类能够更深入地理解和更全面地感知360°真实世界的周边环境。幸运的是，自由曲面、薄板光学和超表面的最新进展为人类对环境的感知提供了创新的方法，为传统光学成像提供了有希望的新思路。在这篇综述中，我们首先介绍了全景成像系统的基本工作原理，然后描述了各种全景成像系统的架构、特点和功能。接着，我们详细讨论了自由曲面、薄板光学和超表面在全景成像中的广泛应用前景和巨大的设计潜力。然后，我们详细分析了这些技术如何帮助提高全景成像系统的性能。我们进一步详细分析了全景成像在自动驾驶和机器人场景理解中的应用，包括<strong>全景语义图像分割</strong>、全景深度估计、全景视觉定位等。最后，我们展望了全景成像仪器的未来潜力和研究方向。</p>
 <span id="more"></span>
-
 <h2 id="INTRODUCTION"><a href="#INTRODUCTION" class="headerlink" title="INTRODUCTION"></a>INTRODUCTION</h2><p>高速通信和人工智能的最新进展导致了对升级传统成像系统的更强烈需求。全景成像比传统的全景光学系统具有更宽广的视场（FoV），能够同时捕捉到更多关于周围环境的信息。它正在成为下一代智能传感仪器。全景成像被应用于自动驾驶、机器视觉检测、内窥镜医学、卫星大气检测等多种应用中。在成像性能方面，全景成像面临着满足机器视觉等应用要求的几个常见挑战，包括视场、分辨率、无盲区和成像质量。另一个迫切的需求是多维智能感知，全景成像被期望与智能传感器结合，记录、融合和感知周围环境的更高维度信息。此外，全景成像还期望朝着轻量化和小体积的结构形式发展，以适应更多空间和重量受限的场景。然而，上述要求通常需要解决不同的权衡问题，这使得全景成像仪器的设计尤为具有挑战性。与之前唯一的全景成像综述[1]相比，它距今已有很长时间，没有提供过去20年全景成像蓬勃发展的概述[2]–[7]，这一点在本综述中得到了解决。其他传感领域的综述已经出现，例如激光雷达[8]、[9]或场景理解应用[10, 12]。然而，到目前为止，还没有出现全景成像及其应用的详细综述。本综述填补了这一空白，从起源到最新发展，梳理了全景成像及其场景应用。全景成像在20世纪90年代经历了第一次热潮，但由于缺乏合格的制造设备和数字信息处理系统，这一热潮逐渐消退。</p>
 <p>在过去十年中，全景成像的概念被重新审视，并迎来了新的热潮。自由曲面[13]和超表面[14]等新兴技术极大地重塑了全景成像系统，并为全景成像领域点亮了明亮的灯光。这些新兴光学技术的应用为全景光学系统架构的性能提升提供了强大的动力（图1(a)）。同时，多维全景成像系统的提出丰富了全景成像，并在不同的应用领域发挥了更强大的作用（图1(b)）。在本综述中，我们首先介绍了全景成像的基本概念、相关设计挑战和潜在解决方案。然后，我们详细回顾了不同架构的全景成像系统及其特点。此外，我们根据它们的多维成像模式对不同的全景成像系统进行了分类和分析，并简要介绍了目前正在为全景成像配备的新兴光学技术。接着，我们总结了并详细讨论了全景成像在场景理解中的应用。最后，本综述提供了全景成像领域的全面概述和展望。</p>
 <h2 id="KEY-PARAMETERS-OF-PANORAMIC-IMAGING-SYSTEMS"><a href="#KEY-PARAMETERS-OF-PANORAMIC-IMAGING-SYSTEMS" class="headerlink" title="KEY PARAMETERS OF PANORAMIC IMAGING SYSTEMS"></a>KEY PARAMETERS OF PANORAMIC IMAGING SYSTEMS</h2><h2 id="ARCHITECTURES-AND-PROPERTIES-OF-PANORAMIC-IMAGING-SYSTEMS"><a href="#ARCHITECTURES-AND-PROPERTIES-OF-PANORAMIC-IMAGING-SYSTEMS" class="headerlink" title="ARCHITECTURES AND PROPERTIES OF PANORAMIC  IMAGING SYSTEMS"></a>ARCHITECTURES AND PROPERTIES OF PANORAMIC  IMAGING SYSTEMS</h2><h3 id="Single-Camera-Scanning-and-Multiple-Cameras-Stitching"><a href="#Single-Camera-Scanning-and-Multiple-Cameras-Stitching" class="headerlink" title="Single Camera Scanning and Multiple Cameras Stitching"></a>Single Camera Scanning and Multiple Cameras Stitching</h3><h3 id="Fisheye-Panoramic-System"><a href="#Fisheye-Panoramic-System" class="headerlink" title="Fisheye Panoramic System"></a>Fisheye Panoramic System</h3><h3 id="Panomorph-Imaging-System"><a href="#Panomorph-Imaging-System" class="headerlink" title="Panomorph Imaging System"></a>Panomorph Imaging System</h3><h3 id="Catadioptric-Panoramic-System"><a href="#Catadioptric-Panoramic-System" class="headerlink" title="Catadioptric Panoramic System"></a>Catadioptric Panoramic System</h3><h3 id="Monocentric-Panoramic-System"><a href="#Monocentric-Panoramic-System" class="headerlink" title="Monocentric Panoramic System"></a>Monocentric Panoramic System</h3><h3 id="Hyper-hemispheric-Lens"><a href="#Hyper-hemispheric-Lens" class="headerlink" title="Hyper-hemispheric Lens"></a>Hyper-hemispheric Lens</h3><h3 id="Panoramic-Annular-Lens"><a href="#Panoramic-Annular-Lens" class="headerlink" title="Panoramic Annular Lens"></a>Panoramic Annular Lens</h3><h2 id="NEW-ENGINES-OF-PANORAMIC-OPTICAL-SYSTEMS"><a href="#NEW-ENGINES-OF-PANORAMIC-OPTICAL-SYSTEMS" class="headerlink" title="NEW ENGINES OF PANORAMIC OPTICAL SYSTEMS"></a>NEW ENGINES OF PANORAMIC OPTICAL SYSTEMS</h2><h3 id="Freeform-Surface"><a href="#Freeform-Surface" class="headerlink" title="Freeform Surface"></a>Freeform Surface</h3><h3 id="Thin-plate-Optics"><a href="#Thin-plate-Optics" class="headerlink" title="Thin-plate Optics"></a>Thin-plate Optics</h3><h3 id="Wide-FoV-Metalens"><a href="#Wide-FoV-Metalens" class="headerlink" title="Wide-FoV Metalens"></a>Wide-FoV Metalens</h3><h2 id="APPLICATIONS-OF-PANORAMIC-IMAGING-SYSTEMS"><a href="#APPLICATIONS-OF-PANORAMIC-IMAGING-SYSTEMS" class="headerlink" title="APPLICATIONS OF PANORAMIC IMAGING SYSTEMS"></a>APPLICATIONS OF PANORAMIC IMAGING SYSTEMS</h2><p>由于全景相机提供的超宽360°视场（FoV），它们已经被应用于许多场景理解任务[236]。在以下小节中，我们将回顾全景图像系统在机器人应用中的应用，如机器人导航和自动驾驶。</p>
 <h3 id="Semantic-Scene-Understanding-with-Image-Segmentation"><a href="#Semantic-Scene-Understanding-with-Image-Segmentation" class="headerlink" title="Semantic Scene Understanding with Image Segmentation"></a>Semantic Scene Understanding with Image Segmentation</h3><p>语义场景感知是机器人学中的一项基本任务，因为它能够在像素级别提供密集的理解，在这里可以精确提取位置和类别信息，为上层导航操作提供丰富的线索。语义场景理解通常是通过语义图像分割来实现的。当使用360°全景相机工作时，可以对整个周围环境进行全面和综合的场景分割[306]，如图12所示。</p>
-<img src="https://vip.helloimg.com/i/2024/08/20/66c45199d687b.png" width="120%"/>
-
+<p><img src="https://vip.helloimg.com/i/2024/08/20/66c45199d687b.png" width="120%"/></p>
 <blockquote>
 <p>图12. 全景场景分割用于语义周围理解。(a) 使用多个鱼眼相机进行环视感知。经许可转载自[307]，[308]。版权所有2017年和2020年，IEEE；(b) 利用单个全景相机进行全景环形语义分割，实现无缝的全方位周围感知。经许可转载自[207]，[306]。版权所有2019年和2020年，IEEE；(c) 通过无监督领域适应从针孔图像进行全景语义分割。经许可转载自[309]，[310]。版权所有2021年，IEEE；(d) 通过密集对比预训练进行全景全景分割，全面理解周围环境，提供像素级的语义和实例信息。经许可转载自[311]。版权所有2021年，IEEE。</p>
 </blockquote>
@@ -299,23 +298,16 @@
 <p><strong>从适应的角度进行全景分割（from an adaptation perspective）</strong>。最近，为了解决标注全景图像的缺乏，研究人员已经明确地将全景分割形式化为一个无监督<strong>领域适应问题</strong>（<strong>domain adaptation problem</strong>）或<strong>领域泛化问题</strong>（<strong>domain generalization problem</strong>），通过从数据丰富的<strong>针孔领域</strong>（<strong>pinhole domain</strong>）转移到数据稀缺的<strong>全景领域</strong>（<strong>panoramic domain</strong>）[309]、[311]。对于领域适应，可以使用标记的针孔数据作为源领域，未标记的全景图像作为目标领域。对于领域泛化，只能使用源领域的图像，目标是产生一个在目标领域中健壮、泛化的分割模型。P2PDA[309]、[310]（图12(c)）设计了注意力增强的领域适应模块，以在多个空间中检测和放大针孔-全景对应关系。Jaus等人[311]、[319]引入了<strong>全景全景分割</strong>（panoramic panoptic segmentation），它通过还提供实例级理解来扩展全景语义分割（图12(d)）。它输出像素级语义类别和实例ID，从而实现更全面的周围感知。通过添加密集的对比预训练阶段，他们在分割未见过的全景图像时获得了显著的泛化增益。全景全景视频分割（Panoramic panoptic video segmen tation）也在使用<strong>Waymo开放数据集</strong>[320]的全景全景分割中得到了解决，覆盖了220°的视场。已经考虑了全景图像中的畸变。许多研究人员选择直接在具有畸变的等矩形全景图像上执行分割模型，并提出畸变感知模型设计。Hu等人[7]考虑了全景图像生成过程，并通过基于变形卷积的模块解决畸变。Zhang等人[321]、[322]开发了一个畸变感知的变换器模型，以适应全景图像。变换器模型与变形补丁嵌入和变形MLP模块集成，很好地解决了畸变问题，增强了室内外全景分割的鲁棒性。Zheng等人[323]使用补充特征表示为室内全景语义分割提供隐式畸变分布先验。此外，还有许多其他鱼眼[324, 327]、全景[328-330]和全向[331, 334]语义分割工作，在该领域证明了宽视场语义场景理解对真实世界应用的相关性。</p>
 <p>由于全景图像通常具有大视场和高分辨率，研究人员也考虑到了这一点，通过设计紧凑的模型来实现快速响应，以满足效率关键应用的需求。例如，PASS[207]和DS-PASS[314]使用高效的骨干网络，但通过在解码器或横向连接中使用注意力块来提高性能。[315]中的框架利用知识蒸馏来提升紧凑模型的性能。全景全景分割框架[319]也将所有研究的全景骨干网络替换为高效的ResNet-18[335]，以支持在真实世界交通场景中运行的移动代理。他们还表明，当向模型输入更高分辨率的图像时，他们的高效修改变得更加重要。</p>
 <h3 id="Geometric-Scene-Understanding-with-Depth-Estimation"><a href="#Geometric-Scene-Understanding-with-Depth-Estimation" class="headerlink" title="Geometric Scene Understanding with Depth Estimation"></a>Geometric Scene Understanding with Depth Estimation</h3><h3 id="Visual-Localization-Odometry-and-SLAM"><a href="#Visual-Localization-Odometry-and-SLAM" class="headerlink" title="Visual Localization, Odometry, and SLAM"></a>Visual Localization, Odometry, and SLAM</h3><h3 id="Optical-Flow-Estimation-Object-Detection-and-Others"><a href="#Optical-Flow-Estimation-Object-Detection-and-Others" class="headerlink" title="Optical Flow Estimation, Object Detection, and Others"></a>Optical Flow Estimation, Object Detection, and Others</h3><p>除了语义分割和深度估计，全景图像中还有许多潜在的信息值得挖掘，例如光流估计和目标检测，如图15所示。在这一部分中，我们分别回顾了这些全景视觉任务。</p>
-<img src="https://vip.helloimg.com/i/2024/08/20/66c451964f8b9.png" width="120%"/>
-
+<p><img src="https://vip.helloimg.com/i/2024/08/20/66c451964f8b9.png" width="120%"/></p>
 <blockquote>
 <p>图15. 全景流估计、目标检测、布局估计和显著性预测。(a) 在真实世界周围视图中进行全景流估计的示例，用于360°场景时间理解。经许可转载自Shi等人[396]。(b) 进行全景目标检测以识别周围环境中的感兴趣对象和位置的示例。经许可转载自[397]。版权所有2019年，IEEE；(c) 用于室内场景理解的全景3D布局估计的示例。经许可转载自[398]。版权所有2019年，IEEE；(d) 反映360°内容中像素对人类视觉系统重要程度的全景显著性预测的示例。经许可转载自[399]。版权所有2018年，IEEE。</p>
 </blockquote>
 <p><strong>光流估计</strong>。光流反映了时间序列图像上的逐像素对应关系，可以通过基于学习的方法[400]获得。全景内容中的光流估计是一项基本任务，它使自动驾驶汽车和机器人能够获取周围场景的时间线索。由于缺乏大规模全景光流数据集，360°光流估计的研究主要集中在领域适应上。为了利用现有的透视模型并从光流网络的进步中受益，两种常见的视角分别是适应模型和数据集。OmniFlowNet[401]适应了为针孔相机设计的著名LiteFlowNet[402]到全景图像，并且不需要重新训练。考虑到球面相机引入的等矩形畸变，他们使用畸变感知卷积替换了常规的基于网格的2D卷积，通过修改卷积核的坐标。为了解决全景内容中球面到平面投影引入的畸变，Bhandari等人[403]提出了一种球面数据增强，将透视流场投影到球面上，然后重新投影到等矩形格式。然而，这种数据增强是离线的，不灵活，透视数据集应该预先转换以进行训练。Yuan等人[404]通过在切线图像上估计引入了360°光流光流方法。他们直接使用现成的透视光流方法来估计全景图像的流场，然后应用在立方体图和二十面体投影下估计的光流来促进全景光流估计。OmniFlow[405]探索了3D室内环境中的人类全方位光流，并使用渲染引擎生成了合成的360°人类光流数据集。在这些方法中，PanoFlow[396]（见图15(a)）提出了一个通用的循环流估计框架，可以适应任何现有的透视基于学习模型，例如RAFT[406]和CSFlow[407]。他们在城市街道场景下生成了公开可用的全景流数据集Flow360，以促进训练和定量分析，并通过对具有360°×(30°∼90°)视场的全景环形相机验证了他们方法的精度和效率。</p>
 <p><strong>目标检测</strong>。在周围环境中的目标检测也是一项需求任务，因为对无人机和助手机器人等自主移动系统的兴趣日益增加。早期的全景目标检测系统[408]、[409]使用手工设计的算子，随后CNN的出现为这个领域注入了新的活力。Garanderie等人[340]扩展了Faster R-CNN[410]以支持3D目标姿态回归。不对网络架构进行更改，他们的扩展模型可以用于直线或等矩形内容，通过图像变换矩阵和球坐标投影恢复3D位置。Yang等人[411]利用YouTube上的VR视频，并提出了边界-FoV注释，创建了一个用于目标检测的等矩形全景数据集。然后他们将YOLO[412]适应到全景内容中，通过重新投影实现全景目标检测。Wang等人[397]（图15(b)）提出了一种畸变数据增强方法，使用裁剪的汽车图像在等矩形图像平面上随机回投影。考虑到大物体的畸变更为明显，他们将锚框的位置信息聚合到网络中。Guerrero-Viu等人[413]利用现成的布局估计方法[414]同时获得2D目标分割掩模和3D边界框。他们还将所有标准卷积替换为EquiConvs[414]，根据全景图像的畸变隐式适应卷积核的形状和大小。</p>
-<p><strong>其他下游任务</strong>。除了上述应用外，全景相机还与其他领域的深度学习算法集成。<strong>布局估计</strong>：房间的3D布局根据视觉点指定墙壁的位置、方向和高度。通过单个全景图像估计房间的布局可以惠及机器人和VR&#x2F;AR应用。LayoutNet[415]是一个深度CNN，可以从单个透视图或全景图像估计室内场景的布局。他们扩展了Stanford2D3D数据集[416]的注释，增加了房间布局注释。DuLa-Net[398]（图15(c)）通过双流网络架构在等矩形图像和透视天花板图像下进行估计融合。他们还介绍了Realtor360数据集，其中包含全景格式的曼哈顿世界房间布局。CFL[414]提出了EquiConvs，根据全景图像的几何先验变形核的形状。它可以预测复杂的几何形状，如非曼哈顿结构。最近，DeepPanoContext[417]作为第一个基于学习的流程被引入，它可以从单个全景图像中恢复3D房间布局和详细的形状、姿态和场景中物体的位置，用于整体3D场景理解。<strong>异常检测</strong>：异常检测是一项检测特定场景中异常物体或危险行为的任务，这对于智能全景视频监控系统很重要。Benito-Picazo等人[418]为视频异常对象检测开发了一个低能耗的树莓派系统。全景视频是通过Point Grey Ladybug 3 Spherical相机获得的，然后输入到CNN中，以确定它是否包含任何异常对象。<strong>显著性预测</strong>：显著性预测是一项流行的计算机视觉任务，意味着预测人类在给定图像中的视线[419]。全景视频中连续的显著性预测对于视点引导等应用至关重要。Zhang等人[420]探索了周围线索在显著性检测中的效用，并提出了BMS，这是一种使用简单的图像处理操作来利用全景图中的拓扑结构线索的显著性模型。Cheng等人[399]（图15(d)）提出了一个弱监督的时空显著性预测模型，以克服360°视频中的大视点变化。他们还收集了一个Wild-360数据集，其中三分之一的帧用显著性热图进行了注释。</p>
+<p><strong>其他下游任务</strong>。除了上述应用外，全景相机还与其他领域的深度学习算法集成。<strong>布局估计</strong>：房间的3D布局根据视觉点指定墙壁的位置、方向和高度。通过单个全景图像估计房间的布局可以惠及机器人和VR/AR应用。LayoutNet[415]是一个深度CNN，可以从单个透视图或全景图像估计室内场景的布局。他们扩展了Stanford2D3D数据集[416]的注释，增加了房间布局注释。DuLa-Net[398]（图15(c)）通过双流网络架构在等矩形图像和透视天花板图像下进行估计融合。他们还介绍了Realtor360数据集，其中包含全景格式的曼哈顿世界房间布局。CFL[414]提出了EquiConvs，根据全景图像的几何先验变形核的形状。它可以预测复杂的几何形状，如非曼哈顿结构。最近，DeepPanoContext[417]作为第一个基于学习的流程被引入，它可以从单个全景图像中恢复3D房间布局和详细的形状、姿态和场景中物体的位置，用于整体3D场景理解。<strong>异常检测</strong>：异常检测是一项检测特定场景中异常物体或危险行为的任务，这对于智能全景视频监控系统很重要。Benito-Picazo等人[418]为视频异常对象检测开发了一个低能耗的树莓派系统。全景视频是通过Point Grey Ladybug 3 Spherical相机获得的，然后输入到CNN中，以确定它是否包含任何异常对象。<strong>显著性预测</strong>：显著性预测是一项流行的计算机视觉任务，意味着预测人类在给定图像中的视线[419]。全景视频中连续的显著性预测对于视点引导等应用至关重要。Zhang等人[420]探索了周围线索在显著性检测中的效用，并提出了BMS，这是一种使用简单的图像处理操作来利用全景图中的拓扑结构线索的显著性模型。Cheng等人[399]（图15(d)）提出了一个弱监督的时空显著性预测模型，以克服360°视频中的大视点变化。他们还收集了一个Wild-360数据集，其中三分之一的帧用显著性热图进行了注释。</p>
 <h2 id="CONCLUSIONS-AND-PERSPECTIVES"><a href="#CONCLUSIONS-AND-PERSPECTIVES" class="headerlink" title="CONCLUSIONS AND PERSPECTIVES"></a>CONCLUSIONS AND PERSPECTIVES</h2><p>全景成像光学系统被寄予厚望，将成为未来智能感知传感器的重要组成部分。它在当前的场景理解应用中展现出巨大的应用潜力，如自动驾驶和机器人系统。与期望相伴的，是设计和制造方面的挑战，即将高性能全景系统压缩到紧凑空间以获取多维全景信息。尽管光学系统的参数限制在这条道路上构成了巨大的障碍，但创新的光学架构和新兴的光学技术为这条道路点亮了明灯。超精密制造的兴起为自由曲面、薄板光学和超透镜等微纳加工提供了强有力的支持。这些新型光学引擎为传统光学元件提供了有效的替代方案，并支持更多的设计自由度，以实现超越传统几何光学的新功能和高性能。未来，全景成像系统将结合这些新兴技术，朝着紧凑、智能和多维发展，实现更强大的全景场景环境感知和周围理解。</p>
 <p>这篇综述文章对全景光学系统知识和下游感知应用进行了系统和详细的文献分析，并阐明了全景光学系统改进的优势、进展、局限性、未来挑战和方向。文章从光学系统和算法应用的角度，确定了全景感知需要面对的宝贵挑战，包括：</p>
-<ol>
-<li>新型光学表面技术将有助于全景成像系统的小型化、轻量化和高性能。</li>
-<li>具有多视场、多功能（例如变焦、偏振）、高时间分辨率和高光谱多维感知能力的全景光学系统将促进更多新的场景理解应用。</li>
-<li>基于新型智能传感器和计算成像的融合，将推动场景理解全景光学仪器的发展。</li>
-<li>结合具有超宽视场的全景光学系统和具有超动态范围的事件传感器，或具有相同投影行为的主动感知激光雷达，实现多模态稳健的周围感知。</li>
-<li>考虑到在全景图像上进行注释是困难和昂贵的，探索无监督或弱监督学习算法，或从现有的针孔领域适应到全景领域的算法，将有利于实际应用。</li>
-</ol>
+<p>1) 新型光学表面技术将有助于全景成像系统的小型化、轻量化和高性能。<br>2) 具有多视场、多功能（例如变焦、偏振）、高时间分辨率和高光谱多维感知能力的全景光学系统将促进更多新的场景理解应用。<br>3) 基于新型智能传感器和计算成像的融合，将推动场景理解全景光学仪器的发展。<br>4) 结合具有超宽视场的全景光学系统和具有超动态范围的事件传感器，或具有相同投影行为的主动感知激光雷达，实现多模态稳健的周围感知。<br>5) 考虑到在全景图像上进行注释是困难和昂贵的，探索无监督或弱监督学习算法，或从现有的针孔领域适应到全景领域的算法，将有利于实际应用。</p>
 <p>总的来说，凭借360°大视场的独特优势，全景光学系统将结合新兴传感器、超精密光学制造、计算成像和人工智能，实现超高性能、新功能、小体积和多维感知的低功耗全景智能仪器，以增强人类观察世界的方式，对周围环境有更深入、更真实的感知。全景成像系统已从传统光学转变为智能计算光学，并将在自动驾驶、医疗健康、安全监控、深空探索、深海探索、天体地形探测和智能机器人等各种应用中得到应用，极大地改善了我们的生活和感知环境的方式。</p>
 
     </div>
@@ -473,20 +465,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-count">35</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-count">44</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -580,6 +572,8 @@
   
   <script color='0,0,255' opacity='0.4' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
   <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 

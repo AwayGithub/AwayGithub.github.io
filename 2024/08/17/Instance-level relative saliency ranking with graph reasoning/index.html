@@ -14,12 +14,13 @@
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
   <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"awayx.online","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"awayx.online","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
   <meta name="description" content="TPAMI 2021  Abstract传统的显著物体检测模型无法区分不同显著物体的重要性。最近，已有两项工作提出通过为不同物体分配不同程度的显著性来检测显著性排序。然而，这些模型中的一个无法区分物体实例，而另一个则更多关注于顺序注意力转移的推断。本文探讨了一种实际问题设置，该设置要求同时对显著实例进行分割并推断其相对显著性排名。我们提出了一种新型的统一模型，作为第一个端到端的解决方案，其中改进">
@@ -134,17 +135,17 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">5</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">42</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">44</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">32</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">35</span></a>
 
   </li>
         <li class="menu-item menu-item-sitemap">
@@ -285,10 +286,8 @@
 </blockquote>
 <h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>传统的显著物体检测模型无法区分不同显著物体的重要性。最近，已有两项工作提出通过为不同物体分配不同程度的显著性来检测显著性排序。然而，这些模型中的一个无法区分物体实例，而另一个则更多关注于顺序注意力转移的推断。本文探讨了一种实际问题设置，该设置要求同时对显著实例进行分割并推断其相对显著性排名。我们提出了一种<strong>新型的统一模型</strong>，作为第一个端到端的解决方案，其中改进的 <strong>Mask R-CNN 用于分割显著实例，随后添加了一个显著性排名分支来推断相对显著性</strong>。对于相对显著性排名，我们构建了一个<strong>新的图推理模块</strong>，通过结合四种图来分别融入实例交互关系、局部对比、全局对比和高层语义先验。此外，我们还提出了一种<strong>新颖的损失函数</strong>来有效训练显著性排名分支。除了这些，我们还为这一任务提出了一个<strong>新数据集和评价指标</strong>，旨在推动这一领域的研究。最后，实验结果表明，我们提出的模型比以前的方法更有效。我们还展示了其在自适应图像重定向中的实际应用示例。</p>
 <span id="more"></span>
-
 <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>显著物体检测（SOD）旨在检测视觉场景中吸引人们注意的物体。为此任务已经提出了各种模型。近年来，基于深度学习的模型，特别是[1]、[2]、[3]、[4]、[5]、[6]，取得了非常有前景的结果。SOD任务以绝对方式定义显著性，其中真实标签（GT）显著性图是二值的，即属于显著物体的像素标记为1，而背景像素标记为0。因此，之前的模型学习检测图像中的所有显著物体，但没有明确区分它们的不同显著性程度。</p>
-<img src="https://vip.helloimg.com/i/2024/08/17/66c053ef6789e.png" width="80%"/>
-
+<p><img src="https://vip.helloimg.com/i/2024/08/17/66c053ef6789e.png" width="80%"/></p>
 <blockquote>
 <p>图 1. 不同显著性模型的比较。显著物体检测模型在每张图像中对所有显著物体进行均等突出，如列 (c) 所示。本文旨在检测实例级别的相对显著性排名，即为不同的显著物体分配不同的显著性值，以表示它们的显著性程度。 (a) 和 (b): 三张示例图像及其对应的 GT 显著性图。 (d): 在 [12] 中，作者预测了像素级的显著性排名，但并没有实际区分物体实例。 (e): 在 [13] 中，显著性排名是基于注意力转移推断的，仅考虑了少于五个物体。 (f): 我们的模型对于相对显著性排名展示了更准确和实际的结果。为了方便区分不同的排名顺序，我们还在每个显著实例上标注了排名顺序。</p>
 </blockquote>
@@ -306,30 +305,26 @@
 <li>考虑到以往评价指标的局限性，我们提出了一种新的评价指标，全面考虑了显著实例检测、分割和排名性能。</li>
 <li>实验结果验证了我们提出的显著性线索和模型的有效性。我们还展示了我们的模型在所有现有数据集上的优越性能，并演示了其在自适应图像重定向任务中的应用。</li>
 </ul>
-<h2 id="RELATED-WORK"><a href="#RELATED-WORK" class="headerlink" title="RELATED WORK"></a>RELATED WORK</h2><h3 id="Salient-Object-Detection"><a href="#Salient-Object-Detection" class="headerlink" title="Salient Object Detection"></a>Salient Object Detection</h3><h3 id="Eye-Fixation-Prediction"><a href="#Eye-Fixation-Prediction" class="headerlink" title="Eye Fixation Prediction"></a>Eye Fixation Prediction</h3><h3 id="Salient-Instance-Segmentation"><a href="#Salient-Instance-Segmentation" class="headerlink" title="Salient Instance Segmentation"></a>Salient Instance Segmentation</h3><h3 id="Graph-Neural-Network"><a href="#Graph-Neural-Network" class="headerlink" title="Graph Neural Network"></a>Graph Neural Network</h3><h2 id="PROPOSED-DATASET"><a href="#PROPOSED-DATASET" class="headerlink" title="PROPOSED DATASET"></a>PROPOSED DATASET</h2><img src="https://vip.helloimg.com/i/2024/08/17/66c058146d55f.png" />
-
+<h2 id="RELATED-WORK"><a href="#RELATED-WORK" class="headerlink" title="RELATED WORK"></a>RELATED WORK</h2><h3 id="Salient-Object-Detection"><a href="#Salient-Object-Detection" class="headerlink" title="Salient Object Detection"></a>Salient Object Detection</h3><h3 id="Eye-Fixation-Prediction"><a href="#Eye-Fixation-Prediction" class="headerlink" title="Eye Fixation Prediction"></a>Eye Fixation Prediction</h3><h3 id="Salient-Instance-Segmentation"><a href="#Salient-Instance-Segmentation" class="headerlink" title="Salient Instance Segmentation"></a>Salient Instance Segmentation</h3><h3 id="Graph-Neural-Network"><a href="#Graph-Neural-Network" class="headerlink" title="Graph Neural Network"></a>Graph Neural Network</h3><h2 id="PROPOSED-DATASET"><a href="#PROPOSED-DATASET" class="headerlink" title="PROPOSED DATASET"></a>PROPOSED DATASET</h2><p><img src="https://vip.helloimg.com/i/2024/08/17/66c058146d55f.png" /></p>
 <blockquote>
 <p>图 2. 以往显著性排名数据集的局限性。我们展示了 PASCAL-S 数据集 [20] 在前四列中的局限性，以及 Siris 的数据集 [13] 在最后四列中的局限性。第二行和第三行分别表示它们的显著性排名注释和眼动注视显著性图。</p>
 </blockquote>
 <p>在[12]中，Islam 等人对 PASCAL-S [20] 数据集进行了相对显著性排名检测的模型训练和评估。然而，由于几个原因，<strong>这个数据集并不是理想的选择</strong>。首先，它仅包含 850 张图片，其中 40.4% 的图片中只有一个显著性排名，如图 2(a) 所示。这些图片不能用于训练和评估显著性排名模型，而剩下的图片数量又太少，无法用于训练深度模型。其次，这个数据集中许多图片存在两个问题。第一个是同一图片中的多个实例被标注为相同的排名，如图 2(b) 所示。另一个是一些实例被过度分割为多个具有不同排名值的区域，例如图 2(c) 中的狗。这两种情况都不适合实例级显著性排名检测任务。第三，数据集中一些标注的显著物体实际上属于“物体”类别，这些类别是相似纹理或材质的无定形区域，如图 2(d) 中的树木、山脉和被子。这些类别通常是不可计数的，因此很难为它们定义“实例”。</p>
 <p>为了解决这些问题，[21] 和 [13] 中的作者分别利用现有的 MS-COCO [66] 数据集和 SALICON [67] 数据集构建了新的显著性排名基准数据集。前者拥有超过 10 万张图片和 80 类的像素级实例掩码标注。后者包含 10,000 张训练图片和 5,000 张验证图片，所有图片均从 MS-COCO 中抽样，且具有通过鼠标跟踪获得的注视数据。因此，直观上，应该很容易使用 SALICON 的注视数据来对 MS-COCO 的对象实例进行排名。然而，<strong>结合这两个数据集并非易事</strong>，因为存在几个挑战。首先，<strong>由于 MS-COCO 仅有 80 类标注的对象实例，因此有些图片中的对象实例虽然有足够的注视数据，但没有掩码标注</strong>。第二个挑战是<strong>许多 COCO 图片中有数十个标注实例</strong>，而我们不能使用所有实例进行显著性排名。这是因为显著性感知非常主观，甚至对于人类来说，也很难毫无疑问地对许多物体的显著性进行排名，特别是对于显著性较低的物体。因此，<strong>需要从复杂的背景中选择一些显著实例，而忽略非显著实例</strong>。第三个挑战是 <strong>MS-COCO 中存在多个标注错误，例如过度分割或欠分割的图片</strong>。这些挑战都阻碍了这两个数据集的直接使用。</p>
 <p>考虑到上述问题，在[21]中，Kalash 等人使用了复杂的手工设计规则并配备可调参数来筛选不合适的图片和选择显著物体实例以构建数据集。通过使用宽松和严格的参数，他们分别构建了一个噪声数据集和一个干净数据集。尽管他们仔细调整了参数并在小规模数据上进行了验证，但他们的<strong>手工设计规则不能适用于所有场景</strong>，特别是在复杂的视觉场景中。在[13]中，Siris 等人简单地筛除了没有对象标注的图片，以及那些包含完全被较大物体包围的小物体的图片。这种<strong>简单的预处理引入了显著的噪声</strong>，尤其是因为他们未能筛除包含在 80 类 MS-COCO 类别之外的显著物体的图片，如图 2(e) 中的建筑物。此外，<strong>他们根据注意力转移生成了显著性排名注释，这使得他们的数据集非常接近扫描路径预测任务（scanpath prediction task），而不是相对显著性排名任务</strong>。例如，他们将图 2(f) 中的船排名为最显著的，因为它位于图片的中心，人们通常首先查看的地方，尽管根据第三行展示的眼动研究，人物比船显著得多。最后，与[21]和我们的数据集不同，他们<strong>没有在每张图片中定义显著物体和非显著物体</strong>。他们的数据集只是排名前五的最显著实例，因此包括一些非显著物体（如图 2(g) 所示）或忽略了一些显著物体（如图 2(h) 所示）。因此，它在定义显著物体时不仅不够合理，而且在实际使用中也不够灵活。</p>
-<p>在本文中，我们构建了一个<strong>更准确标注的相对显著实例排名任务数据集</strong>。我们首先从 MS-COCO 数据集中找到 15,000 张 SALICON 图片，并提取其实例分割掩码。然后，我们将每张图片及其实例注释展示给不同的受试者，并要求他们挑选合适的图片和选择显著物体。受试者包括<strong>五名</strong>年龄在 20 到 30 岁的研究生，其中四名男性和一名女性。图片和显著物体选择的规则如下：i) 对于每张展示的图片，每个受试者选择他&#x2F;她认为显著的物体。ii) 如果图片中有在 MS-COCO 实例注释中未显示的显著物体，则应标记为不合适。iii) 如果图片中存在明显的分割错误，例如有过度分割或欠分割的实例，则应标记为不合适。iv) 如果图片中的显著实例超过八个或少于两个，或者没有明显的显著物体，则应标记为不合适。我们将显著实例的最大数量限制为八个，遵循 PASCAL-S 数据集的标准，<strong>该数据集中每张图片最多有七个显著性排名</strong>，并考虑到 MS-COCO 图片中物体数量相对较多。<strong>经过人工选择和标注，我们筛除了被三名以上受试者标记为不合适的图片</strong>。类似地，对于剩余的图片，我们将<strong>被三名以上受试者标记为显著物体的对象标记为显著物体</strong>。然后，对于每张图片中的显著性排名，我们遵循[21]，<strong>利用 SALICON 数据集提供的显著性图，而不是注视点</strong>。然而，我们不是使用每个实例中的平均显著性值，而是<strong>根据每个实例掩码中的最大显著性值对标记的显著物体进行排名</strong>，因为物体的显著性程度主要取决于其独特的部分。</p>
+<p>在本文中，我们构建了一个<strong>更准确标注的相对显著实例排名任务数据集</strong>。我们首先从 MS-COCO 数据集中找到 15,000 张 SALICON 图片，并提取其实例分割掩码。然后，我们将每张图片及其实例注释展示给不同的受试者，并要求他们挑选合适的图片和选择显著物体。受试者包括<strong>五名</strong>年龄在 20 到 30 岁的研究生，其中四名男性和一名女性。图片和显著物体选择的规则如下：i) 对于每张展示的图片，每个受试者选择他/她认为显著的物体。ii) 如果图片中有在 MS-COCO 实例注释中未显示的显著物体，则应标记为不合适。iii) 如果图片中存在明显的分割错误，例如有过度分割或欠分割的实例，则应标记为不合适。iv) 如果图片中的显著实例超过八个或少于两个，或者没有明显的显著物体，则应标记为不合适。我们将显著实例的最大数量限制为八个，遵循 PASCAL-S 数据集的标准，<strong>该数据集中每张图片最多有七个显著性排名</strong>，并考虑到 MS-COCO 图片中物体数量相对较多。<strong>经过人工选择和标注，我们筛除了被三名以上受试者标记为不合适的图片</strong>。类似地，对于剩余的图片，我们将<strong>被三名以上受试者标记为显著物体的对象标记为显著物体</strong>。然后，对于每张图片中的显著性排名，我们遵循[21]，<strong>利用 SALICON 数据集提供的显著性图，而不是注视点</strong>。然而，我们不是使用每个实例中的平均显著性值，而是<strong>根据每个实例掩码中的最大显著性值对标记的显著物体进行排名</strong>，因为物体的显著性程度主要取决于其独特的部分。</p>
 <p>最终，我们获得了总共 8,988 张图片，其中 6,059 张用于训练，2,929 张用于测试，按照 SALICON 的训练和验证拆分进行划分。与 PASCAL-S 数据集类似，我们将实例分割和相对显著性排名可视化为显著性图。然而，与 PASCAL-S 不同的是，对于每张图片，我们通过<strong>均匀地将</strong> [0,255] <strong>划分为其显著性排名顺序</strong>来分配不同显著实例掩码中的显著性值。图 3 显示了我们提出的数据集中三张示例图片，包括标注的显著实例、SALICON 显著性图和生成的显著性排名图。</p>
-<img src="https://vip.helloimg.com/i/2024/08/17/66c05b785059b.png" width="70%"/>
-
+<p><img src="https://vip.helloimg.com/i/2024/08/17/66c05b785059b.png" width="70%"/></p>
 <blockquote>
 <p>图 3. 我们提出的数据集示例。对于每张图像，我们展示了标注的显著实例和来自 SALICON [67] 数据集的显著性图。基于这两种注释，我们生成了相对显著性排名图，如最后一列所示。</p>
 </blockquote>
 <p><strong>统计分析</strong>：表 1 显示了我们提出的数据集、PASCAL-S [20] 和 Siris 的数据集 [13] 之间的统计比较。如表中所示，我们的数据集具有大规模的图像数据，类似于 Siris 的数据集。PASCAL-S 中有许多图片只有一个显著实例，这些图片不能用于显著性排名。Siris 的数据集中最多有五个显著实例，其中恰好有五个实例的图片占比高达 63.6%，因此偏离了实际应用场景。相比之下，我们的数据集更加平衡。许多图片有两个或三个显著实例，超过 30% 的图片有四个或更多。值得注意的是，我们发现约 9% 的图片根据人工注释有超过五个显著实例。因此，相较于现有的两个数据集 [13]、[21]，我们的数据集<strong>需要考虑更大的显著实例数量限制</strong>，这一发现也展示了我们数据集的难度。</p>
-<img src="https://vip.helloimg.com/i/2024/08/17/66c05b69b4196.png" />
-
+<p><img src="https://vip.helloimg.com/i/2024/08/17/66c05b69b4196.png" /></p>
 <blockquote>
 <p>表1. 三种显著性排名数据集的统计比较。我们提供了关于总图像数量和不同显著实例数量分布的比较。</p>
 </blockquote>
-<p>考虑到显著性程度也受到物体类别信息的很大影响，例如，在 [18]、[40]、[41] 中发现人脸、文本、汽车和人比其他物体更显著，我们还调查了我们提出的数据集中<strong>不同物体类别的平均显著性程度</strong>。具体来说，对于每个排名 $i$，其中 $i\in {1,2,\dots,8}$ 表示降序排名，我们统计每个 COCO 类别 $j$ 的比例为 $p_{i,j}$。然后，我们为排名 $i$ 赋一个相反的分数 $9 − i$，从而为较高的排名赋予较大的分数。最后，类别 $j$ 的平均显著性分数可以计算为： $S_j &#x3D; \sum_{i&#x3D;1}^{8} (9 - i)p_{i,j}$。 我们在图 4 中提供了 80 个 COCO 类别的平均显著性分数的可视化比较。如图所示，“人”类别是最显著的，其分数远高于其他类别。这一观察结果也与 [18]、[40]、[41] 中的发现相符。</p>
-<img src="https://vip.helloimg.com/i/2024/08/17/66c05b7263437.png" />
-
+<p>考虑到显著性程度也受到物体类别信息的很大影响，例如，在 [18]、[40]、[41] 中发现人脸、文本、汽车和人比其他物体更显著，我们还调查了我们提出的数据集中<strong>不同物体类别的平均显著性程度</strong>。具体来说，对于每个排名 $i$，其中 $i\in \{1,2,\dots,8\}$ 表示降序排名，我们统计每个 COCO 类别 $j$ 的比例为 $p_{i,j}$。然后，我们为排名 $i$ 赋一个相反的分数 $9 − i$，从而为较高的排名赋予较大的分数。最后，类别 $j$ 的平均显著性分数可以计算为： $S_j = \sum_{i=1}^{8} (9 - i)p_{i,j}$。 我们在图 4 中提供了 80 个 COCO 类别的平均显著性分数的可视化比较。如图所示，“人”类别是最显著的，其分数远高于其他类别。这一观察结果也与 [18]、[40]、[41] 中的发现相符。</p>
+<p><img src="https://vip.helloimg.com/i/2024/08/17/66c05b7263437.png" /></p>
 <blockquote>
 <p>图 4. 在我们提出的数据集中，80 个 COCO 类别的平均显著性得分比较。为了更好的可视化，我们绘制了每个类别 j 的 log(1 + Sj) 直方图。</p>
 </blockquote>
@@ -490,20 +485,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-count">35</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-count">44</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -597,6 +592,8 @@
   
   <script color='0,0,255' opacity='0.4' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
   <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 

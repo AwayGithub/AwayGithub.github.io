@@ -14,28 +14,29 @@
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
   <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"awayx.online","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"awayx.online","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
   <meta name="description" content="第1章  线性方程组的解法线性方程组的初等变换多元线性方程组 例题：求$1^k+2^k+ \cdots +n^k$ $n$元一次&#x2F;线性方程组 解，解集  线性方程组的同解变形 三角形方程组：方便求解 方程组$U$的线性组合：$W$ 方程组的初等变换：3种 $U\to W$是同解变形">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Linear Algebra">
-<meta property="og:url" content="http://awayx.online/2024/08/09/Linear%20Algebra/index.html">
+<meta property="og:title" content="线性代数">
+<meta property="og:url" content="http://awayx.online/2024/08/09/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/index.html">
 <meta property="og:site_name" content="AwaySpace">
 <meta property="og:description" content="第1章  线性方程组的解法线性方程组的初等变换多元线性方程组 例题：求$1^k+2^k+ \cdots +n^k$ $n$元一次&#x2F;线性方程组 解，解集  线性方程组的同解变形 三角形方程组：方便求解 方程组$U$的线性组合：$W$ 方程组的初等变换：3种 $U\to W$是同解变形">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-08-09T14:56:04.000Z">
-<meta property="article:modified_time" content="2024-08-12T13:38:38.639Z">
+<meta property="article:modified_time" content="2024-09-13T06:51:48.721Z">
 <meta property="article:author" content="AwayX">
 <meta property="article:tag" content="教材">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://awayx.online/2024/08/09/Linear%20Algebra/">
+<link rel="canonical" href="http://awayx.online/2024/08/09/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/">
 
 
 <script id="page-configurations">
@@ -48,7 +49,7 @@
   };
 </script>
 
-  <title>Linear Algebra | AwaySpace</title>
+  <title>线性代数 | AwaySpace</title>
   
 
 
@@ -128,17 +129,17 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">5</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">42</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">44</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">32</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">35</span></a>
 
   </li>
         <li class="menu-item menu-item-sitemap">
@@ -198,7 +199,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://awayx.online/2024/08/09/Linear%20Algebra/">
+    <link itemprop="mainEntityOfPage" href="http://awayx.online/2024/08/09/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/TheRightToCry.jpg">
@@ -211,7 +212,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Linear Algebra
+          线性代数
         </h1>
 
         <div class="post-meta">
@@ -228,7 +229,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-08-12 21:38:38" itemprop="dateModified" datetime="2024-08-12T21:38:38+08:00">2024-08-12</time>
+                <time title="修改时间：2024-09-13 14:51:48" itemprop="dateModified" datetime="2024-09-13T14:51:48+08:00">2024-09-13</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -264,7 +265,7 @@
       
         <h2 id="第1章-线性方程组的解法"><a href="#第1章-线性方程组的解法" class="headerlink" title="第1章  线性方程组的解法"></a>第1章  线性方程组的解法</h2><h3 id="线性方程组的初等变换"><a href="#线性方程组的初等变换" class="headerlink" title="线性方程组的初等变换"></a>线性方程组的初等变换</h3><h4 id="多元线性方程组"><a href="#多元线性方程组" class="headerlink" title="多元线性方程组"></a>多元线性方程组</h4><ol>
 <li>例题：求$1^k+2^k+ \cdots +n^k$</li>
-<li>$n$元一次&#x2F;线性方程组</li>
+<li>$n$元一次/线性方程组</li>
 <li>解，解集</li>
 </ol>
 <h4 id="线性方程组的同解变形"><a href="#线性方程组的同解变形" class="headerlink" title="线性方程组的同解变形"></a>线性方程组的同解变形</h4><ol>
@@ -276,9 +277,8 @@
 </li>
 </ol>
 <span id="more"></span>
-
 <h3 id="矩阵消元法"><a href="#矩阵消元法" class="headerlink" title="矩阵消元法"></a>矩阵消元法</h3><h4 id="矩阵的初等行变换"><a href="#矩阵的初等行变换" class="headerlink" title="矩阵的初等行变换"></a>矩阵的初等行变换</h4><ol>
-<li>矩阵、元素&#x2F;分量，行矩阵&#x2F;行向量，列矩阵&#x2F;列向量，方阵，零矩阵，零向量</li>
+<li>矩阵、元素/分量，行矩阵/行向量，列矩阵/列向量，方阵，零矩阵，零向量</li>
 <li>用矩阵$\mathbf{M}$表示线性方程组<ol>
 <li>$\mathbf{A}$：系数矩阵</li>
 <li>$\mathbf{M}$：增广矩阵</li>
@@ -291,7 +291,7 @@
 <li>通解、特解</li>
 <li>齐次线性方程组<ol>
 <li>常数项全为0，可直接用$\mathbf{A}$代替方程组</li>
-<li>方程至少有零解&#x2F;平凡解</li>
+<li>方程至少有零解/平凡解</li>
 </ol>
 </li>
 </ol>
@@ -311,42 +311,42 @@
 <h3 id="线性方程组解集合的初步讨论"><a href="#线性方程组解集合的初步讨论" class="headerlink" title="线性方程组解集合的初步讨论"></a>线性方程组解集合的初步讨论</h3><h4 id="线性方程组求解过程总结"><a href="#线性方程组求解过程总结" class="headerlink" title="线性方程组求解过程总结"></a>线性方程组求解过程总结</h4><ol>
 <li>阶梯形矩阵$\mathbf{T}$，最简阶梯形矩阵</li>
 <li>化为阶梯形矩阵后：<ol>
-<li>$r$：阶梯数；$n$：矩阵列数&#x2F;未知数个数；$m$：方程数</li>
+<li>$r$：阶梯数；$n$：矩阵列数/未知数个数；$m$：方程数</li>
 <li>一定有：$r\le m$</li>
 <li>$m&lt;n\Rightarrow$无穷多解</li>
-<li>$m&#x3D;n&#x3D;r$（满秩）$\Rightarrow$无论常数项如何取值，方程组有唯一解</li>
+<li>$m=n=r$（满秩）$\Rightarrow$无论常数项如何取值，方程组有唯一解</li>
 </ol>
 </li>
 </ol>
 <h2 id="第2章-向量空间"><a href="#第2章-向量空间" class="headerlink" title="第2章  向量空间"></a>第2章  向量空间</h2><h2 id="第3章-行列式"><a href="#第3章-行列式" class="headerlink" title="第3章  行列式"></a>第3章  行列式</h2><h2 id="第4章-矩阵的代数运算"><a href="#第4章-矩阵的代数运算" class="headerlink" title="第4章  矩阵的代数运算"></a>第4章  矩阵的代数运算</h2><h2 id="第5章-矩阵的相合与相似"><a href="#第5章-矩阵的相合与相似" class="headerlink" title="第5章  矩阵的相合与相似"></a>第5章  矩阵的相合与相似</h2><h3 id="欧氏空间"><a href="#欧氏空间" class="headerlink" title="欧氏空间"></a>欧氏空间</h3><h4 id="最小二乘法"><a href="#最小二乘法" class="headerlink" title="最小二乘法"></a>最小二乘法</h4><ol>
-<li>想要近似解方程组$\mathbf{AX&#x3D;c}$</li>
+<li>想要近似解方程组$\mathbf{AX=c}$</li>
 <li>想象成几何问题：平面外一点到平面距离最小值</li>
-<li>化为求解方程组$\mathbf{A^T AX&#x3D;A^T c}$，3的唯一解是1的近似解</li>
+<li>化为求解方程组$\mathbf{A^T AX=A^T c}$，3的唯一解是1的近似解</li>
 </ol>
 <h4 id="内积的推广"><a href="#内积的推广" class="headerlink" title="内积的推广"></a>内积的推广</h4><ol>
 <li>$\mathbf{R}^n$上内积的定义</li>
 <li>欧氏空间：定义了内积的实向量空间</li>
-<li>$(\mathbf{a},\mathbf{b})&#x3D;\mathbf{a}^T\mathbf{b}$</li>
+<li>$(\mathbf{a},\mathbf{b})=\mathbf{a}^T\mathbf{b}$</li>
 <li>内积的性质：双线性、对称性、正定性</li>
-<li>垂直&#x2F;正交</li>
+<li>垂直/正交</li>
 <li>模，单位向量</li>
 <li>最小二乘法的理论依据<ol>
 <li>方程3的解使得方程1在误差平方的意义下最优</li>
-<li>齐次线性方程组$\mathbf{AX&#x3D;0}$与$\mathbf{A}^T\mathbf{AX&#x3D;0}$同解，$\mathbf{A}^T\mathbf{A}$与$\mathbf{A}$秩相等</li>
-<li>方程3总是有解，且当$rank\mathbf{A}&#x3D;n$时有唯一解</li>
+<li>齐次线性方程组$\mathbf{AX=0}$与$\mathbf{A}^T\mathbf{AX=0}$同解，$\mathbf{A}^T\mathbf{A}$与$\mathbf{A}$秩相等</li>
+<li>方程3总是有解，且当$rank\mathbf{A}=n$时有唯一解</li>
 </ol>
 </li>
 </ol>
 <h4 id="角度的计算公式"><a href="#角度的计算公式" class="headerlink" title="角度的计算公式"></a>角度的计算公式</h4><ol>
-<li>$cos(\theta)&#x3D;\frac{(\mathbf{a},\mathbf{b})}{|\mathbf{a}||\mathbf{b}|}$</li>
+<li>$cos(\theta)=\frac{(\mathbf{a},\mathbf{b})}{|\mathbf{a}||\mathbf{b}|}$</li>
 <li>柯西-施瓦茨不等式：$(\mathbf{a},\mathbf{b})^2\le|\mathbf{a}|^2|\mathbf{b}|^2$</li>
 <li>余弦定理</li>
 <li>三角形不等式</li>
 </ol>
 <h3 id="正交化"><a href="#正交化" class="headerlink" title="正交化"></a>正交化</h3><h4 id="标准正交基"><a href="#标准正交基" class="headerlink" title="标准正交基"></a>标准正交基</h4><ol>
 <li>正交向量组、正交基，标准正交向量组(单位向量组成)、标准正交基</li>
-<li>度量方阵&#x2F;格拉姆方阵$\mathbf{G}$：以向量组$T$中两两向量的内积$(\mathbf{\alpha}_i,\mathbf{\alpha}_j)$为第$(i,j)$元组成的方阵<ol>
-<li>将向量组以列排成$\mathbf{A}$，则$\mathbf{G}&#x3D;\mathbf{A}^T\mathbf{A}$</li>
+<li>度量方阵/格拉姆方阵$\mathbf{G}$：以向量组$T$中两两向量的内积$(\mathbf{\alpha}_i,\mathbf{\alpha}_j)$为第$(i,j)$元组成的方阵<ol>
+<li>将向量组以列排成$\mathbf{A}$，则$\mathbf{G}=\mathbf{A}^T\mathbf{A}$</li>
 <li>对称性</li>
 <li>用$\mathbf{G}$计算内积</li>
 <li>$\mathbf{X^T GX}\ge 0$</li>
@@ -356,14 +356,14 @@
 <li>设$\mathbf{S}$是$n$阶<strong>实对称</strong>方阵，若对任意$\mathbf{0}\neq\mathbf{X}\in\mathbf{R}^{n\times1}$有$\mathbf{X^T SX&gt;0}$，则称$\mathbf{S}$是正定的</li>
 </ol>
 </li>
-<li>正交方阵：$\mathbf{A^T A&#x3D;I}$</li>
+<li>正交方阵：$\mathbf{A^T A=I}$</li>
 </ol>
 <h4 id="Gram-Schmidt正交化方法"><a href="#Gram-Schmidt正交化方法" class="headerlink" title="Gram-Schmidt正交化方法"></a>Gram-Schmidt正交化方法</h4><p>一组基$\to$正交基$\to$标准正交基</p>
 <p>对线性无关的$\mathbf{a_1,\cdots,a_k,a_{k+1}}$，将$\mathbf{a_{k+1}}$减去$\mathbf{a_1,\cdots,a_k}$适当的线性组合，可以得到与$\mathbf{a_1,\cdots,a_k}$都正交的向量$\mathbf{b_{k+1}}$</p>
 <p>算法：逐次递进</p>
 <h4 id="矩阵的相合"><a href="#矩阵的相合" class="headerlink" title="矩阵的相合"></a>矩阵的相合</h4><ol>
-<li>定义：$\mathbf{A,B}$是$n$阶方阵，若存在可逆方阵$\mathbf{P}$使$\mathbf{B&#x3D;P^T AP}$，则称$\mathbf{B}$与$\mathbf{A}$相合</li>
-<li>应用（求向量组的标准正交基）：利用相合，将原向量组$S$的格拉姆方阵$\mathbf{G&#x3D;A^T A}$相合到$\mathbf{P^T GP&#x3D;I}$，则$\mathbf{B&#x3D;AP}$是标准正交向量组</li>
+<li>定义：$\mathbf{A,B}$是$n$阶方阵，若存在可逆方阵$\mathbf{P}$使$\mathbf{B=P^T AP}$，则称$\mathbf{B}$与$\mathbf{A}$相合</li>
+<li>应用（求向量组的标准正交基）：利用相合，将原向量组$S$的格拉姆方阵$\mathbf{G=A^T A}$相合到$\mathbf{P^T GP=I}$，则$\mathbf{B=AP}$是标准正交向量组</li>
 <li>相合的性质<ol>
 <li>自反性：$\mathbf{A}$与自身相合</li>
 <li>对称性</li>
@@ -372,16 +372,16 @@
 </li>
 </ol>
 <h3 id="二次型"><a href="#二次型" class="headerlink" title="二次型"></a>二次型</h3><h4 id="二次型的配方"><a href="#二次型的配方" class="headerlink" title="二次型的配方"></a>二次型的配方</h4><ol>
-<li>二次型：$n$元二次函数$Q(x_1,\dots,x_n)&#x3D;\sum_{1\le i\le j\le n}a_{ij}x_ix_j$</li>
-<li>标准型：设存在可逆方阵$\mathbf{P}$使$Q(\mathbf{X})&#x3D;Q_1(\mathbf{Y})&#x3D;d_1y_1^2+\cdots+d_ny_n^2$对$\mathbf{Y&#x3D;PX}$成立，则称$Q_1(\mathbf{Y})$是$Q(\mathbf{X})$的标准型</li>
+<li>二次型：$n$元二次函数$Q(x_1,\dots,x_n)=\sum_{1\le i\le j\le n}a_{ij}x_ix_j$</li>
+<li>标准型：设存在可逆方阵$\mathbf{P}$使$Q(\mathbf{X})=Q_1(\mathbf{Y})=d_1y_1^2+\cdots+d_ny_n^2$对$\mathbf{Y=PX}$成立，则称$Q_1(\mathbf{Y})$是$Q(\mathbf{X})$的标准型</li>
 <li>$Q(\mathbf{X})$的正定、半正定，负定、半负定</li>
 <li>任意数域$F$上的二次型都能通过可逆线性变换变为标准型</li>
 </ol>
-<h4 id="用矩阵相合化简二次型"><a href="#用矩阵相合化简二次型" class="headerlink" title="用矩阵相合化简二次型"></a>用矩阵相合化简二次型</h4><p>$Q(\mathbf{X})&#x3D;\mathbf{XS^T X}$，求可逆方阵$\mathbf{K}$将$\mathbf{S}$相合到对角矩阵$\mathbf{D&#x3D;K^T SK}$，则$Q(\mathbf{X})&#x3D;Q_1(\mathbf{Y})&#x3D;\mathbf{Y^T DY}$为标准形，其中$\mathbf{X&#x3D;KY}$</p>
+<h4 id="用矩阵相合化简二次型"><a href="#用矩阵相合化简二次型" class="headerlink" title="用矩阵相合化简二次型"></a>用矩阵相合化简二次型</h4><p>$Q(\mathbf{X})=\mathbf{XS^T X}$，求可逆方阵$\mathbf{K}$将$\mathbf{S}$相合到对角矩阵$\mathbf{D=K^T SK}$，则$Q(\mathbf{X})=Q_1(\mathbf{Y})=\mathbf{Y^T DY}$为标准形，其中$\mathbf{X=KY}$</p>
 <h3 id="实对称方阵相合标准形"><a href="#实对称方阵相合标准形" class="headerlink" title="实对称方阵相合标准形"></a>实对称方阵相合标准形</h3><h4 id="实对称方阵相合标准形-1"><a href="#实对称方阵相合标准形-1" class="headerlink" title="实对称方阵相合标准形"></a>实对称方阵相合标准形</h4><ol>
 <li>西尔韦斯特惯性定律：任何一个实对称方阵$\mathbf{S}$都能相合到唯一的标准形：对角方阵，p个1，q个-1，n-p-q个0</li>
-<li>正惯性系数p、负惯性系数q；$p+q&#x3D;rank\mathbf{S}$，$p-q$称为符号差</li>
-<li>实二次型$Q(\mathbf{X})&#x3D;\mathbf{X^T SX}$可以通过可逆线性代换化为规范形：$Q_1(\mathbf{Y})&#x3D;y_1^2+\cdots+y_p^2-y_{p+1}^2-\cdots-y_{p+q}^2$</li>
+<li>正惯性系数p、负惯性系数q；$p+q=rank\mathbf{S}$，$p-q$称为符号差</li>
+<li>实二次型$Q(\mathbf{X})=\mathbf{X^T SX}$可以通过可逆线性代换化为规范形：$Q_1(\mathbf{Y})=y_1^2+\cdots+y_p^2-y_{p+1}^2-\cdots-y_{p+q}^2$</li>
 </ol>
 <h4 id="正定方阵的判定"><a href="#正定方阵的判定" class="headerlink" title="正定方阵的判定"></a>正定方阵的判定</h4><ol>
 <li>实对称方阵$\mathbf{S&gt;0}\Leftrightarrow \mathbf{S}$与$\mathbf{I}$相合</li>
@@ -389,34 +389,34 @@
 <li>实对称方阵$\mathbf{S&gt;0}\Rightarrow |\mathbf{S}_k|&gt;0$，$|\mathbf{S}_k|$称为顺序主子式</li>
 <li>实对称方阵$\mathbf{S&gt;0}\Leftrightarrow \mathbf{S}$的全体顺序主子式$|\mathbf{S}_k|&gt;0$</li>
 </ol>
-<h3 id="特征向量与相似矩阵"><a href="#特征向量与相似矩阵" class="headerlink" title="特征向量与相似矩阵"></a>特征向量与相似矩阵</h3><h4 id="特征向量"><a href="#特征向量" class="headerlink" title="特征向量"></a>特征向量</h4><p>变换$\sigma:\mathbf{X}\mapsto \mathbf{PX}$将某个方向上的非零向量拉伸&#x2F;压缩到原来的实数倍</p>
+<h3 id="特征向量与相似矩阵"><a href="#特征向量与相似矩阵" class="headerlink" title="特征向量与相似矩阵"></a>特征向量与相似矩阵</h3><h4 id="特征向量"><a href="#特征向量" class="headerlink" title="特征向量"></a>特征向量</h4><p>变换$\sigma:\mathbf{X}\mapsto \mathbf{PX}$将某个方向上的非零向量拉伸/压缩到原来的实数倍</p>
 <ol>
-<li>特征值、特征向量：$\mathbf{AX}&#x3D;\lambda\mathbf{X}$</li>
+<li>特征值、特征向量：$\mathbf{AX}=\lambda\mathbf{X}$</li>
 <li>求法<ol>
-<li>求特征多项式$\varphi_{\mathbf{A}}(\lambda)&#x3D;|\lambda\mathbf{I-A}|$，解方程$\varphi_{\mathbf{A}}(\lambda)&#x3D;0$求出所有根，即为$\mathbf{A}$所有特征值</li>
-<li>对每个特征值$\lambda_i$，解齐次线性方程组$(\mathbf{A}-\lambda_i\mathbf{I})\mathbf{X&#x3D;0}$求出解空间$V_{\lambda_i}$的一组基，这组基的所有非零线性组合就是$\mathbf{A}$属于$\lambda_i$的全部特征向量</li>
+<li>求特征多项式$\varphi_{\mathbf{A}}(\lambda)=|\lambda\mathbf{I-A}|$，解方程$\varphi_{\mathbf{A}}(\lambda)=0$求出所有根，即为$\mathbf{A}$所有特征值</li>
+<li>对每个特征值$\lambda_i$，解齐次线性方程组$(\mathbf{A}-\lambda_i\mathbf{I})\mathbf{X=0}$求出解空间$V_{\lambda_i}$的一组基，这组基的所有非零线性组合就是$\mathbf{A}$属于$\lambda_i$的全部特征向量</li>
 </ol>
 </li>
 <li>一些定义<ol>
 <li>特征方程：$\lambda\mathbf{I-A}$</li>
-<li>特征多项式：$\varphi_{\mathbf{A}}(\lambda)&#x3D;|\lambda\mathbf{I-A}|$</li>
+<li>特征多项式：$\varphi_{\mathbf{A}}(\lambda)=|\lambda\mathbf{I-A}|$</li>
 <li>特征根：特征多项式的根</li>
-<li>特征子空间：对每个特征值$\lambda_i$，齐次线性方程组$(\mathbf{A}-\lambda_I\mathbf{I})\mathbf{X&#x3D;0}$的解空间$V_{\lambda_i}$</li>
+<li>特征子空间：对每个特征值$\lambda_i$，齐次线性方程组$(\mathbf{A}-\lambda_I\mathbf{I})\mathbf{X=0}$的解空间$V_{\lambda_i}$</li>
 <li>特征根的重数、特征值的重数</li>
 </ol>
 </li>
 <li>三角形矩阵的全体特征值就是它的全体对角元，每个特征值$\lambda_i$的重数就是它在对角元中出现的次数</li>
-<li>$|\lambda\mathbf{I-A}|&#x3D;(\lambda-\lambda_1)\cdots(\lambda-\lambda_n)$，令$\lambda&#x3D;0$得：<ol>
+<li>$|\lambda\mathbf{I-A}|=(\lambda-\lambda_1)\cdots(\lambda-\lambda_n)$，令$\lambda=0$得：<ol>
 <li>行列式$|\mathbf{A}|$等于特征值的乘积</li>
-<li>特征多项式常数项&#x3D;$(-1)^n|\mathbf{A}|$</li>
+<li>特征多项式常数项=$(-1)^n|\mathbf{A}|$</li>
 </ol>
 </li>
 </ol>
 <h4 id="相似矩阵"><a href="#相似矩阵" class="headerlink" title="相似矩阵"></a>相似矩阵</h4><ol>
-<li>相似：设$\mathbf{A,B}$是$n$阶方阵，若存在$n$阶可逆方阵$\mathbf{P}$使$\mathbf{B&#x3D;P^{-1}AP}$，则称$\mathbf{A}$与$\mathbf{B}$相似</li>
+<li>相似：设$\mathbf{A,B}$是$n$阶方阵，若存在$n$阶可逆方阵$\mathbf{P}$使$\mathbf{B=P^{-1}AP}$，则称$\mathbf{A}$与$\mathbf{B}$相似</li>
 <li>相似不变量：特征多项式、特征值、行列式、迹、秩</li>
-<li>$\mathbf{AP&#x3D;PD}$，其中$\mathbf{P}$各列为$\mathbf{A}$的特征向量；$\mathbf{D}$为对角矩阵，对角元为$\mathbf{A}$的特征值<ol>
-<li>应用：$\mathbf{A&#x3D;PDP^{-1}}$，$\mathbf{A^n&#x3D;PD^{n}P^{-1}}$</li>
+<li>$\mathbf{AP=PD}$，其中$\mathbf{P}$各列为$\mathbf{A}$的特征向量；$\mathbf{D}$为对角矩阵，对角元为$\mathbf{A}$的特征值<ol>
+<li>应用：$\mathbf{A=PDP^{-1}}$，$\mathbf{A^n=PD^{n}P^{-1}}$</li>
 </ol>
 </li>
 </ol>
@@ -424,32 +424,32 @@
 <li>$n$阶复方阵$\mathbf{A}$相似于对角矩阵$\Leftrightarrow$$\mathbf{A}$有$n$个线性无关的特征向量</li>
 <li>$n$阶复方阵$\mathbf{A}$相似于对角矩阵$\Leftrightarrow$$\mathbf{A}$的每个特征值$\lambda_i$的重数等于特征子空间$V_{\lambda_i}$的维数</li>
 </ol>
-<h3 id="正交相似"><a href="#正交相似" class="headerlink" title="正交相似"></a>正交相似</h3><h4 id="二次曲线与二次曲面方程的化简"><a href="#二次曲线与二次曲面方程的化简" class="headerlink" title="二次曲线与二次曲面方程的化简"></a>二次曲线与二次曲面方程的化简</h4><p>原坐标$\mathbf{X}$变换到新坐标$\mathbf{Y}$：$\mathbf{X&#x3D;UY}$，其中$\mathbf{U}$是由解空间中的标准正交基为各列排成的正交方阵，且$det\mathbf{U}&#x3D;1$</p>
+<h3 id="正交相似"><a href="#正交相似" class="headerlink" title="正交相似"></a>正交相似</h3><h4 id="二次曲线与二次曲面方程的化简"><a href="#二次曲线与二次曲面方程的化简" class="headerlink" title="二次曲线与二次曲面方程的化简"></a>二次曲线与二次曲面方程的化简</h4><p>原坐标$\mathbf{X}$变换到新坐标$\mathbf{Y}$：$\mathbf{X=UY}$，其中$\mathbf{U}$是由解空间中的标准正交基为各列排成的正交方阵，且$det\mathbf{U}=1$</p>
 <h4 id="实对称方阵的正交相似"><a href="#实对称方阵的正交相似" class="headerlink" title="实对称方阵的正交相似"></a>实对称方阵的正交相似</h4><p>（前提：<strong>实对称</strong>方阵！）</p>
 <ol>
-<li>正交相似：$\mathbf{B&#x3D;U^{-1}AU}$，其中$\mathbf{U}$为正交矩阵，则称$\mathbf{A}$与$\mathbf{B}$正交相似</li>
+<li>正交相似：$\mathbf{B=U^{-1}AU}$，其中$\mathbf{U}$为正交矩阵，则称$\mathbf{A}$与$\mathbf{B}$正交相似</li>
 <li>算法<ol>
 <li>求所有特征根$\lambda_i$，一定都是实数</li>
 <li>对每个$\lambda_i$求齐次线性方程组实数域上的解空间$V_{\lambda_i}$的一组基$S_i$</li>
 <li>将$S_i$正交化、单位化为$T_i$，将$T_i$为列排为正交方阵$\mathbf{U}$</li>
-<li>$\mathbf{D&#x3D;U^{-1}AU}$为对角矩阵，对角元是$\mathbf{A}$全部特征根</li>
+<li>$\mathbf{D=U^{-1}AU}$为对角矩阵，对角元是$\mathbf{A}$全部特征根</li>
 </ol>
 </li>
-<li>定理（复杂版化简二次型的理论依据）：任意$n$阶实对称方阵$\mathbf{S}$可通过正交方阵相似到对角矩阵$\mathbf{D&#x3D;U^{-1}SU}$，且对角元为$\mathbf{S}$的特征值</li>
+<li>定理（复杂版化简二次型的理论依据）：任意$n$阶实对称方阵$\mathbf{S}$可通过正交方阵相似到对角矩阵$\mathbf{D=U^{-1}SU}$，且对角元为$\mathbf{S}$的特征值</li>
 <li>实对称方阵<strong>不同特征值的特征向量相互垂直</strong></li>
 <li>坐标变换下，线性变换的关系<ol>
-<li>线性变换前，旧坐标系下坐标$\mathbf{X}$与新坐标系下坐标$\mathbf{Y}$：$\mathbf{X&#x3D;UY}$</li>
+<li>线性变换前，旧坐标系下坐标$\mathbf{X}$与新坐标系下坐标$\mathbf{Y}$：$\mathbf{X=UY}$</li>
 <li>旧坐标系下描述线性变换：$\mathbf{X\mapsto AX}$</li>
 <li>新坐标系下描述线性变换：$\mathbf{Y\mapsto(U^{-1}AU)Y}$</li>
 </ol>
 </li>
 </ol>
-<h4 id="三维几何空间中的旋转与对称"><a href="#三维几何空间中的旋转与对称" class="headerlink" title="三维几何空间中的旋转与对称"></a>三维几何空间中的旋转与对称</h4><p>此时不再是实对陈方阵，不能正交相似&#x2F;相合至对角阵</p>
+<h4 id="三维几何空间中的旋转与对称"><a href="#三维几何空间中的旋转与对称" class="headerlink" title="三维几何空间中的旋转与对称"></a>三维几何空间中的旋转与对称</h4><p>此时不再是实对陈方阵，不能正交相似/相合至对角阵</p>
 <h4 id="正交变换"><a href="#正交变换" class="headerlink" title="正交变换"></a>正交变换</h4><ol>
-<li>正交变换：$\sigma:\mathbf{A\mapsto AX}$保持向量内积不变&#x2F;保持图形的形状和大小不变</li>
+<li>正交变换：$\sigma:\mathbf{A\mapsto AX}$保持向量内积不变/保持图形的形状和大小不变</li>
 <li>$\sigma:\mathbf{A\mapsto AX}$是正交变换 $\Leftrightarrow \mathbf{A}$是正交方阵</li>
 <li>同阶正交方阵的乘积是正交方阵；正交方阵的逆是正交方阵</li>
-<li>酉方阵：满足$\mathbf{A^*A&#x3D;I}$的复方阵<ol>
+<li>酉方阵：满足$\mathbf{A^*A=I}$的复方阵<ol>
 <li>酉方阵的特征值的模为1</li>
 <li>正交方阵（完全为实数的酉方阵）的特征值的模为1</li>
 </ol>
@@ -457,18 +457,18 @@
 </ol>
 <h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><h3 id="相合与相似"><a href="#相合与相似" class="headerlink" title="相合与相似"></a>相合与相似</h3><p>相合的应用：</p>
 <ol>
-<li>求向量组$\mathbf{A}$的标准正交基（通过把格拉姆方阵 $\mathbf{G&#x3D;A}^T \mathbf{A}$ 相合到单位阵 $\mathbf{I}&#x3D;\mathbf{P}^T\mathbf{GP}$，标准正交基为$\mathbf{B}&#x3D;\mathbf{AP}$）</li>
-<li>化简二次型（通过相合到对角阵 $\mathbf{D}&#x3D;\mathbf{K}^T\mathbf{SK}$，新变量 $\mathbf{Y}&#x3D;\mathbf{K}^{-1}\mathbf{X}$）</li>
+<li>求向量组$\mathbf{A}$的标准正交基（通过把格拉姆方阵 $\mathbf{G=A}^T \mathbf{A}$ 相合到单位阵 $\mathbf{I}=\mathbf{P}^T\mathbf{GP}$，标准正交基为$\mathbf{B}=\mathbf{AP}$）</li>
+<li>化简二次型（通过相合到对角阵 $\mathbf{D}=\mathbf{K}^T\mathbf{SK}$，新变量 $\mathbf{Y}=\mathbf{K}^{-1}\mathbf{X}$）</li>
 </ol>
-<p>相似的应用（似乎总跟特征值&#x2F;向量有关）：</p>
+<p>相似的应用（似乎总跟特征值/向量有关）：</p>
 <ol>
 <li>求矩阵(<strong>不要求对称</strong>)的$n$次幂（求特征向量，相似到对角阵）</li>
 <li>化简<strong>二次型</strong>（求特征向量并正交标准化得<strong>正交方阵</strong>$\mathbf{U}$，正交相似到对角阵$\mathbf{D}$）<ol>
 <li>$\mathbf{X}^T\mathbf{AX}$ 变为 $\mathbf{Y}^T\mathbf{DY}$</li>
-<li>其中，$\mathbf{X&#x3D;UY}$，$\mathbf{D}&#x3D;\mathbf{U}^T\mathbf{AU}&#x3D;\mathbf{U}^{-1}\mathbf{AU}$（对角元为特征值）</li>
+<li>其中，$\mathbf{X=UY}$，$\mathbf{D}=\mathbf{U}^T\mathbf{AU}=\mathbf{U}^{-1}\mathbf{AU}$（对角元为特征值）</li>
 </ol>
 </li>
-<li>研究非二次型的变换，如旋转（此时正交相似&#x2F;相合到非对角阵）</li>
+<li>研究非二次型的变换，如旋转（此时正交相似/相合到非对角阵）</li>
 </ol>
 
     </div>
@@ -500,7 +500,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://awayx.online/2024/08/09/Linear%20Algebra/" title="Linear Algebra">http://awayx.online/2024/08/09/Linear Algebra/</a>
+    <a href="http://awayx.online/2024/08/09/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/" title="线性代数">http://awayx.online/2024/08/09/线性代数/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -626,20 +626,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-count">35</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-count">44</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -733,6 +733,8 @@
   
   <script color='0,0,255' opacity='0.4' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
   <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 

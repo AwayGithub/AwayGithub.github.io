@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/infinite-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/infinite-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"awayx.online","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="B站视频地址：【喵星考拉】傅里叶变换究极入门课程_哔哩哔哩_bilibili    线性代数相关：坐标变换坐标变换公式：  \begin{align*} \mathbf{u_i} &amp;&#x3D; \sum_k u_{j,k} \cdot \mathbf{v_{i,j,k}}\\ u_{j,k} &amp;&#x3D; \mathbf{u_i^T}\mathbf{v_{i,j,k}} &#x3D; \sum_m (u_i^T)_m \c">
+<meta property="og:type" content="article">
+<meta property="og:title" content="傅里叶变换">
+<meta property="og:url" content="http://awayx.online/2024/10/15/%E5%82%85%E9%87%8C%E5%8F%B6%E5%8F%98%E6%8D%A2/index.html">
+<meta property="og:site_name" content="AwaySpace">
+<meta property="og:description" content="B站视频地址：【喵星考拉】傅里叶变换究极入门课程_哔哩哔哩_bilibili    线性代数相关：坐标变换坐标变换公式：  \begin{align*} \mathbf{u_i} &amp;&#x3D; \sum_k u_{j,k} \cdot \mathbf{v_{i,j,k}}\\ u_{j,k} &amp;&#x3D; \mathbf{u_i^T}\mathbf{v_{i,j,k}} &#x3D; \sum_m (u_i^T)_m \c">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.helloimg.com/i/2024/10/15/670e1a200920d.png">
+<meta property="og:image" content="https://www.helloimg.com/i/2024/10/15/670e1a9d0f90b.png">
+<meta property="og:image" content="https://www.helloimg.com/i/2024/10/15/670e1b754c626.png">
+<meta property="og:image" content="https://www.helloimg.com/i/2024/10/15/670e1b754b571.png">
+<meta property="og:image" content="https://www.helloimg.com/i/2024/10/15/670e252576871.png">
+<meta property="og:image" content="https://www.helloimg.com/i/2024/10/15/670e259fe9df9.png">
+<meta property="article:published_time" content="2024-10-15T08:34:57.000Z">
+<meta property="article:modified_time" content="2024-10-15T09:14:37.881Z">
+<meta property="article:author" content="AwayX">
+<meta property="article:tag" content="笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.helloimg.com/i/2024/10/15/670e1a200920d.png">
+
+<link rel="canonical" href="http://awayx.online/2024/10/15/%E5%82%85%E9%87%8C%E5%8F%B6%E5%8F%98%E6%8D%A2/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>傅里叶变换 | AwaySpace</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">AwaySpace</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">44</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">35</span></a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container"></div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="algolia-results">
+  <div id="algolia-stats"></div>
+  <div id="algolia-hits"></div>
+  <div id="algolia-pagination" class="algolia-pagination"></div>
+</div>
+
+      
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://awayx.online/2024/10/15/%E5%82%85%E9%87%8C%E5%8F%B6%E5%8F%98%E6%8D%A2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/TheRightToCry.jpg">
+      <meta itemprop="name" content="AwayX">
+      <meta itemprop="description" content="嘿嘿">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AwaySpace">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          傅里叶变换
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-10-15 16:34:57 / 修改时间：17:14:37" itemprop="dateCreated datePublished" datetime="2024-10-15T16:34:57+08:00">2024-10-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>B站视频地址：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1oz1eYVECp/?spm_id_from=333.337.search-card.all.click&amp;vd_source=eae193446d18b44e3dd89f9d03f37981">【喵星考拉】傅里叶变换究极入门课程_哔哩哔哩_bilibili</a></p>
+<div style="position: relative; width: 50%; height: 0; padding-bottom: 50%;"><iframe src="//player.bilibili.com/player.html?isOutside=true&aid=113258841248645&bvid=BV1oz1eYVECp&cid=26163743018&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;"> </iframe></div>
+
+<h2 id="线性代数相关：坐标变换"><a href="#线性代数相关：坐标变换" class="headerlink" title="线性代数相关：坐标变换"></a>线性代数相关：坐标变换</h2><p>坐标变换公式：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\mathbf{u_i} &= \sum_k u_{j,k} \cdot \mathbf{v_{i,j,k}}\\
+u_{j,k} &= \mathbf{u_i^T}\mathbf{v_{i,j,k}} = \sum_m (u_i^T)_m \cdot (v_{i,j,k})_m
+\end{align*}</script><blockquote>
+<p>注：视频中这里的公式有误<br>首先，第一行$\mathbf{u_i}$表示一个列向量，不用转置；<br>其次，$u_{j,k}$的计算式不应该对$k$求和，应该对两个向量的每个分量相乘求和</p>
+</blockquote>
+<span id="more"></span>
+<p>含义：<br>系$i$下的坐标=系$j$下各正交基的线性组合<br>系$j$下各正交基的系数=系$i$下的坐标$\cdot$系$j$中各正交基在系$i$下的坐标（投影）</p>
+<p>写成矩阵（$\mathbf{V_{i,j}}$是$\mathbf{v_{i,j,k}}$按列拼起来的矩阵）：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\mathbf{u_i}&=\mathbf{V_{i,j}}\cdot\mathbf{u_j}\\\\
+\mathbf{u_j^T}&=\mathbf{u_i^T}\cdot\mathbf{V_{i,j}}
+\end{align*}</script><p>取转置（正交矩阵的转置为其逆）：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\mathbf{u_i}&=\mathbf{V_{i,j}}\cdot\mathbf{u_j}\\\\
+\mathbf{u_j}&=\mathbf{V_{i,j}^{-1}}\cdot\mathbf{u_i}
+\end{align*}</script><h2 id="无穷维向量——函数"><a href="#无穷维向量——函数" class="headerlink" title="无穷维向量——函数"></a>无穷维向量——函数</h2><p>把函数理解为无穷维向量</p>
+<p>向量内积：</p>
+<script type="math/tex; mode=display">\mathbf{u_{(v_i)}}=\sum_{n=1}^ku_nv_{i,n}</script><p>函数内积：</p>
+<script type="math/tex; mode=display">\left\langle f(x),g(x) \right\rangle=\int_{-\infty}^{+\infty}f(x)g(x)\mathrm{d}x</script><h2 id="函数的坐标变换——积分变换"><a href="#函数的坐标变换——积分变换" class="headerlink" title="函数的坐标变换——积分变换"></a>函数的坐标变换——积分变换</h2><p>上式中，$\left\langle f(x),g(x) \right\rangle$是一个数，相当于是一个坐标值<br>由于函数是无穷维向量，想复原这个无穷维向量，需要无穷个坐标值<br>因此有：</p>
+<script type="math/tex; mode=display">
+F(\omega)=\int_{-\infty}^{+\infty}f(x)\cdot g(x,\omega)\mathrm{d}x</script><p>其中$F(\omega)$称为“像函数”，相当于“新坐标系下无穷个坐标值”；$g(x,\omega)$是“无穷个正交函数组”<br>此之谓“<strong>积分变换</strong>”！<br>可以用像函数复原原函数：</p>
+<script type="math/tex; mode=display">
+f(x)=\int_{-\infty}^{+\infty}F(\omega)\cdot g(x,\omega)\mathrm{d}\omega</script><h3 id="复数、复变函数的内积"><a href="#复数、复变函数的内积" class="headerlink" title="复数、复变函数的内积"></a>复数、复变函数的内积</h3><p>需要<strong>取共轭</strong>（否则不满足$\left\langle \mathbf{a,a} \right\rangle=||a||^2$）</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\left\langle \mathbf{a,b} \right\rangle&=\mathbf{a}\cdot\mathbf{b^*}\\\\
+\left\langle f(x),g(x) \right\rangle&=\int_{-\infty}^{+\infty}f(x)\cdot g^*(x)\mathrm{d}x
+\end{align*}</script><h3 id="复空间中的积分变换"><a href="#复空间中的积分变换" class="headerlink" title="复空间中的积分变换"></a>复空间中的积分变换</h3><p>正变换：</p>
+<script type="math/tex; mode=display">
+F(\omega)=\int_{-\infty}^{+\infty}f(x)\cdot g^*(x,\omega)\mathrm{d}x</script><p>逆变换：</p>
+<script type="math/tex; mode=display">
+f(x)=\int_{-\infty}^{+\infty}F(\omega)\cdot g(x,\omega)\mathrm{d}\omega</script><p>注意，正变换要取共轭（相当于求内积/坐标值）；逆变换不取共轭（相当于基函数的线性组合）</p>
+<h2 id="工程学理论——微分方程"><a href="#工程学理论——微分方程" class="headerlink" title="工程学理论——微分方程"></a>工程学理论——微分方程</h2><p>弹簧-质量-阻尼 力学系统：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+f(t)-Kx-R_mv&=Ma\\\\
+M\ddot{x}(t)+R_m\dot{x}(t)+Kx&=f(t)
+\end{align*}</script><p>电容-电阻-电感 电学系统：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+u_R+u_L+u_C&=U\\\\
+LC\ddot{u}_C(t)+RC\dot{u}_C(t)+u_C&=U
+\end{align*}</script><p>二阶常系数微分方程求解：？</p>
+<h2 id="差分与微分，求和与积分"><a href="#差分与微分，求和与积分" class="headerlink" title="差分与微分，求和与积分"></a>差分与微分，求和与积分</h2><p>可用矩阵计算差分：<br><img src="https://www.helloimg.com/i/2024/10/15/670e1a200920d.png" width="55%"/></p>
+<p>可用矩阵计算求和：<br><img src="https://www.helloimg.com/i/2024/10/15/670e1a9d0f90b.png" width="45%"/></p>
+<p>函数的求导看作无穷维矩阵：<br><img src="https://www.helloimg.com/i/2024/10/15/670e1b754c626.png" width="30%"/></p>
+<p>函数的积分看作无穷维矩阵：<br><img src="https://www.helloimg.com/i/2024/10/15/670e1b754b571.png" width="30%"/></p>
+<h2 id="求导、积分矩阵的“特征向量”"><a href="#求导、积分矩阵的“特征向量”" class="headerlink" title="求导、积分矩阵的“特征向量”"></a>求导、积分矩阵的“特征向量”</h2><p>指数函数！</p>
+<script type="math/tex; mode=display">
+\frac{\mathrm{d}}{\mathrm{d}t}(e^{st})=se^{st}\qquad\int e^{st}\mathrm{d}t=\frac{1}{s}e^{st}+C</script><p>令$s=\sigma+j\omega$，得到三角函数</p>
+<h3 id="指数函数与三角函数的关系"><a href="#指数函数与三角函数的关系" class="headerlink" title="指数函数与三角函数的关系"></a>指数函数与三角函数的关系</h3><script type="math/tex; mode=display">
+\cos\omega t=\frac{1}{2}(e^{j\omega t}+e^{-j\omega t})\qquad\sin\omega t=\frac{1}{2j}(e^{j\omega t}-e^{-j\omega t})</script><script type="math/tex; mode=display">
+\sin(\omega t+\varphi)=\frac{\sin\varphi-j\cos\varphi}{2}e^{j\omega t}+\frac{\sin\varphi+j\cos\varphi}{2}e^{-j\omega t}</script><p>注意到，两个复指数项的系数的共轭的</p>
+<h3 id="特征向量的用处"><a href="#特征向量的用处" class="headerlink" title="特征向量的用处"></a>特征向量的用处</h3><p>由于求导/积分运算的特征函数是复指数，因此若能把一个函数表示成复指数的线性组合，就能把微分方程化为代数方程</p>
+<h2 id="用特征函数解微分方程"><a href="#用特征函数解微分方程" class="headerlink" title="用特征函数解微分方程"></a>用特征函数解微分方程</h2><p>略（注意有重根时的推导）</p>
+<h2 id="用三角函数作为正交基"><a href="#用三角函数作为正交基" class="headerlink" title="用三角函数作为正交基"></a>用三角函数作为正交基</h2><p>定理：周期函数可以表示为具有相同周期的复指数函数的线性组合，这些函数两两正交且归一（证明略）</p>
+<h2 id="周期函数的频率分解——傅里叶级数"><a href="#周期函数的频率分解——傅里叶级数" class="headerlink" title="周期函数的频率分解——傅里叶级数"></a>周期函数的频率分解——傅里叶级数</h2><p>设有一个周期函数$f(t)$周期为$T$，即频率$f_0=\frac{1}{T}$，角频率$\omega_0=2\pi f_0$，希望找到它在各个复指数基函数（$f_0,2f_0,3f_0,\dots,nf_0,\dots$）上的投影（求<strong>投影</strong>）：</p>
+<script type="math/tex; mode=display">
+F(n)=\left\langle f(t),e^{j2\pi nf_0t} \right\rangle=\frac{1}{T}\int_Tf(t)e^{-j2\pi nf_0t}\mathrm{d}t</script><p>由投影复原原函数（求<strong>线性组合</strong>）：</p>
+<script type="math/tex; mode=display">
+f(t)=\sum_{n=-\infty}^{+\infty}F(n)e^{j2\pi nf_0t}</script><p>频率间隔：$\Delta f=f_0=\frac{1}{T}$，故周期越长，频谱越密，最终趋于连续函数</p>
+<p><img src="https://www.helloimg.com/i/2024/10/15/670e252576871.png" width="100%"/></p>
+<h2 id="非周期函数的频率分解——傅里叶变换"><a href="#非周期函数的频率分解——傅里叶变换" class="headerlink" title="非周期函数的频率分解——傅里叶变换"></a>非周期函数的频率分解——傅里叶变换</h2><p><img src="https://www.helloimg.com/i/2024/10/15/670e259fe9df9.png" width="80%"/></p>
+<p>正变换（求<strong>投影</strong>）：</p>
+<script type="math/tex; mode=display">
+F(j\omega)=\int_{-\infty}^{+\infty}f(t)e^{-j\omega t}\mathrm{d}t</script><p>逆变换（求<strong>线性组合</strong>）：</p>
+<script type="math/tex; mode=display">
+f(t)=\frac{1}{2\pi}\int_{-\infty}^{+\infty}F(j\omega)e^{j\omega t}\mathrm{d}\omega</script>
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.jpg" alt="AwayX 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>AwayX
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://awayx.online/2024/10/15/%E5%82%85%E9%87%8C%E5%8F%B6%E5%8F%98%E6%8D%A2/" title="傅里叶变换">http://awayx.online/2024/10/15/傅里叶变换/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E7%AC%94%E8%AE%B0/" rel="tag"><i class="fa fa-tag"></i> 笔记</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/09/13/%E5%A4%8D%E5%8F%98%E5%87%BD%E6%95%B0%E4%B8%8E%E7%A7%AF%E5%88%86%E5%8F%98%E6%8D%A2/" rel="prev" title="复变函数与积分变换">
+      <i class="fa fa-chevron-left"></i> 复变函数与积分变换
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC81OTUwMS8zNTk2Mw=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%E7%9B%B8%E5%85%B3%EF%BC%9A%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2"><span class="nav-number">1.</span> <span class="nav-text">线性代数相关：坐标变换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%A0%E7%A9%B7%E7%BB%B4%E5%90%91%E9%87%8F%E2%80%94%E2%80%94%E5%87%BD%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">无穷维向量——函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E7%9A%84%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E2%80%94%E2%80%94%E7%A7%AF%E5%88%86%E5%8F%98%E6%8D%A2"><span class="nav-number">3.</span> <span class="nav-text">函数的坐标变换——积分变换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A5%E7%A8%8B%E5%AD%A6%E7%90%86%E8%AE%BA%E2%80%94%E2%80%94%E5%BE%AE%E5%88%86%E6%96%B9%E7%A8%8B"><span class="nav-number">4.</span> <span class="nav-text">工程学理论——微分方程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%AE%E5%88%86%E4%B8%8E%E5%BE%AE%E5%88%86%EF%BC%8C%E6%B1%82%E5%92%8C%E4%B8%8E%E7%A7%AF%E5%88%86"><span class="nav-number">5.</span> <span class="nav-text">差分与微分，求和与积分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B1%82%E5%AF%BC%E3%80%81%E7%A7%AF%E5%88%86%E7%9F%A9%E9%98%B5%E7%9A%84%E2%80%9C%E7%89%B9%E5%BE%81%E5%90%91%E9%87%8F%E2%80%9D"><span class="nav-number">6.</span> <span class="nav-text">求导、积分矩阵的“特征向量”</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8%E7%89%B9%E5%BE%81%E5%87%BD%E6%95%B0%E8%A7%A3%E5%BE%AE%E5%88%86%E6%96%B9%E7%A8%8B"><span class="nav-number">7.</span> <span class="nav-text">用特征函数解微分方程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8%E4%B8%89%E8%A7%92%E5%87%BD%E6%95%B0%E4%BD%9C%E4%B8%BA%E6%AD%A3%E4%BA%A4%E5%9F%BA"><span class="nav-number">8.</span> <span class="nav-text">用三角函数作为正交基</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%A8%E6%9C%9F%E5%87%BD%E6%95%B0%E7%9A%84%E9%A2%91%E7%8E%87%E5%88%86%E8%A7%A3%E2%80%94%E2%80%94%E5%82%85%E9%87%8C%E5%8F%B6%E7%BA%A7%E6%95%B0"><span class="nav-number">9.</span> <span class="nav-text">周期函数的频率分解——傅里叶级数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%9E%E5%91%A8%E6%9C%9F%E5%87%BD%E6%95%B0%E7%9A%84%E9%A2%91%E7%8E%87%E5%88%86%E8%A7%A3%E2%80%94%E2%80%94%E5%82%85%E9%87%8C%E5%8F%B6%E5%8F%98%E6%8D%A2"><span class="nav-number">10.</span> <span class="nav-text">非周期函数的频率分解——傅里叶变换</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="AwayX"
+      src="/images/TheRightToCry.jpg">
+  <p class="site-author-name" itemprop="name">AwayX</p>
+  <div class="site-description" itemprop="description">嘿嘿</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">35</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/awaygithub" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;awaygithub" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:away2557103310@outlook.com" title="E-Mail → mailto:away2557103310@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://yoursite.com/" title="http:&#x2F;&#x2F;yoursite.com" rel="noopener" target="_blank">Title</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2024-02 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AwayX</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.4' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch-lite.umd.js"></script>
+<script src="//cdn.jsdelivr.net/npm/instantsearch.js@4/dist/instantsearch.production.min.js"></script>
+<script src="/js/algolia-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+</body>
+</html>

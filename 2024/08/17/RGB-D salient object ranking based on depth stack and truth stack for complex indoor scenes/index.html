@@ -14,12 +14,13 @@
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
   <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"awayx.online","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"awayx.online","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
   <meta name="description" content="PR 2023  AbstractRGB-D显著性对象检测近年来取得了很大进展，得益于其广泛的应用。以往的研究主要集中在单一对象的简单场景图像上，这些模型通常会在处理复杂的多对象场景时表现不佳。此外，这些方法将显著性对象检测建模为二值分割问题。然而，心理学研究表明，人类会将视觉注意力从一个对象转移到另一个对象，并对显著性对象进行排名，特别是在复杂的室内场景中。基于心理学研究，我们提出在复杂室内场">
@@ -130,17 +131,17 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">5</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">42</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">44</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">32</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">35</span></a>
 
   </li>
         <li class="menu-item menu-item-sitemap">
@@ -281,11 +282,9 @@
 </blockquote>
 <h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>RGB-D显著性对象检测近年来取得了很大进展，得益于其广泛的应用。以往的研究主要集中在单一对象的简单场景图像上，这些模型通常会在处理复杂的多对象场景时表现不佳。此外，这些方法将显著性对象检测建模为二值分割问题。然而，心理学研究表明，人类会将视觉注意力从一个对象转移到另一个对象，并对显著性对象进行排名，特别是在复杂的室内场景中。基于心理学研究，我们提出<strong>在复杂室内场景的RGB-D图像中对显著性对象进行排序</strong>。由于缺乏这样的数据，我们首先<strong>构建了一个包含多个对象的复杂室内场景的RGB-D显著性对象排名数据集</strong>。不同对象的显著性排名基于观察者注意到这些对象的顺序定义。最终的显著性对象排名结果是13位观察者的显著性排名的平均值。该RGB-D显著性对象排名数据集还与当前主流的RGB-D显著性对象检测数据集进行比较分析。由于深度图像提供的<strong>位置信息可以帮助确定对象的显著性排名</strong>，我们进一步提出了一种<strong>端到端网</strong>络，利用深度堆叠和真实标签堆叠来预测复杂场景中显著性对象的排序。定量和定性比较结果证明了所提方法的有效性。</p>
 <span id="more"></span>
-
 <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>显著性对象检测可以作为许多与视觉相关的应用的预处理技术，如语义分割[1]、前景图评估[2,3]、视觉跟踪[4]、图像解析[5]、图像描述[6]和人员重识别[7,8]。因此，显著性对象检测的研究吸引了许多研究人员的关注，并在近年来得到了广泛发展[9–11]。显著性对象检测与对象的位置有着强烈的关联。此外，深度图可以提供对象的轮廓和位置信息，对于确定对象的显著性是一个重要的辅助工具。因此，RGB-D显著性对象检测越来越受到研究人员的关注。</p>
 <p>大多数RGB-D显著性对象检测数据集包含的是单一对象的简单室外场景图像。然而，现实世界的场景通常比较复杂，并包含多个对象。这在一定程度上限制了RGB-D显著性对象检测模型在现实世界视觉任务中的应用能力。此外，心理学研究表明，人类具有将视觉注意力从一个对象转移到另一个对象的能力。这种能力帮助人们处理包含多个对象的复杂场景，并相应地对显著对象进行排序。此外，显著性的判断通常是主观的。观察者对不同对象的显著性判断既存在差异也存在相似性。因此，很难以直接的方式评估复杂场景中对象的显著性[12]。然而，现有的RGB-D显著性对象检测任务被处理为二值化问题，这与人类的真实视觉感知不匹配。根据心理学研究，本文将显著性对象排序引入RGB-D显著性检测领域。由于缺乏这样的数据集，本文构建了一个包含多个对象的复杂室内场景的显著性排序数据集。基于<strong>NYU Depth-v2</strong>数据集[13]，我们邀请了<strong>13名标注者</strong>根据他们注意到对象的顺序对每张图像中的显著对象进行标记。最终的显著性对象排序结果是这些观察者显著性排名的平均值。我们进一步将提出的RGB-D显著性对象排序数据集与主流RGB-D显著性对象检测数据集进行比较分析。</p>
-<img src="https://vip.helloimg.com/i/2024/08/17/66c0af5485a5f.png" width="60%"/>
-
+<p><img src="https://vip.helloimg.com/i/2024/08/17/66c0af5485a5f.png" width="60%"/></p>
 <blockquote>
 <p>图1. (a) 来自我们数据集的图像，(b) 对应的深度图，(c) 对应的显著性排序真实标签 (GT)，(d) 对应的显著性排序真实标签（彩色化，红色表示第1名，绿色表示第2名，蓝色表示第3名，青色表示第4名及以上）。(关于图例中颜色的解释，请参见本文的网络版。)</p>
 </blockquote>
@@ -297,8 +296,8 @@
 <p>3D视觉受到研究界的广泛关注。我们期望RGB-D显著性对象排序数据集能为3D视觉的其他后续任务做出贡献。因此，本文将显著性对象排序任务引入RGB-D领域。</p>
 <h2 id="RGB-D-saliency-ranking-dataset"><a href="#RGB-D-saliency-ranking-dataset" class="headerlink" title="RGB-D saliency ranking dataset"></a>RGB-D saliency ranking dataset</h2><h3 id="Definition-of-RGB-D-salient-object-ranking"><a href="#Definition-of-RGB-D-salient-object-ranking" class="headerlink" title="Definition of RGB-D salient object ranking"></a>Definition of RGB-D salient object ranking</h3><h3 id="Data-collection-and-truth-generation"><a href="#Data-collection-and-truth-generation" class="headerlink" title="Data collection and truth generation"></a>Data collection and truth generation</h3><p>以往的 RGB-D 显著性目标检测任务被视为二分类问题，并且 RGB-D 模型通常用于检测简单场景中的一个显著物体。在本文中，我们构建了一个 RGB-D 显著性目标排序数据集，包含具有多个物体的复杂室内场景。该 RGB-D 显著性目标排序数据集基于 NYU Depth-v2 [13] 数据集构建，NYU Depth-v2 数据集包含 1449 张具有多个物体的室内复杂 <strong>RGB 图像</strong>、高质量的<strong>深度图像</strong>和<strong>实例分割的真实标签</strong>。所提出的 RGB-D 显著性目标排序数据集被标记为 RGBD NYU-rank。</p>
 <p>我们让 <strong>13 名标注者</strong>根据他们注意到物体的顺序对每张图像中的不同物体进行标注。在标注过程中，我们<strong>不限制标注者可以标注的物体数量</strong>。因此，某个标注者在标注图像时可能认为场景中有许多显著物体，也可能只标注几个显著物体，甚至认为图像中没有显著物体。</p>
-<p>我们首先分析标注数据，以确定显著物体的适当排序数量。根据多数投票，<strong>如果一个实例被 13 名标注者中的 6 名以上标注为显著物体，则该实例被视为显著物体</strong>。然后，我们统计了每张图像中的显著物体数量。数据集中具有不同数量显著物体的图像及其对应的比例列在表 1 中。从表中可以看出，包含 1、2 或 3 个显著物体的图像占数据集的大部分，总比例达到 86.3%。根据这些特征，我们设置了**四个排序级别：排序 1、排序 2、排序 3 和排序 4+**。需要注意的是，图像中的显著物体数量是任意的。根据多数投票结果，显著物体的数量可以是一个或多个，而不是固定的四个显著物体。因此，数据集中每张图像中的显著物体数量是可变的。</p>
-<p>首先，我们根据多数投票的原则，将标注次数超过 6 次的物体视为显著物体。然后，我们对这些显著物体按照显著性进行排序。为了模拟人类的注意力转移机制，根据标注顺序给不同的标注显著物体分配不同的分数。**每个标注者对第一个标注的显著物体给予 1 分，之后标注的显著物体的分数每次减少 10%**。也就是说，第二个和第三个标注的显著物体的分数分别为 0.9 分和 0.8 分。在标注过程中，第一个标注的实例获得了大部分视觉注意力。这与我们日常生活中的注意力机制一致，人们通常首先关注最吸引人的事物，然后是次之的事物 [33]。</p>
+<p>我们首先分析标注数据，以确定显著物体的适当排序数量。根据多数投票，<strong>如果一个实例被 13 名标注者中的 6 名以上标注为显著物体，则该实例被视为显著物体</strong>。然后，我们统计了每张图像中的显著物体数量。数据集中具有不同数量显著物体的图像及其对应的比例列在表 1 中。从表中可以看出，包含 1、2 或 3 个显著物体的图像占数据集的大部分，总比例达到 86.3%。根据这些特征，我们设置了<strong>四个排序级别：排序 1、排序 2、排序 3 和排序 4+</strong>。需要注意的是，图像中的显著物体数量是任意的。根据多数投票结果，显著物体的数量可以是一个或多个，而不是固定的四个显著物体。因此，数据集中每张图像中的显著物体数量是可变的。</p>
+<p>首先，我们根据多数投票的原则，将标注次数超过 6 次的物体视为显著物体。然后，我们对这些显著物体按照显著性进行排序。为了模拟人类的注意力转移机制，根据标注顺序给不同的标注显著物体分配不同的分数。<strong>每个标注者对第一个标注的显著物体给予 1 分，之后标注的显著物体的分数每次减少 10%</strong>。也就是说，第二个和第三个标注的显著物体的分数分别为 0.9 分和 0.8 分。在标注过程中，第一个标注的实例获得了大部分视觉注意力。这与我们日常生活中的注意力机制一致，人们通常首先关注最吸引人的事物，然后是次之的事物 [33]。</p>
 <p>为了考虑不同标注者的总体显著性排名行为，<strong>将不同标注者对同一实例的标注分数汇总，然后，将不同实例的汇总分数在每张图像内进行排序</strong>。根据多数投票认为显著的实例首先被选为显著物体，然后使用这些显著物体的分数进行排序。在每张图像中，具有最高标注分数的实例被标记为排序 1，第二高的标注分数的实例标记为排序 2，依此类推，直到四个排序级别。特别地，分数未进入前三的实例被标记为排序 4+。</p>
 <h3 id="Data-analysis"><a href="#Data-analysis" class="headerlink" title="Data analysis"></a>Data analysis</h3><h2 id="Proposed-network-architecture"><a href="#Proposed-network-architecture" class="headerlink" title="Proposed network architecture"></a>Proposed network architecture</h2><h3 id="Generation-of-depth-stack-and-ground-truth-stack"><a href="#Generation-of-depth-stack-and-ground-truth-stack" class="headerlink" title="Generation of depth stack and ground truth stack"></a>Generation of depth stack and ground truth stack</h3><h3 id="Backbone-network"><a href="#Backbone-network" class="headerlink" title="Backbone network"></a>Backbone network</h3><h3 id="Depth-stack-module"><a href="#Depth-stack-module" class="headerlink" title="Depth stack module"></a>Depth stack module</h3><h3 id="Saliency-map-re-fusion-module"><a href="#Saliency-map-re-fusion-module" class="headerlink" title="Saliency map re-fusion module"></a>Saliency map re-fusion module</h3><h3 id="Loss"><a href="#Loss" class="headerlink" title="Loss"></a>Loss</h3><h2 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h2><h3 id="Implementation-details"><a href="#Implementation-details" class="headerlink" title="Implementation details"></a>Implementation details</h3><h3 id="Datasets"><a href="#Datasets" class="headerlink" title="Datasets"></a>Datasets</h3><p>所提议的数据库，即 NYU-rank，用于比较不同模型的性能。该 RGB-D NYU-rank 数据集包含 RGB 图像、深度图像和显著性排序的真实标签图像。我们将该数据集随机分为 1160 张图像的训练集和 289 张图像的测试集。</p>
 <h3 id="Evaluation-metrics"><a href="#Evaluation-metrics" class="headerlink" title="Evaluation metrics"></a>Evaluation metrics</h3><h3 id="Quantitative-analysis"><a href="#Quantitative-analysis" class="headerlink" title="Quantitative analysis"></a>Quantitative analysis</h3><h3 id="Qualitative-analysis"><a href="#Qualitative-analysis" class="headerlink" title="Qualitative analysis"></a>Qualitative analysis</h3><h3 id="Failure-cases"><a href="#Failure-cases" class="headerlink" title="Failure cases"></a>Failure cases</h3><h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>当前的RGB-D显著性对象检测被视为二值化分割任务。此外，当前RGB-D显著性检测数据集中通常缺乏室内和复杂场景中的多个对象。因此，本文<strong>将显著性对象排序任务引入RGB-D领域</strong>。由于缺乏这样的数据集，我们重建了一个用于显著性对象排序任务的<strong>RGBD NYU-rank</strong>数据集。该数据集包含室内和复杂场景。我们还提出了一种新颖的端到端神经网络，用于显著性对象排序，利用<strong>深度堆叠和真实标签堆叠</strong>的协同特征。它利用深度图中的位置和轮廓信息来弥补RGB图像中的缺失信息，从而更有效地执行显著性排序任务。实验结果证明了我们提出的神经网络的有效性。结果表明，所提出的DSM模块和SMRM模块可以有效提升显著性对象排序的性能。</p>
@@ -459,20 +458,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-count">35</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-count">44</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -566,6 +565,8 @@
   
   <script color='0,0,255' opacity='0.4' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
   <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 

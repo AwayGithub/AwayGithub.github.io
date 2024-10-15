@@ -14,12 +14,13 @@
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
   <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"awayx.online","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"awayx.online","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
   <meta name="description" content="图像">
@@ -150,17 +151,17 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">5</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">42</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">44</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">32</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">35</span></a>
 
   </li>
         <li class="menu-item menu-item-sitemap">
@@ -288,10 +289,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="图像"><a href="#图像" class="headerlink" title="图像"></a>图像</h2><img src="https://vip.helloimg.com/i/2024/08/13/66bb41565cb06.jpg" width="70%"/>
-
+        <h2 id="图像"><a href="#图像" class="headerlink" title="图像"></a>图像</h2><p><img src="https://vip.helloimg.com/i/2024/08/13/66bb41565cb06.jpg" width="70%"/></p>
 <span id="more"></span>
-
 <h3 id="The-Secrets-of-Salient-Object-Segmentation"><a href="#The-Secrets-of-Salient-Object-Segmentation" class="headerlink" title="The Secrets of Salient Object Segmentation"></a>The Secrets of Salient Object Segmentation</h3><ol>
 <li><strong>CVPR 2014.6</strong></li>
 <li>构建了 <strong>PASCAL-S</strong> 数据集，论证了该数据集的优越性<ol>
@@ -308,32 +307,29 @@
 <li><strong>像素级</strong>方案</li>
 </ol>
 <h3 id="Relative-Saliency-and-Ranking-Models-Metrics-Data-and-Benchmarks"><a href="#Relative-Saliency-and-Ranking-Models-Metrics-Data-and-Benchmarks" class="headerlink" title="Relative Saliency and Ranking: Models, Metrics,  Data and Benchmarks"></a>Relative Saliency and Ranking: Models, Metrics,  Data and Benchmarks</h3><ol>
-<li><strong>TMAPI 2019</strong>，与&lt;Revisiting Salient Object Detection-Simultaneous Detection, Ranking, and Subitizing of Multiple Salient Objects&gt;作者相同</li>
+<li><strong>TMAPI 2019</strong>，与<Revisiting Salient Object Detection-Simultaneous Detection, Ranking, and Subitizing of Multiple Salient Objects>作者相同</li>
 <li>属于阶段B：提出了如何从segmentation、fixation创建用于SOR的<strong>真值</strong>数据的方法</li>
 <li>使用了<strong>PASCAL-SR</strong>数据集；创建了<strong>COCO-SalRank</strong>数据集</li>
 <li>COCO-SalRank：结合SALICON的模拟眼动数据、MS COCO的实例级掩码数据，用一系列算法计算出每个实例的显著性排名</li>
 </ol>
-<img src="https://vip.helloimg.com/i/2024/08/17/66c0442db4b71.jpg" width="70%" />
-
+<p><img src="https://vip.helloimg.com/i/2024/08/17/66c0442db4b71.jpg" width="70%" /></p>
 <h3 id="Inferring-attention-shift-ranks-of-objects-for-image-saliency"><a href="#Inferring-attention-shift-ranks-of-objects-for-image-saliency" class="headerlink" title="Inferring attention shift ranks of objects for image saliency"></a>Inferring attention shift ranks of objects for image saliency</h3><ol>
 <li><strong>CVPR 2020</strong></li>
 <li>使用<strong>注视转移顺序</strong>定义相对显著性</li>
-<li>构建了一个大规模的显著对象排序数据集 <strong>ASR&#x2F;ASSR</strong>，<strong>显示包含显著性排序顺序</strong>：<ol>
+<li>构建了一个大规模的显著对象排序数据集 <strong>ASR/ASSR</strong>，<strong>显示包含显著性排序顺序</strong>：<ol>
 <li>从MS COCO和SALICON构建，用三种方法，九种策略（4+1+4）</li>
 <li>经过研究，选择 <strong>DistFixSeq</strong> 来生成真实的显著性排序</li>
 </ol>
 </li>
 <li>对象的显著性排序由观察者根据<strong>注意力转移顺序</strong>来定义。最终的显著性排序是多个观察者显著性排序的平均值</li>
 </ol>
-<img src="https://vip.helloimg.com/i/2024/08/17/66c0449b162a0.jpg" width="70%" />
-
+<p><img src="https://vip.helloimg.com/i/2024/08/17/66c0449b162a0.jpg" width="70%" /></p>
 <h3 id="Salient-object-ranking-with-position-preserved-attention"><a href="#Salient-object-ranking-with-position-preserved-attention" class="headerlink" title="Salient object ranking with position-preserved attention"></a>Salient object ranking with position-preserved attention</h3><ol>
 <li><strong>ICCV 2021</strong></li>
 <li>第一个端到端的SOR任务框架，以多任务学习的方式解决该问题，可以共同优化 SOR 损失和检测损失（检测分支和显著物体排序分支是<strong>并行的</strong>，而不是顺序的）</li>
 <li>使用<strong>ASSR</strong>数据集</li>
 </ol>
-<img src="https://vip.helloimg.com/i/2024/08/17/66c05fd79ebc4.jpg" width="70%" >
-
+<p><img src="https://vip.helloimg.com/i/2024/08/17/66c05fd79ebc4.jpg" width="70%" ></p>
 <h3 id="Instance-level-relative-saliency-ranking-with-graph-reasoning"><a href="#Instance-level-relative-saliency-ranking-with-graph-reasoning" class="headerlink" title="Instance-level relative saliency ranking with graph reasoning"></a>Instance-level relative saliency ranking with graph reasoning</h3><ol>
 <li><strong>TPAMI 2021</strong></li>
 <li><strong>两阶段</strong>方案，首先分割显著实例，然后对其进行排名<ol>
@@ -574,7 +570,7 @@
 </ol>
 </li>
 <li>本文提出了评估全景视频编码质量损失的<strong>主观和客观</strong>方法<ol>
-<li>首先介绍了一个<strong>新的（？）数据库</strong>（<strong>VR-HM48&#x2F;VR-VQA48</strong>），其中包含了多个受试者观看全景视频序列时的观看方向数据<ol>
+<li>首先介绍了一个<strong>新的（？）数据库</strong>（<strong>VR-HM48/VR-VQA48</strong>），其中包含了多个受试者观看全景视频序列时的观看方向数据<ol>
 <li>发现不同受试者的观看方向具有高度的一致性。观看方向通常在前区域中心呈正态分布，但有时也会落入其他与视频内容相关的区域</li>
 </ol>
 </li>
@@ -619,19 +615,19 @@
 <li>实验（<strong>VAQ-ODV</strong>数据集）验证了我们的V-CNN方法在显著提升360°视频VQA的最新技术水平方面的有效性</li>
 <li>我们的方法在两个辅助任务中也取得了相当的表现</li>
 </ol>
-<h3 id="State-of-the-Art-in-360°-Video-Image-Processing-Perception-Assessment-and-Compression"><a href="#State-of-the-Art-in-360°-Video-Image-Processing-Perception-Assessment-and-Compression" class="headerlink" title="State-of-the-Art in 360° Video&#x2F;Image Processing: Perception, Assessment and Compression"></a>State-of-the-Art in 360° Video&#x2F;Image Processing: Perception, Assessment and Compression</h3><ol>
+<h3 id="State-of-the-Art-in-360°-Video-Image-Processing-Perception-Assessment-and-Compression"><a href="#State-of-the-Art-in-360°-Video-Image-Processing-Perception-Assessment-and-Compression" class="headerlink" title="State-of-the-Art in 360° Video/Image Processing: Perception, Assessment and Compression"></a>State-of-the-Art in 360° Video/Image Processing: Perception, Assessment and Compression</h3><ol>
 <li><strong>JSTSP 2020 MC2</strong></li>
 <li>背景<ol>
-<li>360°视频&#x2F;图像越来越受欢迎并引起了广泛关注</li>
-<li>由于360°视频&#x2F;图像的球面视角范围涉及大量数据，这对解决存储、传输等瓶颈的360°视频&#x2F;图像处理提出了挑战</li>
-<li>因此，近年来涌现出了大量关于360°视频&#x2F;图像处理的研究工作</li>
+<li>360°视频/图像越来越受欢迎并引起了广泛关注</li>
+<li>由于360°视频/图像的球面视角范围涉及大量数据，这对解决存储、传输等瓶颈的360°视频/图像处理提出了挑战</li>
+<li>因此，近年来涌现出了大量关于360°视频/图像处理的研究工作</li>
 </ol>
 </li>
-<li>本文从感知、评估和压缩三个方面回顾了360°视频&#x2F;图像处理的最新研究进展<ol>
-<li>首先，本文回顾了360°视频&#x2F;图像的相关数据集和视觉注意力建模方法</li>
-<li>其次，我们综述了360°视频&#x2F;图像在主观和客观视觉质量评估（VQA）方面的相关研究</li>
-<li>第三，我们概述了360°视频&#x2F;图像的压缩方法，这些方法或是利用了球面特性，或是结合了视觉注意力模型</li>
-<li>最后，我们总结了本文的综述内容，并展望了360°视频&#x2F;图像处理领域的未来研究趋势</li>
+<li>本文从感知、评估和压缩三个方面回顾了360°视频/图像处理的最新研究进展<ol>
+<li>首先，本文回顾了360°视频/图像的相关数据集和视觉注意力建模方法</li>
+<li>其次，我们综述了360°视频/图像在主观和客观视觉质量评估（VQA）方面的相关研究</li>
+<li>第三，我们概述了360°视频/图像的压缩方法，这些方法或是利用了球面特性，或是结合了视觉注意力模型</li>
+<li>最后，我们总结了本文的综述内容，并展望了360°视频/图像处理领域的未来研究趋势</li>
 </ol>
 </li>
 </ol>
@@ -679,7 +675,7 @@
 </li>
 <li>实验验证了我们的V-CNN方法在360°视频VQA上的性能显著提升，并且在三个辅助任务中也表现出色</li>
 </ol>
-<h3 id="Attention-Based-Deep-Reinforcement-Learning-for-Virtual-Cinematography-of-360-circ-Videos"><a href="#Attention-Based-Deep-Reinforcement-Learning-for-Virtual-Cinematography-of-360-circ-Videos" class="headerlink" title="Attention-Based Deep Reinforcement Learning for Virtual Cinematography of $360^{\circ}$ Videos"></a>Attention-Based Deep Reinforcement Learning for Virtual Cinematography of $360^{\circ}$ Videos</h3><ol>
+<h3 id="Attention-Based-Deep-Reinforcement-Learning-for-Virtual-Cinematography-of-360-circ-Videos"><a href="#Attention-Based-Deep-Reinforcement-Learning-for-Virtual-Cinematography-of-360-circ-Videos" class="headerlink" title="Attention-Based Deep Reinforcement Learning for Virtual Cinematography of $360^{\circ}$ Videos"></a>Attention-Based Deep Reinforcement Learning for Virtual Cinematography of $360^{\circ}$ Videos</h3><ol>
 <li><strong>TM 2020 MC2</strong></li>
 <li><strong>related, but video</strong></li>
 <li>背景<ol>
@@ -770,12 +766,12 @@
 <h3 id="Omnidirectional-Image-Super-Resolution-via-Latitude-Adaptive-Network"><a href="#Omnidirectional-Image-Super-Resolution-via-Latitude-Adaptive-Network" class="headerlink" title="Omnidirectional Image Super-Resolution via Latitude Adaptive Network"></a>Omnidirectional Image Super-Resolution via Latitude Adaptive Network</h3><ol>
 <li><strong>TM 2022 MC2</strong></li>
 <li><strong>not so related</strong></li>
-<li>&lt;LAU-Net: Latitude Adaptive Upscaling Network for Omnidirectional Image Super-Resolution&gt; 的发展提升</li>
+<li><LAU-Net: Latitude Adaptive Upscaling Network for Omnidirectional Image Super-Resolution> 的发展提升</li>
 <li>背景<ol>
 <li>低分辨率的全向图像恢复高分辨率的全向图像，即<strong>全向图像超分辨率</strong>（ODI-SR），是非常必要的</li>
 </ol>
 </li>
-<li>提出了一种新颖的纬度感知上采样网络，称为**LAU-Net+**，不同的纬度带可以学习采用不同的上采样因子<ol>
+<li>提出了一种新颖的纬度感知上采样网络，称为<strong>LAU-Net+</strong>，不同的纬度带可以学习采用不同的上采样因子<ol>
 <li>引入了一个拉普拉斯多级金字塔网络，其中随着级别数量的增加，上采样因子逐渐增加</li>
 <li>每个级别由一个特征增强模块（FEM）、一个带选择决策模块（DDM）和一个高纬度增强模块（HEM）组成<ol>
 <li>FEM模块用于增强从输入ODI中提取的高层次特征</li>
@@ -857,9 +853,7 @@
 </ol>
 </li>
 </ol>
-<img src="https://vip.helloimg.com/i/2024/08/20/66c46e2e001e5.png" width="80%"/>
-
-
+<p><img src="https://vip.helloimg.com/i/2024/08/20/66c46e2e001e5.png" width="80%"/></p>
 <h3 id="Orientation-Aware-Semantic-Segmentation-on-Icosahedron-Spheres"><a href="#Orientation-Aware-Semantic-Segmentation-on-Icosahedron-Spheres" class="headerlink" title="Orientation-Aware Semantic Segmentation on Icosahedron Spheres"></a>Orientation-Aware Semantic Segmentation on Icosahedron Spheres</h3><ol>
 <li><strong>ICCV 2019</strong></li>
 <li>背景<ol>
@@ -875,9 +869,7 @@
 </li>
 <li>我们的方向感知CNN成为了最近<strong>2D3DS</strong>数据集的新最佳状态，并且我们的<strong>Omni-SYNTHIA</strong>版本的SYNTHIA也达到了这一水平</li>
 </ol>
-<img src="https://vip.helloimg.com/i/2024/08/20/66c478a811b4e.png" width="70%"/>
-
-
+<p><img src="https://vip.helloimg.com/i/2024/08/20/66c478a811b4e.png" width="70%"/></p>
 <h3 id="PASS-Panoramic-annular-semantic-segmentation"><a href="#PASS-Panoramic-annular-semantic-segmentation" class="headerlink" title="PASS: Panoramic annular semantic segmentation"></a>PASS: Panoramic annular semantic segmentation</h3><ol>
 <li><strong>ITS 2019</strong></li>
 <li>背景<ol>
@@ -893,9 +885,7 @@
 </li>
 <li>实验证明了PASS在单一PASS中对现实世界周围感知的有效性</li>
 </ol>
-<img src="https://vip.helloimg.com/i/2024/08/20/66c48aa675cb6.png" width="80%"/>
-
-
+<p><img src="https://vip.helloimg.com/i/2024/08/20/66c48aa675cb6.png" width="80%"/></p>
 <h3 id="Large-scale-joint-semantic-re-localisation-and-scene-understanding-via-globally-unique-instance-coordinate-regression"><a href="#Large-scale-joint-semantic-re-localisation-and-scene-understanding-via-globally-unique-instance-coordinate-regression" class="headerlink" title="Large scale joint semantic re-localisation and scene understanding via globally unique instance coordinate regression"></a>Large scale joint semantic re-localisation and scene understanding via globally unique instance coordinate regression</h3><ol>
 <li><strong>BMVC 2019</strong></li>
 </ol>
@@ -970,8 +960,7 @@
 </ol>
 </li>
 </ol>
-<img src="https://vip.helloimg.com/i/2024/08/20/66c47d832094d.png" />
-
+<p><img src="https://vip.helloimg.com/i/2024/08/20/66c47d832094d.png" /></p>
 <h3 id="Panoptic-Segmentation-A-Review"><a href="#Panoptic-Segmentation-A-Review" class="headerlink" title="Panoptic Segmentation: A Review"></a>Panoptic Segmentation: A Review</h3><ol>
 <li><strong>arxiv 2021</strong></li>
 <li><strong>没有涉及全景图像</strong></li>
@@ -1009,9 +998,7 @@
 </li>
 <li>实验表明，我们提出的方法使我们的高效架构能够获得显著的准确性提升，在全景图像领域超越了现有技术</li>
 </ol>
-<img src="https://vip.helloimg.com/i/2024/08/20/66c491b1e5855.png"/>
-
-
+<p><img src="https://vip.helloimg.com/i/2024/08/20/66c491b1e5855.png"/></p>
 <h3 id="Capturing-omni-range-context-for-omnidirectional-segmentation"><a href="#Capturing-omni-range-context-for-omnidirectional-segmentation" class="headerlink" title="Capturing omni-range context for omnidirectional segmentation"></a>Capturing omni-range context for omnidirectional segmentation</h3><ol>
 <li><strong>CVPR 2021</strong></li>
 <li>《PASS: Panoramic annular semantic segmentation》团队</li>
@@ -1052,9 +1039,7 @@
 </li>
 <li>我们的框架在局部和全局层面上促进了在领域对应学习时的信息交换，并提高了两个标准分割网络的领域自适应性能，分别在平均IoU上提高了6.05%和11.26%</li>
 </ol>
-<img src="https://vip.helloimg.com/i/2024/08/20/66c49acfcb891.png" width="120%"/>
-
-
+<p><img src="https://vip.helloimg.com/i/2024/08/20/66c49acfcb891.png" width="120%"/></p>
 <h3 id="Panoramic-panoptic-segmentation-Towards-complete-surrounding-understanding-via-unsupervised-contrastive-learning"><a href="#Panoramic-panoptic-segmentation-Towards-complete-surrounding-understanding-via-unsupervised-contrastive-learning" class="headerlink" title="Panoramic panoptic segmentation: Towards complete surrounding understanding via unsupervised contrastive learning"></a>Panoramic panoptic segmentation: Towards complete surrounding understanding via unsupervised contrastive learning</h3><ol>
 <li><strong>IVS 2021</strong></li>
 <li>《PASS: Panoramic annular semantic segmentation》团队</li>
@@ -1063,10 +1048,7 @@
 <li>发布了<strong>WildPPS</strong>：第一个<strong>全景全景图像数据集</strong>，以促进周围感知的进步</li>
 <li>使用我们提出的方法，在我们的 <strong>WildPPS</strong> 数据集上实现了超过5%的显著改进</li>
 </ol>
-<img src="https://vip.helloimg.com/i/2024/08/20/66c4a0180a253.png" width="80%"/>
-
-
-
+<p><img src="https://vip.helloimg.com/i/2024/08/20/66c4a0180a253.png" width="80%"/></p>
 <h3 id="A-survey-on-deep-learning-based-panoptic-segmentation"><a href="#A-survey-on-deep-learning-based-panoptic-segmentation" class="headerlink" title="A survey on deep learning-based panoptic segmentation"></a>A survey on deep learning-based panoptic segmentation</h3><ol>
 <li><strong>DSP 2022</strong></li>
 <li>这一小段提到了全景图分割：<ol>
@@ -1142,9 +1124,7 @@
 </li>
 <li>进一步提出了一个新的全景视频泛视觉分割基准，并基于DeepLab系列模型建立了几个强基线</li>
 </ol>
-<img src="https://vip.helloimg.com/i/2024/08/21/66c58a94c8df4.png" />
-
-
+<p><img src="https://vip.helloimg.com/i/2024/08/21/66c58a94c8df4.png" /></p>
 <h3 id="Bending-reality-Distortion-aware-transformers-for-adapting-to-panoramic-semantic-segmentation"><a href="#Bending-reality-Distortion-aware-transformers-for-adapting-to-panoramic-semantic-segmentation" class="headerlink" title="Bending reality: Distortion-aware transformers for adapting to panoramic semantic segmentation"></a>Bending reality: Distortion-aware transformers for adapting to panoramic semantic segmentation</h3><ol>
 <li><strong>CVPR 2022</strong></li>
 <li>《PASS: Panoramic annular semantic segmentation》团队</li>
@@ -1179,9 +1159,7 @@
 <li>实验结果表明，使用具有失真意识的CNN和等矩形卷积可以提高语义分割性能（mIoU增加了4%）</li>
 <li>还发布了一个像素级标注的户外全景图像数据集，可以用于各种计算机视觉应用，如<strong>自动驾驶和视觉定位</strong></li>
 </ol>
-<img src="https://vip.helloimg.com/i/2024/08/21/66c592d144483.png" width="60%"/>
-<img src="https://vip.helloimg.com/i/2024/08/21/66c593c6baf94.png" />
-
+<p><img src="https://vip.helloimg.com/i/2024/08/21/66c592d144483.png" width="60%"/><br><img src="https://vip.helloimg.com/i/2024/08/21/66c593c6baf94.png" /></p>
 <h3 id="Review-on-Panoramic-Imaging-and-Its-Applications-in-Scene-Understanding"><a href="#Review-on-Panoramic-Imaging-and-Its-Applications-in-Scene-Understanding" class="headerlink" title="Review on Panoramic Imaging and Its Applications in Scene Understanding"></a>Review on Panoramic Imaging and Its Applications in Scene Understanding</h3><ol>
 <li><strong>TIM 2022</strong></li>
 <li><strong>最近的全景图像综述文章</strong></li>
@@ -1278,11 +1256,8 @@
 </ol>
 </li>
 </ol>
-<img src="https://vip.helloimg.com/i/2024/08/20/66c4b450143fd.png" />
-
-
-
-<h3 id="全景图-视频-——-SOD"><a href="#全景图-视频-——-SOD" class="headerlink" title="全景图&#x2F;视频 —— SOD"></a>全景图&#x2F;视频 —— SOD</h3><h3 id="Distortion-Adaptive-Salient-Object-Detection-in-360-circ-Omnidirectional-Images"><a href="#Distortion-Adaptive-Salient-Object-Detection-in-360-circ-Omnidirectional-Images" class="headerlink" title="Distortion-Adaptive Salient Object Detection in $360^{\circ}$ Omnidirectional Images"></a>Distortion-Adaptive Salient Object Detection in $360^{\circ}$ Omnidirectional Images</h3><ol>
+<p><img src="https://vip.helloimg.com/i/2024/08/20/66c4b450143fd.png" /></p>
+<h3 id="全景图-视频-——-SOD"><a href="#全景图-视频-——-SOD" class="headerlink" title="全景图/视频 —— SOD"></a>全景图/视频 —— SOD</h3><h3 id="Distortion-Adaptive-Salient-Object-Detection-in-360-circ-Omnidirectional-Images"><a href="#Distortion-Adaptive-Salient-Object-Detection-in-360-circ-Omnidirectional-Images" class="headerlink" title="Distortion-Adaptive Salient Object Detection in $360^{\circ}$ Omnidirectional Images"></a>Distortion-Adaptive Salient Object Detection in $360^{\circ}$ Omnidirectional Images</h3><ol>
 <li><strong>TVCG 2020</strong></li>
 <li><strong>北航， <a target="_blank" rel="noopener" href="https://vrlab.buaa.edu.cn/">虚拟现实技术与系统国家重点实验室</a>，Jia Li, Jinming Su, Changqun Xia</strong></li>
 <li>背景<ol>
@@ -1305,8 +1280,7 @@
 <li>验结果表明，所提出的基线方法在360°SOD数据集上超越了表现最佳的现有方法</li>
 <li>所提出的基线方法和其他方法在360°SOD数据集上的基准测试结果表明，所提出的数据集非常具有挑战性</li>
 </ol>
-<img src="https://vip.helloimg.com/i/2024/08/24/66c9f08bdbcb7.png"/>
-
+<p><img src="https://vip.helloimg.com/i/2024/08/24/66c9f08bdbcb7.png"/></p>
 <h3 id="A-FIXATION-BASED-360◦-BENCHMARK-DATASET-FOR-SALIENT-OBJECT-DETECTION"><a href="#A-FIXATION-BASED-360◦-BENCHMARK-DATASET-FOR-SALIENT-OBJECT-DETECTION" class="headerlink" title="A FIXATION-BASED 360◦ BENCHMARK DATASET FOR SALIENT OBJECT DETECTION"></a>A FIXATION-BASED 360◦ BENCHMARK DATASET FOR SALIENT OBJECT DETECTION</h3><ol>
 <li><strong>ICIP 2020</strong></li>
 <li>背景<ol>
@@ -1323,9 +1297,7 @@
 </li>
 <li>实验结果表明，现有方法在全景图像的SOD应用中存在局限性，这表明所提出的数据集具有挑战性</li>
 </ol>
-<img src="https://vip.helloimg.com/i/2024/08/24/66c9f16ea7fb5.png"/>
-
-
+<p><img src="https://vip.helloimg.com/i/2024/08/24/66c9f16ea7fb5.png"/></p>
 <h3 id="FANet-Features-Adaptation-Network-for-360-Omnidirectional-Salient-Object-Detection"><a href="#FANet-Features-Adaptation-Network-for-360-Omnidirectional-Salient-Object-Detection" class="headerlink" title="FANet: Features Adaptation Network for 360 Omnidirectional Salient Object Detection"></a>FANet: Features Adaptation Network for 360 Omnidirectional Salient Object Detection</h3><ol>
 <li><strong>SPL 2020</strong></li>
 <li>背景<ol>
@@ -1362,8 +1334,7 @@
 </ol>
 </li>
 </ol>
-<img src="https://vip.helloimg.com/i/2024/08/24/66c9ed4058898.png"/>
-
+<p><img src="https://vip.helloimg.com/i/2024/08/24/66c9ed4058898.png"/></p>
 <h3 id="ASOD60K-An-Audio-Induced-Salient-Object-Detection-Dataset-for-Panoramic-Videos"><a href="#ASOD60K-An-Audio-Induced-Salient-Object-Detection-Dataset-for-Panoramic-Videos" class="headerlink" title="ASOD60K: An Audio-Induced Salient Object Detection Dataset for Panoramic Videos"></a>ASOD60K: An Audio-Induced Salient Object Detection Dataset for Panoramic Videos</h3><ol>
 <li><strong>Arxiv 2021</strong></li>
 <li>背景<ol>
@@ -1371,14 +1342,14 @@
 </ol>
 </li>
 <li>我们提出了PV-SOD，这是一项新任务，旨在从全景视频中分割显著对象<ol>
-<li>与现有的注视点&#x2F;对象级显著性检测任务不同，我们专注于<strong>声音诱发的显著对象</strong>检测（SOD），其中显著对象是根据声音诱发的眼动进行标记的</li>
+<li>与现有的注视点/对象级显著性检测任务不同，我们专注于<strong>声音诱发的显著对象</strong>检测（SOD），其中显著对象是根据声音诱发的眼动进行标记的</li>
 <li>我们收集了第一个大规模数据集，名为<strong>ASOD60K</strong>，其中包含带有六级层级注释的4K分辨率视频帧</li>
-<li>每个序列都标有其超类&#x2F;子类，每个子类中的对象进一步用人类眼动注视点、边界框、对象级&#x2F;实例级遮罩和相关属性（例如，几何失真）进行了注释</li>
+<li>每个序列都标有其超类/子类，每个子类中的对象进一步用人类眼动注视点、边界框、对象级/实例级遮罩和相关属性（例如，几何失真）进行了注释</li>
 </ol>
 </li>
 <li>我们系统地在ASOD60K上对11种代表性方法进行了基准测试，并得出了几个有趣的发现</li>
 </ol>
-<h3 id="View-Aware-Salient-Object-Detection-for-360∘-Omnidirectional-Image"><a href="#View-Aware-Salient-Object-Detection-for-360∘-Omnidirectional-Image" class="headerlink" title="View-Aware Salient Object Detection for 360∘ Omnidirectional Image"></a>View-Aware Salient Object Detection for 360∘ Omnidirectional Image</h3><ol>
+<h3 id="View-Aware-Salient-Object-Detection-for-360∘-Omnidirectional-Image"><a href="#View-Aware-Salient-Object-Detection-for-360∘-Omnidirectional-Image" class="headerlink" title="View-Aware Salient Object Detection for 360∘ Omnidirectional Image"></a>View-Aware Salient Object Detection for 360∘ Omnidirectional Image</h3><ol>
 <li><strong>TM 2022</strong></li>
 <li><strong>北航， <a target="_blank" rel="noopener" href="https://vrlab.buaa.edu.cn/">虚拟现实技术与系统国家重点实验室</a>，Junjie Wu , Changqun Xia</strong></li>
 <li>背景<ol>
@@ -1398,8 +1369,7 @@
 <li>20种最先进的isod方法的基准测试结果表明，所构建的数据集是非常具有挑战性的</li>
 <li>详尽的实验验证了所提出的方法是实用的，并且优于目前最先进的方法</li>
 </ol>
-<img src="https://vip.helloimg.com/i/2024/08/24/66c9e6d9b4d29.png" width="80%"/>
-
+<p><img src="https://vip.helloimg.com/i/2024/08/24/66c9e6d9b4d29.png" width="80%"/></p>
 <h3 id="Multi-Stage-Salient-Object-Detection-in-360°-Omnidirectional-Image-Using-Complementary-Object-Level-Semantic-Information"><a href="#Multi-Stage-Salient-Object-Detection-in-360°-Omnidirectional-Image-Using-Complementary-Object-Level-Semantic-Information" class="headerlink" title="Multi-Stage Salient Object Detection in 360° Omnidirectional Image Using Complementary Object-Level Semantic Information"></a>Multi-Stage Salient Object Detection in 360° Omnidirectional Image Using Complementary Object-Level Semantic Information</h3><ol>
 <li><strong>ETCI 2023</strong></li>
 <li>背景<ol>
@@ -1425,7 +1395,7 @@
 <li>在360°全景真实动态场景中进行目标级视听显著检测，对于探索和建模沉浸式环境中的人的感知，以及在教育、社交网络、娱乐和培训等领域的虚拟、增强和混合现实应用的开发具有重要意义</li>
 </ol>
 </li>
-<li>提出了一项新的任务–全景视听显著目标检测(<strong>PAV-SOD</strong>)，旨在从反映现实生活场景的360°全景视频中分割出最能抓住人类注意力的目标<ol>
+<li>提出了一项新的任务—全景视听显著目标检测(<strong>PAV-SOD</strong>)，旨在从反映现实生活场景的360°全景视频中分割出最能抓住人类注意力的目标<ol>
 <li>我们收集了<strong>PAVS10K</strong>，这是第一个用于视听显著对象检测的全景视频数据集<ol>
 <li>包括67个4K分辨率的等长方形视频，每个视频带有分层的场景类别和相关属性，这些标签描述了进行PAV-SOD的具体挑战</li>
 <li>10,465个均匀采样的视频帧，其中包含手动注释的对象级和实例级像素掩码</li>
@@ -1434,17 +1404,15 @@
 </li>
 </ol>
 </li>
-<li>基于我们的PAVS10K，我们进一步系统地基准了13种最先进的显著对象检测(SOD)&#x2F;视频对象分割(VOS)方法</li>
+<li>基于我们的PAVS10K，我们进一步系统地基准了13种最先进的显著对象检测(SOD)/视频对象分割(VOS)方法</li>
 <li>还提出了一种新的基线网络，该网络利用了360°视频帧的视觉和音频线索，并使用了一种新的条件变分自动编码器(CVAE)<ol>
 <li>基于CVAE的视听网络CAV-Net由时空视频分割网络、卷积音频编码网络和视听分布估计模块组成。因此，我们的CAV-Net优于所有竞争模型，并能够估计PAVS10K中的任意不确定性</li>
 </ol>
 </li>
 <li>通过广泛的实验结果，我们获得了一些关于PAV-SOD挑战的发现和对PAV-SOD模型可解释性的见解</li>
 </ol>
-<img src="https://vip.helloimg.com/i/2024/08/24/66c9dd10064e8.png" />
-
-<img src="https://vip.helloimg.com/i/2024/08/24/66c9db3c86fd7.png" />
-
+<p><img src="https://vip.helloimg.com/i/2024/08/24/66c9dd10064e8.png" /></p>
+<p><img src="https://vip.helloimg.com/i/2024/08/24/66c9db3c86fd7.png" /></p>
 <h3 id="Panoramic-Video-Salient-Object-Detection-with-Ambisonic-Audio-Guidance"><a href="#Panoramic-Video-Salient-Object-Detection-with-Ambisonic-Audio-Guidance" class="headerlink" title="Panoramic Video Salient Object Detection with Ambisonic Audio Guidance"></a>Panoramic Video Salient Object Detection with Ambisonic Audio Guidance</h3><ol>
 <li><strong>AAAI 2023</strong></li>
 <li>背景<ol>
@@ -1498,7 +1466,7 @@
 <li>损失函数创新</li>
 <li>评价指标创新</li>
 <li>方法创新<ol>
-<li>逐物体&#x2F;逐像素(被淘汰)</li>
+<li>逐物体/逐像素(被淘汰)</li>
 <li>多任务学习（较复杂且不易优化）</li>
 <li>考虑上下文</li>
 <li>考虑同一图像中对象间相互作用</li>
@@ -1695,20 +1663,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-count">35</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-count">44</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1802,6 +1770,8 @@
   
   <script color='0,0,255' opacity='0.4' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
   <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 

@@ -14,20 +14,21 @@
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
   <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"awayx.online","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"awayx.online","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="CVPR 2024 github：EricDengbowen&#x2F;QAGNet: Official repository for CVPR 2024 paper &#34;Advancing Saliency Ranking with Human Fixations: Dataset, Models and Benchmarks&#34;. (github.com)  Abstract显著">
+  <meta name="description" content="CVPR 2024 github：EricDengbowen&#x2F;QAGNet: Official repository for CVPR 2024 paper &#34;Advancing Saliency Ranking with Human Fixations: Dataset, Models and Benchmarks&#34;. (github.com)  Abstract显著性排序检测">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Advancing Saliency Ranking with Human Fixations - Dataset, Models and Benchmarks">
 <meta property="og:url" content="http://awayx.online/2024/08/18/Advancing%20Saliency%20Ranking%20with%20Human%20Fixations%20-%20Dataset,%20Models%20and%20Benchmarks/index.html">
 <meta property="og:site_name" content="AwaySpace">
-<meta property="og:description" content="CVPR 2024 github：EricDengbowen&#x2F;QAGNet: Official repository for CVPR 2024 paper &#34;Advancing Saliency Ranking with Human Fixations: Dataset, Models and Benchmarks&#34;. (github.com)  Abstract显著">
+<meta property="og:description" content="CVPR 2024 github：EricDengbowen&#x2F;QAGNet: Official repository for CVPR 2024 paper &#34;Advancing Saliency Ranking with Human Fixations: Dataset, Models and Benchmarks&#34;. (github.com)  Abstract显著性排序检测">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://vip.helloimg.com/i/2024/08/18/66c1b6a0474ba.png">
 <meta property="og:image" content="https://vip.helloimg.com/i/2024/08/18/66c1b69dbbab3.png">
@@ -132,17 +133,17 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">5</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">42</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">44</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">32</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">35</span></a>
 
   </li>
         <li class="menu-item menu-item-sitemap">
@@ -274,13 +275,11 @@
       
         <blockquote>
 <p><strong>CVPR 2024</strong></p>
-<p><strong>github</strong>：<a target="_blank" rel="noopener" href="https://github.com/EricDengbowen/QAGNet">EricDengbowen&#x2F;QAGNet: Official repository for CVPR 2024 paper &#34;Advancing Saliency Ranking with Human Fixations: Dataset, Models and Benchmarks&#34;. (github.com)</a></p>
+<p><strong>github</strong>：<a target="_blank" rel="noopener" href="https://github.com/EricDengbowen/QAGNet">EricDengbowen/QAGNet: Official repository for CVPR 2024 paper &#34;Advancing Saliency Ranking with Human Fixations: Dataset, Models and Benchmarks&#34;. (github.com)</a></p>
 </blockquote>
 <h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>显著性排序检测（Saliency Ranking Detection, SRD）已经成为计算机视觉中的一个挑战性任务，旨在不仅识别图像中的显著对象，还根据其显著性程度对其进行排序。现有的SRD数据集主要使用鼠标轨迹数据，这不足以捕捉人类视觉感知的复杂性。为了解决这个问题，本文介绍了<strong>第一个大规模的SRD数据集SIFR</strong>（Saliency Instance Fixation Ranking），该数据集使用<strong>真实的人类注视数据构建</strong>，从而更贴近真实的视觉感知过程。为了为该数据集建立基准，我们提出了<strong>QAGNet</strong>，这是一种新颖的模型，利用来自transformer检测器的显著性实例查询特征，在三层嵌套图中进行处理。通过大量实验，我们证明了我们的方法在两个广泛使用的SRD数据集以及我们新提出的数据集上超越了现有的最先进方法。代码和数据集可在<a target="_blank" rel="noopener" href="https://github.com/EricDengbowen/QAGNet">https://github.com/EricDengbowen/QAGNet</a> 上获取。</p>
 <span id="more"></span>
-
-<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><img src="https://vip.helloimg.com/i/2024/08/18/66c1b6a0474ba.png" width="70%"/>
-
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p><img src="https://vip.helloimg.com/i/2024/08/18/66c1b6a0474ba.png" width="70%"/></p>
 <blockquote>
 <p>图 1. 我们提出的数据集、ASSR [30] 数据集和 IRSR [18] 数据集的对比，其中所有 SRD 的真实标签都经过着色处理。SOD 任务旨在检测像素级的显著对象，而不进行区分，而 SRD 任务则旨在为每个检测到的对象分配不同程度的显著性（列 (b) 和 (c)）。我们提出的数据集是基于眼动跟踪注视点精心制作的，而其他两个数据集则基于鼠标轨迹。</p>
 </blockquote>
@@ -295,8 +294,7 @@
 <li>我们的实验结果展示了 QAGNet 中不同模块的有效性，并且我们的方法在两个广泛使用的数据集和我们新创建的数据集上，均显示出了显著优于其他竞争方法的性能。</li>
 </ul>
 <h2 id="Related-Work"><a href="#Related-Work" class="headerlink" title="Related Work"></a>Related Work</h2><p>显著目标检测（Salient Object Detection, SOD）旨在突出场景中最具视觉吸引力或重要性的物体。类似于前景分割，SOD 的流行方法[17, 19, 24, 34, 35, 40, 41]和数据集[14, 33, 37, 38]并不区分不同的显著物体，而是对所有显著区域进行二值分割。近年来，显著性排序检测（Saliency Ranking Detection, SRD）这一扩展任务应运而生，旨在识别并对物体的显著性进行排序。该任务旨在更好地反映人类观察者在视觉场中感知不同物体相对重要性的能力。</p>
-<img src="https://vip.helloimg.com/i/2024/08/18/66c1b69dbbab3.png" width="70%"/>
-
+<p><img src="https://vip.helloimg.com/i/2024/08/18/66c1b69dbbab3.png" width="70%"/></p>
 <blockquote>
 <p>图 2. ASSR 和 IRSR 数据集中观察到的局限性。</p>
 </blockquote>
@@ -307,8 +305,7 @@
 <h3 id="Gaze-Recording-and-Fixation-Filtering"><a href="#Gaze-Recording-and-Fixation-Filtering" class="headerlink" title="Gaze Recording and Fixation Filtering"></a>Gaze Recording and Fixation Filtering</h3><p>接下来，我们使用眼动跟踪系统进行“自由浏览”任务，观察<strong>八名参与者</strong>的观看习惯。凝视跟踪使用 Tobii Pro Nano（Tobii，瑞典）进行，采样频率设置为 60 Hz。每张图像按比例调整大小以适应全屏分辨率，并以固定的 3 秒时间呈现给受试者。为了保持眼动跟踪的准确性，每 200 张图像会执行一次重新校准程序。为缓解眼睛疲劳，参与者在每 200 张图像的间隔处可以选择休息或暂停凝视记录过程。需要注意的是，该过程并不快速，<strong>凝视记录的过程持续了六个月</strong>。在数据采集期间，我们在记录会话期间及会话之间监测注意力水平，以确保一致性。</p>
 <p>然后，我们对每位参与者的原始凝视信息进行处理，以识别关注区域。我们使用基于速度的方法 [27] 将点分组为不同的注视事件，在这些事件中，观察者专注于某个对象 [25]。我们的方法会自动移除物体之间的快速眼动（扫视）。基于文献 [25] 中给出的注视平均时长，我们<strong>移除所有时长少于 200 毫秒的注视</strong>。此外，为减少中心偏见，我们<strong>移除了每位参与者首次捕获的注视点</strong>。经过过滤后，我们将每张图像对应的八位参与者的注视点进行汇总。</p>
 <h3 id="Salient-Objects-Threshold-and-Annotation"><a href="#Salient-Objects-Threshold-and-Annotation" class="headerlink" title="Salient Objects Threshold and Annotation"></a>Salient Objects Threshold and Annotation</h3><p>我们旨在<strong>使用现有的 MS-COCO 注释、Mask-RCNN 和人工注释的最佳组合，识别并标注每个观察到的显著实例</strong>。在每个场景中，MS-COCO 将提供部分对象的注释，但这些对象可能并不显著，或者显著对象可能没有被注释。我们将根据需要移除、添加或细化注释，以确保所有观察到的显著对象都具有高质量的注释。首先，我们计算位于现有多边形内的注视点的平均数量 $m$ 及其对应的标准差 $\sigma$。然后，我们应用一个阈值 $N_{\text{fixation}} \geq m - \sigma$，其中 $N_{\text{fixation}}$ 表示多边形内的注视点数量。包含足够数量注视点的现有多边形将自动纳入数据集。我们使用 DBSCAN [4] 对其余的注视点进行聚类，如果这些聚类满足上述相同的阈值标准，我们将其标记为潜在的未注释对象。对于 MS-COCO 测试集中没有注释的图像，我们执行相同的过程，但使用 Mask R-CNN 的多边形初步估计值。</p>
-<img src="https://vip.helloimg.com/i/2024/08/18/66c1b699d720d.png" width="70%" />
-
+<p><img src="https://vip.helloimg.com/i/2024/08/18/66c1b699d720d.png" width="70%" /></p>
 <blockquote>
 <p>图 4. 我们提出的数据集的示例。我们的注视图以代表阈值显著对象的点（红色）、在未注释对象上的注视聚类（绿色）和未被认为显著的注视聚类（黄色）为重点进行标注。</p>
 </blockquote>
@@ -472,20 +469,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-count">35</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-count">44</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -579,6 +576,8 @@
   
   <script color='0,0,255' opacity='0.4' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
   <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 

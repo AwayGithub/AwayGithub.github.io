@@ -14,12 +14,13 @@
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
   <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"awayx.online","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"awayx.online","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
   <meta name="description" content="嘿嘿">
@@ -125,17 +126,17 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">5</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">42</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">44</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">32</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">35</span></a>
 
   </li>
         <li class="menu-item menu-item-sitemap">
@@ -190,6 +191,308 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://awayx.online/2024/08/17/Bidirectional%20object-context%20prioritization%20learning%20for%20saliency%20ranking/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/TheRightToCry.jpg">
+      <meta itemprop="name" content="AwayX">
+      <meta itemprop="description" content="嘿嘿">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AwaySpace">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/08/17/Bidirectional%20object-context%20prioritization%20learning%20for%20saliency%20ranking/" class="post-title-link" itemprop="url">Bidirectional object-context prioritization learning for saliency ranking</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-08-17 17:03:53" itemprop="dateCreated datePublished" datetime="2024-08-17T17:03:53+08:00">2024-08-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-08-18 20:51:35" itemprop="dateModified" datetime="2024-08-18T20:51:35+08:00">2024-08-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">论文笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/Computer-Vision/" itemprop="url" rel="index"><span itemprop="name">Computer Vision</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/Computer-Vision/Salient-Object-Ranking/" itemprop="url" rel="index"><span itemprop="name">Salient Object Ranking</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/Computer-Vision/Salient-Object-Ranking/image/" itemprop="url" rel="index"><span itemprop="name">image</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/Computer-Vision/Salient-Object-Ranking/image/2022/" itemprop="url" rel="index"><span itemprop="name">2022</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p><strong>CVPR 2022</strong></p>
+<p><strong>github</strong>：<a target="_blank" rel="noopener" href="https://github.com/GrassBro/OCOR">GrassBro/OCOR: Bi-directional Object-context Prioritization Learning for Saliency Ranking (github.com)</a></p>
+</blockquote>
+<h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>最近提出了显著性排名任务，以研究人类在视觉上通常如何根据不同物体的显著性程度来转移注意力。现有的方法主要关注学习物体-物体或物体-场景关系。这种策略遵循了心理学中的基于物体的注意力概念，但<strong>往往倾向于关注具有强语义的物体（例如，人），从而导致不切实际的显著性排名</strong>。我们观察到空间注意力与基于物体的注意力在人的视觉识别系统中是同时工作的。在识别过程中，人类的空间注意力机制会在不同的区域（即上下文，context-to-context）之间移动、参与和脱离，这启发我们在显著性排名中<strong>除了物体级的推理外，还需要建模区域级的交互</strong>。因此，我们提出了一种新的<strong>双向方法</strong>，<strong>将空间注意力与基于物体的注意力统一用于显著性排名</strong>。我们的模型包含两个新模块：（1）选择性物体显著性（SOS）模块，通过推断显著物体的语义表示来建模基于物体的注意力；（2）物体-上下文-物体关系（OCOR）模块，通过共同建模显著物体的物体-上下文和上下文-物体交互来分配显著性排名。大量实验表明，我们的方法优于现有的最先进方法。代码和预训练模型可在 <a target="_blank" rel="noopener" href="https://github.com/GrassBro/OCOR">https://github.com/GrassBro/OCOR</a> 获取。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/08/17/Bidirectional%20object-context%20prioritization%20learning%20for%20saliency%20ranking/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://awayx.online/2024/08/17/Instance-level%20relative%20saliency%20ranking%20with%20graph%20reasoning/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/TheRightToCry.jpg">
+      <meta itemprop="name" content="AwayX">
+      <meta itemprop="description" content="嘿嘿">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AwaySpace">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/08/17/Instance-level%20relative%20saliency%20ranking%20with%20graph%20reasoning/" class="post-title-link" itemprop="url">Instance-level relative saliency ranking with graph reasoning</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-08-17 16:27:30" itemprop="dateCreated datePublished" datetime="2024-08-17T16:27:30+08:00">2024-08-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-08-18 20:51:55" itemprop="dateModified" datetime="2024-08-18T20:51:55+08:00">2024-08-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">论文笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/Computer-Vision/" itemprop="url" rel="index"><span itemprop="name">Computer Vision</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/Computer-Vision/Salient-Object-Ranking/" itemprop="url" rel="index"><span itemprop="name">Salient Object Ranking</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/Computer-Vision/Salient-Object-Ranking/image/" itemprop="url" rel="index"><span itemprop="name">image</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/Computer-Vision/Salient-Object-Ranking/image/2021/" itemprop="url" rel="index"><span itemprop="name">2021</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p><strong>TPAMI 2021</strong></p>
+</blockquote>
+<h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>传统的显著物体检测模型无法区分不同显著物体的重要性。最近，已有两项工作提出通过为不同物体分配不同程度的显著性来检测显著性排序。然而，这些模型中的一个无法区分物体实例，而另一个则更多关注于顺序注意力转移的推断。本文探讨了一种实际问题设置，该设置要求同时对显著实例进行分割并推断其相对显著性排名。我们提出了一种<strong>新型的统一模型</strong>，作为第一个端到端的解决方案，其中改进的 <strong>Mask R-CNN 用于分割显著实例，随后添加了一个显著性排名分支来推断相对显著性</strong>。对于相对显著性排名，我们构建了一个<strong>新的图推理模块</strong>，通过结合四种图来分别融入实例交互关系、局部对比、全局对比和高层语义先验。此外，我们还提出了一种<strong>新颖的损失函数</strong>来有效训练显著性排名分支。除了这些，我们还为这一任务提出了一个<strong>新数据集和评价指标</strong>，旨在推动这一领域的研究。最后，实验结果表明，我们提出的模型比以前的方法更有效。我们还展示了其在自适应图像重定向中的实际应用示例。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/08/17/Instance-level%20relative%20saliency%20ranking%20with%20graph%20reasoning/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://awayx.online/2024/08/17/Salient%20object%20ranking%20with%20position-preserved%20attention/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/TheRightToCry.jpg">
+      <meta itemprop="name" content="AwayX">
+      <meta itemprop="description" content="嘿嘿">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AwaySpace">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/08/17/Salient%20object%20ranking%20with%20position-preserved%20attention/" class="post-title-link" itemprop="url">Salient object ranking with position-preserved attention</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-08-17 15:17:12" itemprop="dateCreated datePublished" datetime="2024-08-17T15:17:12+08:00">2024-08-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-08-18 20:52:39" itemprop="dateModified" datetime="2024-08-18T20:52:39+08:00">2024-08-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">论文笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/Computer-Vision/" itemprop="url" rel="index"><span itemprop="name">Computer Vision</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/Computer-Vision/Salient-Object-Ranking/" itemprop="url" rel="index"><span itemprop="name">Salient Object Ranking</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/Computer-Vision/Salient-Object-Ranking/image/" itemprop="url" rel="index"><span itemprop="name">image</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/Computer-Vision/Salient-Object-Ranking/image/2021/" itemprop="url" rel="index"><span itemprop="name">2021</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p><strong>ICCV 2021</strong></p>
+<p><strong>github</strong>: <a target="_blank" rel="noopener" href="https://github.com/EricFH/SOR">https://github.com/EricFH/SOR</a></p>
+</blockquote>
+<h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>实例分割可以检测图像中物体的位置，但难以理解它们之间的关系。我们关注一个典型的关系：<strong>相对显著性</strong>。一个密切相关的任务是显著物体检测，它预测一个二值图，突出显示视觉上显著的区域，但难以区分多个物体。通过后处理直接将两个任务结合起来也会导致较差的性能。目前对相对显著性的研究不足，限制了内容感知图像裁剪、视频摘要和图像标注等实际应用。在本文中，我们研究了<strong>显著物体排序（SOR）任务</strong>，该任务旨在根据视觉显著性为每个检测到的物体分配一个排序顺序。我们提出了<strong>第一个端到端的 SOR 任务框架</strong>（end-to-end framework），并以<strong>多任务学习</strong>（multi-task learning fashion）的方式解决该问题。该框架<strong>同时处理实例分割和显著物体排序</strong>。在这个框架中，<strong>SOR 分支是独立的，可以灵活地与不同的检测方法配合使用</strong>，因此易于用作插件。我们还为 SOR 分支引入了一个专门设计的<strong>位置保留注意力（PPA）模块</strong>。该模块由位置嵌入阶段和特征交互阶段组成。考虑到位置在显著性比较中的重要性，我们在 ROI 池化操作中保留了物体的绝对坐标，然后在第一阶段将位置信息与语义特征融合。在特征交互阶段，我们应用注意力机制来获得建议框的上下文表示，以预测它们的相对排序顺序。我们在 <strong>ASR 数据集</strong>上进行了广泛的实验。在没有复杂技巧的情况下，我们提出的方法显著优于之前的最先进方法。代码将公开发布，网址为 <a target="_blank" rel="noopener" href="https://github.com/EricFH/SOR%E3%80%82">https://github.com/EricFH/SOR。</a></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/08/17/Salient%20object%20ranking%20with%20position-preserved%20attention/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -721,7 +1024,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://awayx.online/2024/08/09/Linear%20Algebra/">
+    <link itemprop="mainEntityOfPage" href="http://awayx.online/2024/08/09/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/TheRightToCry.jpg">
@@ -735,7 +1038,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2024/08/09/Linear%20Algebra/" class="post-title-link" itemprop="url">Linear Algebra</a>
+            <a href="/2024/08/09/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/" class="post-title-link" itemprop="url">线性代数</a>
         </h2>
 
         <div class="post-meta">
@@ -752,7 +1055,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-08-12 21:38:38" itemprop="dateModified" datetime="2024-08-12T21:38:38+08:00">2024-08-12</time>
+                <time title="修改时间：2024-09-13 14:51:48" itemprop="dateModified" datetime="2024-09-13T14:51:48+08:00">2024-09-13</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -781,7 +1084,7 @@
       
           <h2 id="第1章-线性方程组的解法"><a href="#第1章-线性方程组的解法" class="headerlink" title="第1章  线性方程组的解法"></a>第1章  线性方程组的解法</h2><h3 id="线性方程组的初等变换"><a href="#线性方程组的初等变换" class="headerlink" title="线性方程组的初等变换"></a>线性方程组的初等变换</h3><h4 id="多元线性方程组"><a href="#多元线性方程组" class="headerlink" title="多元线性方程组"></a>多元线性方程组</h4><ol>
 <li>例题：求$1^k+2^k+ \cdots +n^k$</li>
-<li>$n$元一次&#x2F;线性方程组</li>
+<li>$n$元一次/线性方程组</li>
 <li>解，解集</li>
 </ol>
 <h4 id="线性方程组的同解变形"><a href="#线性方程组的同解变形" class="headerlink" title="线性方程组的同解变形"></a>线性方程组的同解变形</h4><ol>
@@ -794,297 +1097,7 @@
 </ol>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2024/08/09/Linear%20Algebra/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://awayx.online/2024/08/09/NeRF%20-%20Representing%20Scenes%20as%20Neural%20Radiance%20Fields%20for%20View%20Synthesis/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/TheRightToCry.jpg">
-      <meta itemprop="name" content="AwayX">
-      <meta itemprop="description" content="嘿嘿">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="AwaySpace">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/08/09/NeRF%20-%20Representing%20Scenes%20as%20Neural%20Radiance%20Fields%20for%20View%20Synthesis/" class="post-title-link" itemprop="url">NeRF - Representing Scenes as Neural Radiance Fields for View Synthesis</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-08-09 18:35:11" itemprop="dateCreated datePublished" datetime="2024-08-09T18:35:11+08:00">2024-08-09</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-08-12 21:38:20" itemprop="dateModified" datetime="2024-08-12T21:38:20+08:00">2024-08-12</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">论文笔记</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/Computer-Vision/" itemprop="url" rel="index"><span itemprop="name">Computer Vision</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/Computer-Vision/NeRF/" itemprop="url" rel="index"><span itemprop="name">NeRF</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>我们提出了一种方法，通过优化一个基于连续体积场函数的底层模型，利用稀疏的输入视图集合，实现了复杂场景的新视角合成，并取得了最先进的结果。我们的算法使用一个全连接（非卷积）深度网络来表示场景，其输入是一个连续的5D坐标（空间位置(x, y, z)和观察方向(θ, φ)），输出是该空间位置的体密度和视角相关的辐射发射率。我们通过沿着相机光线查询5D坐标来合成视图，并使用经典的体积渲染技术将输出颜色和密度投影到图像中。由于体积渲染是自然可微的，我们优化表示的唯一输入是具有已知相机姿态的图像集合。我们描述了如何有效地优化神经辐射场以渲染具有复杂几何和外观的逼真新视角，并展示了在神经渲染和视角合成方面超越先前工作的结果。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024/08/09/NeRF%20-%20Representing%20Scenes%20as%20Neural%20Radiance%20Fields%20for%20View%20Synthesis/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://awayx.online/2024/08/09/Understanding%20Diffusion%20Models%20-%20A%20Unified%20Perspective/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/TheRightToCry.jpg">
-      <meta itemprop="name" content="AwayX">
-      <meta itemprop="description" content="嘿嘿">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="AwaySpace">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/08/09/Understanding%20Diffusion%20Models%20-%20A%20Unified%20Perspective/" class="post-title-link" itemprop="url">Understanding Diffusion Models - A Unified Perspective</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-08-09 18:25:53" itemprop="dateCreated datePublished" datetime="2024-08-09T18:25:53+08:00">2024-08-09</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-08-12 21:38:10" itemprop="dateModified" datetime="2024-08-12T21:38:10+08:00">2024-08-12</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">论文笔记</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/Computer-Vision/" itemprop="url" rel="index"><span itemprop="name">Computer Vision</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/Computer-Vision/Diffusion-Model/" itemprop="url" rel="index"><span itemprop="name">Diffusion Model</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>生成式模型：根据某分布的样本值 $x$建模分布$p(x)$，然后从该分布得到新样本值</p>
-<p>当前生成式模型的方向：</p>
-<ul>
-<li><p>Generative Adversarial Networks（GANs）</p>
-</li>
-<li><p>likelihood-based modeling</p>
-<ul>
-<li>autoregressive models, normalizing flows, Variational Autoencoders（VAEs）</li>
-</ul>
-</li>
-<li><p>energy-based modeling</p>
-</li>
-<li><p>score-based modeling</p>
-</li>
-</ul>
-<p>diffusion models（扩散模型）既有likelyhood-based解释，也有score-based解释</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024/08/09/Understanding%20Diffusion%20Models%20-%20A%20Unified%20Perspective/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://awayx.online/2024/08/09/Revisiting%20Salient%20Object%20Detection%20-%20Simultaneous%20Detection,%20Ranking,%20and%20Subitizing%20of%20Multiple%20Salient%20Objects/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/TheRightToCry.jpg">
-      <meta itemprop="name" content="AwayX">
-      <meta itemprop="description" content="嘿嘿">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="AwaySpace">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/08/09/Revisiting%20Salient%20Object%20Detection%20-%20Simultaneous%20Detection,%20Ranking,%20and%20Subitizing%20of%20Multiple%20Salient%20Objects/" class="post-title-link" itemprop="url">Revisiting Salient Object Detection - Simultaneous Detection, Ranking, and Subitizing of Multiple Salient Objects</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-08-09 00:38:11" itemprop="dateCreated datePublished" datetime="2024-08-09T00:38:11+08:00">2024-08-09</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-08-18 20:52:16" itemprop="dateModified" datetime="2024-08-18T20:52:16+08:00">2024-08-18</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">论文笔记</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/Computer-Vision/" itemprop="url" rel="index"><span itemprop="name">Computer Vision</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/Computer-Vision/Salient-Object-Ranking/" itemprop="url" rel="index"><span itemprop="name">Salient Object Ranking</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/Computer-Vision/Salient-Object-Ranking/image/" itemprop="url" rel="index"><span itemprop="name">image</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/Computer-Vision/Salient-Object-Ranking/image/2018/" itemprop="url" rel="index"><span itemprop="name">2018</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>显著对象检测（salient object detection）是一个已经被详细研究并提出了许多解决方案的问题。在本文中，我们认为迄今为止的工作所解决的问题相对来说是定义不明确的。具体来说，当询问多个观察者时，对于<strong>什么构成显著对象并没有普遍的共识</strong>。这意味着某些对象比其他对象更有可能被判断为显著，这<strong>暗示显著对象之间存在一个相对的排名</strong>。本论文提出的解决方案解决了这个更广泛的问题，考虑了相对排名，并且我们<strong>提出了适合在相对显著性背景下衡量成功的数据和指标</strong>。我们提出了一种<strong>基于相对显著性分层表示和逐阶段细化</strong>的创新深度学习解决方案。我们还展示了显著对象快速计数（subitizing）问题可以使用同一个网络来解决，并且我们的方法在所有考虑的指标上（包括传统的和新提出的）都超过了之前的任何工作。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024/08/09/Revisiting%20Salient%20Object%20Detection%20-%20Simultaneous%20Detection,%20Ranking,%20and%20Subitizing%20of%20Multiple%20Salient%20Objects/#more" rel="contents">
+              <a class="btn" href="/2024/08/09/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1175,20 +1188,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-count">35</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-count">44</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1282,6 +1295,8 @@
   
   <script color='0,0,255' opacity='0.4' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
   <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 

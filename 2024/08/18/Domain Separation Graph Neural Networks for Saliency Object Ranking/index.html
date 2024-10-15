@@ -14,20 +14,21 @@
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
   <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"awayx.online","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"awayx.online","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="CVPR 2024 github：Wu-ZJ&#x2F;DSGNN (github.com)  Abstract显著对象排序（SOR）最近引起了广泛关注。以往的方法通常未能明确探索对象之间与显著性程度相关的关系。在本文中，我们提出了一种新颖的域分离图神经网络（DSGNN），该网络首先分别从每个对象中提取形状和纹理线索，并为给定图像中的所有对象构建形状图和纹理图。然后，我们提出了形状-纹理图域分离">
+  <meta name="description" content="CVPR 2024 github：Wu-ZJ&#x2F;DSGNN (github.com)  Abstract显著对象排序（SOR）最近引起了广泛关注。以往的方法通常未能明确探索对象之间与显著性程度相关的关系。在本文中，我们提出了一种新颖的域分离图神经网络（DSGNN），该网络首先分别从每个对象中提取形状和纹理线索，并为给定图像中的所有对象构建形状图和纹理图。然后，我们提出了形状-纹理图域分离（STGD">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Domain Separation Graph Neural Networks for Saliency Object Ranking">
 <meta property="og:url" content="http://awayx.online/2024/08/18/Domain%20Separation%20Graph%20Neural%20Networks%20for%20Saliency%20Object%20Ranking/index.html">
 <meta property="og:site_name" content="AwaySpace">
-<meta property="og:description" content="CVPR 2024 github：Wu-ZJ&#x2F;DSGNN (github.com)  Abstract显著对象排序（SOR）最近引起了广泛关注。以往的方法通常未能明确探索对象之间与显著性程度相关的关系。在本文中，我们提出了一种新颖的域分离图神经网络（DSGNN），该网络首先分别从每个对象中提取形状和纹理线索，并为给定图像中的所有对象构建形状图和纹理图。然后，我们提出了形状-纹理图域分离">
+<meta property="og:description" content="CVPR 2024 github：Wu-ZJ&#x2F;DSGNN (github.com)  Abstract显著对象排序（SOR）最近引起了广泛关注。以往的方法通常未能明确探索对象之间与显著性程度相关的关系。在本文中，我们提出了一种新颖的域分离图神经网络（DSGNN），该网络首先分别从每个对象中提取形状和纹理线索，并为给定图像中的所有对象构建形状图和纹理图。然后，我们提出了形状-纹理图域分离（STGD">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://vip.helloimg.com/i/2024/08/18/66c1c029bb9de.png">
 <meta property="article:published_time" content="2024-08-18T09:37:47.000Z">
@@ -130,17 +131,17 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">5</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">42</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">44</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">32</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">35</span></a>
 
   </li>
         <li class="menu-item menu-item-sitemap">
@@ -272,15 +273,14 @@
       
         <blockquote>
 <p><strong>CVPR 2024</strong></p>
-<p><strong>github</strong>：<a target="_blank" rel="noopener" href="https://github.com/Wu-ZJ/DSGNN">Wu-ZJ&#x2F;DSGNN (github.com)</a></p>
+<p><strong>github</strong>：<a target="_blank" rel="noopener" href="https://github.com/Wu-ZJ/DSGNN">Wu-ZJ/DSGNN (github.com)</a></p>
 </blockquote>
 <h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>显著对象排序（SOR）最近引起了广泛关注。以往的方法通常未能明确探索对象之间与显著性程度相关的关系。在本文中，我们提出了一种<strong>新颖的域分离图神经网络（DSGNN）</strong>，该网络首先分别从每个对象中提取形状和纹理线索，并为给定图像中的所有对象构建形状图和纹理图。然后，我们提出了形状-纹理图域分离（STGDS）模块，通过分别明确建模每对对象之间的形状和纹理关系，来分离目标对象的任务相关和无关信息。此外，我们引入了跨图像图域分离（CIGDS）模块，旨在探索对不同场景具有鲁棒性的显著性程度子空间，从而为在不同图像中具有相同显著性水平的目标创建统一的表示。重要的是，我们的 DSGNN 自动学习多维特征来表示每个图边，允许复杂、多样且与排序相关的关系进行建模。实验结果表明，我们的 DSGNN 在 ASSR 和 IRSR 数据集上分别取得了新的最先进性能，SA-SOR 指标有大幅提升，分别为 5.2% 和 4.1%。我们的代码已在 <a target="_blank" rel="noopener" href="https://github.com/Wu-ZJ/DSGNN">https://github.com/Wu-ZJ/DSGNN</a> 上提供。</p>
 <span id="more"></span>
-
 <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>显著对象排序（SOR）旨在模拟人类视觉注意系统，在图像中对多个人工定义的显著对象进行联合排序（即它们的相对重要性 [31, 45, 49]）。虽然 SOR 技术能够为各种实际应用带来益处，如图像字幕生成 [57]、非写实渲染 [18]、人机交互 [48] 等，但由于人类的注意力总是受到各种因素的影响，这项任务具有挑战性。这些因素包括<strong>对象的空间位置、大小、颜色亮度、对比度和清晰度，以及它们在图像中的上下文</strong> [45]。</p>
 <p>当前的 SOR 方法 [13, 45] 通常从使用现有的实例分割方法（如 Mask-RCNN [20] 和 Mask2former [8]）检测多个显著对象开始，在此基础上，特意提取与显著程度相关的特征来预测其显著性得分，其中 CNN [20, 28] 和 Transformer [8, 50] 被频繁使用。尽管这些方法已经在通过各种空间注意机制建模每个对象与场景之间的关系方面表现出显著效果，但它们<strong>经常忽略候选显著对象之间的关系</strong>，而这种关系对人类观察者判断其在场景中的相对重要性也是至关重要的 [9, 36, 37]。因此，一些方法试图通过<strong>图边</strong> [31] 或<strong>对象之间的注意力图</strong> [49] 来探索显著对象之间的关系。</p>
 <p>虽然上述方法在一定程度上可以对对象之间以及它们与场景之间的关系进行建模，但它们<strong>仍未能全面探索对象之间与显著程度相关的潜在关系</strong>。首先，<strong>形状和纹理</strong>都在决定对象的显著性程度方面发挥着重要作用。然而，现有的方法 [13, 31, 45, 49] 都未能分别建模对象形状和纹理之间与显著性程度相关的关系线索，同时抑制其中包含的不相关噪声。其次，由于<strong>不同图像中具有相同显著程度的对象可能在任务空间中表现出相似的分布</strong> [38]，它们之间的关系也可能有助于显著性程度的估计，而这也被现有方法忽略了。第三，现有的基于图的方法 [31] <strong>通过单值图边描述每对对象之间的关系，未能描述它们之间复杂多样的潜在关系</strong>。尽管基于注意力的方法 [49] 可以建模更全面的关系，但它们可能引入与任务无关的噪声。</p>
-<p>在本文中，我们提出了一种新颖的用于显著对象排序（SOR）任务的域分离图神经网络（DSGNN），可以专门解决上述三个问题。我们的 DSGNN 首先分别从每个对象中提取形状和纹理线索，并<strong>为给定图像中的所有对象构建形状图和纹理图</strong>。然后，新颖的形状-纹理图域分离（STGDS）模块通过<strong>明确建模所有对象的形状和纹理之间的关系</strong>，分别分离目标对象中与任务相关和无关的信息。之后，跨图像图域分离（CIGDS）模块被引入，以探索对不同场景具有鲁棒性的显著性程度子空间，旨在<strong>为不同图像中具有相同显著性水平的目标创建统一的表示</strong>。重要的是，我们的 DSGNN 自动学习多维特征 [47] 来表示每个图边，允许全面捕捉对象形状&#x2F;纹理以及不同图像中的对象之间复杂、多样且与排序相关的关系。总而言之，本文的主要贡献和创新总结如下：</p>
+<p>在本文中，我们提出了一种新颖的用于显著对象排序（SOR）任务的域分离图神经网络（DSGNN），可以专门解决上述三个问题。我们的 DSGNN 首先分别从每个对象中提取形状和纹理线索，并<strong>为给定图像中的所有对象构建形状图和纹理图</strong>。然后，新颖的形状-纹理图域分离（STGDS）模块通过<strong>明确建模所有对象的形状和纹理之间的关系</strong>，分别分离目标对象中与任务相关和无关的信息。之后，跨图像图域分离（CIGDS）模块被引入，以探索对不同场景具有鲁棒性的显著性程度子空间，旨在<strong>为不同图像中具有相同显著性水平的目标创建统一的表示</strong>。重要的是，我们的 DSGNN 自动学习多维特征 [47] 来表示每个图边，允许全面捕捉对象形状/纹理以及不同图像中的对象之间复杂、多样且与排序相关的关系。总而言之，本文的主要贡献和创新总结如下：</p>
 <ul>
 <li>我们提出了一种新颖的用于 SOR 任务的 DSGNN，特别考虑了三个关键因素：（1）场景中对象的形状交互；（2）场景中对象的纹理交互；（3）不同场景中对象之间的内在关系。该方法受 [3] 启发，但能够在推理场景内外目标之间的复杂关系时，明确解耦与任务相关和无关的线索。</li>
 <li>我们提出了领域中第一个<strong>多维边缘图神经网络</strong>（multi-dimensional edge GNN），用于显著对象分析，能够通过深度学习的多维图边缘特征全面有效地建模目标对象之间的关系（即显著性程度）。</li>
@@ -289,9 +289,8 @@
 <h2 id="Related-Work"><a href="#Related-Work" class="headerlink" title="Related Work"></a>Related Work</h2><h3 id="Saliency-Object-Detection"><a href="#Saliency-Object-Detection" class="headerlink" title="Saliency Object Detection"></a>Saliency Object Detection</h3><h3 id="Saliency-Object-Ranking"><a href="#Saliency-Object-Ranking" class="headerlink" title="Saliency Object Ranking"></a>Saliency Object Ranking</h3><p>显著对象排序（SOR）任务建立在显著对象检测的基础上，不仅要求检测每个显著对象，还需要确定每个单独对象的显著性程度。Islam 等人 [24] 首次提出了显著对象排序任务。然而，他们确定实例显著性程度的方法是预测实例每个像素的显著性值，然后对其进行平均。Siris 等人 [45] 首次基于实例分割（Mask-RCNN）[20] 构建了显著对象排序模型，从而降低了任务的难度。同样，Liu 等人 [31] 和 Fang 等人 [13] 也选择基于 Mask-RCNN [20] 构建显著对象排序模型。前者引入了多个图结构来推断对象之间的关系，而后者在提取目标特征之前融合了对象的位置信息。Tian 等人 [49] 首次采用基于查询的实例分割算法 [14] 来构建显著对象排序任务，并设计了一种复杂的对象-上下文注意机制，以理解对象在图像中的重要性。</p>
 <h3 id="Instance-Segmentation"><a href="#Instance-Segmentation" class="headerlink" title="Instance Segmentation"></a>Instance Segmentation</h3><h3 id="Graph-representation-learning-and-Graph-Neural-Networks"><a href="#Graph-representation-learning-and-Graph-Neural-Networks" class="headerlink" title="Graph representation learning and Graph Neural Networks"></a>Graph representation learning and Graph Neural Networks</h3><h2 id="Methodology"><a href="#Methodology" class="headerlink" title="Methodology"></a>Methodology</h2><h3 id="Shape-Texture-Graph-Domain-Separation-Module"><a href="#Shape-Texture-Graph-Domain-Separation-Module" class="headerlink" title="Shape-Texture Graph Domain Separation Module"></a>Shape-Texture Graph Domain Separation Module</h3><h3 id="Cross-Image-Domain-Separation-Module"><a href="#Cross-Image-Domain-Separation-Module" class="headerlink" title="Cross Image Domain Separation Module"></a>Cross Image Domain Separation Module</h3><h3 id="Training-Strategy"><a href="#Training-Strategy" class="headerlink" title="Training Strategy"></a>Training Strategy</h3><h2 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h2><h3 id="Experimental-Setup"><a href="#Experimental-Setup" class="headerlink" title="Experimental Setup"></a>Experimental Setup</h3><p><strong>数据集</strong>。我们的实验在两个广泛使用的数据集上进行，即 ASSR [45] 和 IRSR [31]，它们均源自 MS-COCO [30] 和 SALICON [25] 数据集。然而，它们在确定目标显著性方面有所不同：ASSR 数据集主要基于眼动顺序来评估目标显著性，对每张图像的前5个显著对象进行标注，并分别提供 7,646、1,436 和 2,418 张训练、验证和测试图像。与此同时，IRSR 数据集基于<strong>眼动持续时间（？）</strong>来评估目标显著性，包含 6,059 张训练图像和 2,929 张测试图像，每张图像最多标注 8 个对象。</p>
 <p><strong>评估指标</strong>。我们遵循先前研究 [31, 49] 使用三种评估指标：（1）平均绝对误差（MAE），比较预测的显著性排序掩码与像素级别的真实值之间的差异；（2）显著对象排序（SOR），使用 Spearman 相关性衡量预测的显著性值列表与真实值之间的相关程度；（3）分割感知显著对象排序（SA-SOR），使用 Pearson 相关性评估预测的显著性排序与真实排序之间的相关性，同时考虑与显著对象相关的假阳性和假阴性。有关详细信息，请参阅 [31, 45]。</p>
-<p><strong>实现细节</strong>。我们采用在 MS-COCO [30] 训练集上预训练的 ResNet [19] 和 Swin Transformer [33] 作为我们方法的骨干网络。根据 Mask2former [8] 的训练策略，我们采用了随机水平翻转和多尺度裁剪作为数据增强。在输入网络之前，所有图像均固定为 480×640 像素。我们的模型以总批量大小为 8 进行训练，共计 36,000 次迭代。初始学习率设置为 5e-5，并在第 15,000 和 30,000 次迭代时减少 0.1 倍。我们使用 AdamW 优化器并设置权重衰减为 0.05 来优化模型。对于 ASSR [45] 和 IRSR [31] 数据集，查询的数量分别设置为 5 和 8。损失项的权重比设置为 α : β : λ &#x3D; 1 : 1 : 1。我们的方法使用 mmdetection 工具包实现，并在四张 RTX 3090 GPU 上进行训练。</p>
-<h3 id="Comparison-to-existing-methods"><a href="#Comparison-to-existing-methods" class="headerlink" title="Comparison to existing methods"></a>Comparison to existing methods</h3><img src="https://vip.helloimg.com/i/2024/08/18/66c1c029bb9de.png" />
-
+<p><strong>实现细节</strong>。我们采用在 MS-COCO [30] 训练集上预训练的 ResNet [19] 和 Swin Transformer [33] 作为我们方法的骨干网络。根据 Mask2former [8] 的训练策略，我们采用了随机水平翻转和多尺度裁剪作为数据增强。在输入网络之前，所有图像均固定为 480×640 像素。我们的模型以总批量大小为 8 进行训练，共计 36,000 次迭代。初始学习率设置为 5e-5，并在第 15,000 和 30,000 次迭代时减少 0.1 倍。我们使用 AdamW 优化器并设置权重衰减为 0.05 来优化模型。对于 ASSR [45] 和 IRSR [31] 数据集，查询的数量分别设置为 5 和 8。损失项的权重比设置为 α : β : λ = 1 : 1 : 1。我们的方法使用 mmdetection 工具包实现，并在四张 RTX 3090 GPU 上进行训练。</p>
+<h3 id="Comparison-to-existing-methods"><a href="#Comparison-to-existing-methods" class="headerlink" title="Comparison to existing methods"></a>Comparison to existing methods</h3><p><img src="https://vip.helloimg.com/i/2024/08/18/66c1c029bb9de.png" /></p>
 <blockquote>
 <p><strong>图 1. 与其他最先进方法的比较。</strong></p>
 <p>(a) 在 ASSR 和 IRSR 数据集上 SA-SOR 和 MAE 的比较。距离左上角越近，显著性排序和分割结果越准确。</p>
@@ -454,20 +453,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-count">35</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-count">44</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -561,6 +560,8 @@
   
   <script color='0,0,255' opacity='0.4' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
   <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 

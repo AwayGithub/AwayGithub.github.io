@@ -14,20 +14,21 @@
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
   <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"awayx.online","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"awayx.online","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="CVPR 2021 github：JingZhang617&#x2F;COD-Rank-Localize-and-Segment (github.com)  Abstract伪装（Camouflage）是许多物种生存的关键防御机制。常见的伪装策略包括背景匹配，即模仿环境的颜色和图案，以及破坏性着色，即隐藏身体轮廓[37]。伪装目标检测 (COD) 的目标是分割隐藏在环境中的伪装物体。现有的 CO">
+  <meta name="description" content="CVPR 2021 github：JingZhang617&#x2F;COD-Rank-Localize-and-Segment (github.com)  Abstract伪装（Camouflage）是许多物种生存的关键防御机制。常见的伪装策略包括背景匹配，即模仿环境的颜色和图案，以及破坏性着色，即隐藏身体轮廓[37]。伪装目标检测 (COD) 的目标是分割隐藏在环境中的伪装物体。现有的 COD 模型基">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Simultaneously Localize, Segment and Rank the Camouflaged Objects">
 <meta property="og:url" content="http://awayx.online/2024/08/18/Simultaneously%20Localize,%20Segment%20and%20Rank%20the%20Camouflaged%20Objects/index.html">
 <meta property="og:site_name" content="AwaySpace">
-<meta property="og:description" content="CVPR 2021 github：JingZhang617&#x2F;COD-Rank-Localize-and-Segment (github.com)  Abstract伪装（Camouflage）是许多物种生存的关键防御机制。常见的伪装策略包括背景匹配，即模仿环境的颜色和图案，以及破坏性着色，即隐藏身体轮廓[37]。伪装目标检测 (COD) 的目标是分割隐藏在环境中的伪装物体。现有的 CO">
+<meta property="og:description" content="CVPR 2021 github：JingZhang617&#x2F;COD-Rank-Localize-and-Segment (github.com)  Abstract伪装（Camouflage）是许多物种生存的关键防御机制。常见的伪装策略包括背景匹配，即模仿环境的颜色和图案，以及破坏性着色，即隐藏身体轮廓[37]。伪装目标检测 (COD) 的目标是分割隐藏在环境中的伪装物体。现有的 COD 模型基">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://vip.helloimg.com/i/2024/08/18/66c1df89d6c6a.png">
 <meta property="og:image" content="https://vip.helloimg.com/i/2024/08/18/66c1df83c1bdb.png">
@@ -131,17 +132,17 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">5</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">42</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">44</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">32</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">35</span></a>
 
   </li>
         <li class="menu-item menu-item-sitemap">
@@ -273,15 +274,13 @@
       
         <blockquote>
 <p><strong>CVPR 2021</strong></p>
-<p><strong>github</strong>：<a target="_blank" rel="noopener" href="https://github.com/JingZhang617/COD-Rank-Localize-and-Segment">JingZhang617&#x2F;COD-Rank-Localize-and-Segment (github.com)</a></p>
+<p><strong>github</strong>：<a target="_blank" rel="noopener" href="https://github.com/JingZhang617/COD-Rank-Localize-and-Segment">JingZhang617/COD-Rank-Localize-and-Segment (github.com)</a></p>
 </blockquote>
 <h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>伪装（Camouflage）是许多物种生存的关键防御机制。常见的伪装策略包括背景匹配，即模仿环境的颜色和图案，以及破坏性着色，即隐藏身体轮廓[37]。伪装目标检测 (COD) 的目标是分割隐藏在环境中的伪装物体。现有的 COD 模型基于二元的地面实况，用于分割伪装目标，但未能体现伪装的程度。在本文中，我们重新审视了这一任务，并提出明确地<strong>建模伪装物体在特定背景下的显著性</strong>，不仅能更好地理解动物的伪装与进化，还能为设计更复杂的伪装技术提供指导。此外，我们观察到伪装物体的某些特定部分使它们对捕食者而言是可检测的。基于对伪装物体的上述理解，我们提出了<strong>首个基于排序的 COD 网络 (Rank-Net)，能够同时定位、分割和排序伪装物体</strong>。定位模型旨在找到使伪装物体显眼的辨别区域；分割模型用于分割伪装物体的整体范围；排序模型则推断出不同伪装物体的可检测性。此外，我们<strong>贡献了一个大型的 COD 测试集</strong>，以评估 COD 模型的泛化能力。实验结果表明，我们的模型实现了新的最先进技术，构建了一个更具解释性的 COD 网络。</p>
 <span id="more"></span>
-
 <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>伪装是最重要的反捕食防御机制之一，能够防止猎物被捕食者识别[43]。猎物通常使用两种主要策略来实现伪装：背景匹配和破坏性着色[37]。依赖背景匹配的猎物通常与其栖息地的颜色或图案相似，而在复杂的栖息地中，背景匹配反而可能增加它们的可见性。破坏性着色则在复杂环境中表现得更好，猎物通过进化在身体边缘形成高对比度的标记，以打破其轮廓。</p>
 <p>背景匹配和破坏性着色的共同目标是使猎物隐藏在环境中，或大幅降低其显著性，这与感知者的知觉和认知密切相关。通过深入研究伪装物体检测过程，可以细致地探究人类视觉系统的机制。此外，有效的伪装物体检测模型在农业领域可以用于害虫控制，在医学图像分割中可以检测感染或肿瘤区域[11, 12]。它还可以提升一般物体检测的性能，尤其是在物体与背景相似的情况下[10]。</p>
-<img src="https://vip.helloimg.com/i/2024/08/18/66c1df89d6c6a.png" />
-
+<p><img src="https://vip.helloimg.com/i/2024/08/18/66c1df89d6c6a.png" /></p>
 <blockquote>
 <p><strong>Figure 1</strong>: 传统的“二进制”真值仅提供伪装对象的范围。我们提供了额外的注释，包括“注视”（“Fixation”）和“排名”（“Ranking”），前者发现使伪装对象可检测的区域，后者突出伪装的难度等级。在“排名”中，蓝色表示更高的排名（更难的伪装）。</p>
 </blockquote>
@@ -297,15 +296,18 @@
 <h3 id="The-new-dataset"><a href="#The-new-dataset" class="headerlink" title="The new dataset"></a>The new dataset</h3><p><strong>数据集收集</strong>：为了实现伪装目标的定位和排名，我们首先<strong>对现有伪装目标检测数据集 CAMO</strong> [22] 和 <strong>COD10K</strong> [10] <strong>中的一些图像进行重新标注</strong>，使其具有定位（注视点）标注和排名标注。我们将重新处理的数据集称为 <strong>CAM-FR</strong>。基本假设是，观众找到伪装目标所需的时间越长，伪装目标的级别越高 [48]。基于此，我们记录每个伪装目标的检测延迟，并将其作为伪装排名的指标。</p>
 <p>为了实现这一目标，我们使用眼动追踪器（SMI RED250）并记录每个伪装目标被注意到的时间。SMI RED250 提供三个采样率，分别为 60Hz、120Hz 和 250Hz，代表了记录的检测延迟的精度。在我们的实验中，我们使用了 <strong>250Hz 的采样率</strong>。操作距离为 60-80cm，这是观众与伪装图像之间的距离。运动范围在水平方向上为 40cm，垂直方向上为 20cm，这是观众为了发现伪装目标而移动的范围。</p>
 <p>在现有的伪装目标检测训练数据集（例如 COD10K [10] 和 CAMO 数据集 [22]）的基础上，我们邀请<strong>六位观众</strong>观察每张图像，并进行伪装目标检测的任务3。我们将不同观众的中位观察时间定义为每个伪装实例的检测延迟，并借助实例级标注进行计算。具体来说，我们将第 $j$ 个观众对第 $i$ 个实例的观察时间定义为：</p>
-<p>$$<br>\Delta t_{ij} &#x3D; \text{median}(\delta t_{ij}), \delta t_{ij} &#x3D; {t_{ij}^k - t_{j}^0}_{k&#x3D;1}^{K}<br>$$</p>
-<p>其中，$K$ 是实例上的注视点数，$t_{j}^0$ 是观众 $j$ 开始观看图像的时间，$t_{ij}^k$ 是观众 $j$ 对实例 $i$ 的第 $k$ 个注视点的时间。为了避免极端高或低的注视时间的影响，我们使用中位数而不是平均值：</p>
-<p>$$<br>\text{median}(\mathbf{x})&#x3D;\left{<br>\begin{matrix}<br> x_{(n+1)&#x2F;2}, &amp; n&#x2F;2\ne0 \<br> \frac{x_{\left \lfloor n&#x2F;2 \right \rfloor }+x_{\left\lfloor n&#x2F;2 \right\rfloor+1}}{2}, &amp; n&#x2F;2&#x3D;0<br>\end{matrix}\right.<br>$$</p>
-<p>其中，$\mathbf{x}&#x3D;{ x_l }_{l&#x3D;1}^n$ 是一个按升序索引的集合。考虑到观众的不同感知能力，我们将实例 $i$ 的最终检测延迟定义为六个观众的中位数： $\Delta t_i &#x3D; \text{median}<em>j(\Delta t</em>{ij})$ ，随后我们使用这些数据来生成我们的排名数据集。</p>
+<script type="math/tex; mode=display">
+\Delta t_{ij} = \text{median}(\delta t_{ij}), \delta t_{ij} = \{t_{ij}^k - t_{j}^0\}_{k=1}^{K}</script><p>其中，$K$ 是实例上的注视点数，$t_{j}^0$ 是观众 $j$ 开始观看图像的时间，$t_{ij}^k$ 是观众 $j$ 对实例 $i$ 的第 $k$ 个注视点的时间。为了避免极端高或低的注视时间的影响，我们使用中位数而不是平均值：</p>
+<script type="math/tex; mode=display">
+\text{median}(\mathbf{x})=\left\{
+\begin{matrix}
+ x_{(n+1)/2}, & n/2\ne0 \\
+ \frac{x_{\left \lfloor n/2 \right \rfloor }+x_{\left\lfloor n/2 \right\rfloor+1}}{2}, & n/2=0
+\end{matrix}\right.</script><p>其中，$\mathbf{x}=\{ x_l \}_{l=1}^n$ 是一个按升序索引的集合。考虑到观众的不同感知能力，我们将实例 $i$ 的最终检测延迟定义为六个观众的中位数： $\Delta t_i = \text{median}_j(\Delta t_{ij})$ ，随后我们使用这些数据来生成我们的排名数据集。</p>
 <p>出现两种情况可能导致伪装目标区域没有注视点。第一种情况是由于眼动追踪器的机械故障或观众操作不当引起的。第二种情况是由于伪装程度较高，使得伪装目标难以被检测。我们设置了一个阈值来区分这两种情况。<strong>如果超过一半的观众忽略了该实例，我们将其视为难样本，搜索时间设置为 1（经过归一化处理）。否则，将删除相应观众的值，并从剩余的检测延迟中计算中位数。</strong></p>
 <p><strong>数据集信息</strong>：我们的数据集 CAM-FR 包含 <strong>2,000 张用于训练的图像和 280 张用于测试的图像</strong>。训练集包括 1,711 张来自 COD10K-CAM 训练集 [10] 的图像，以及 289 张来自 CAMO 训练集 [22] 的图像。然后，我们将 238 张来自 COD10K-CAM 训练集的图像和 42 张来自 CAMO 训练集的图像重新标注为测试集。在 CAM-FR 中，我们有不同的排名（排名 0 是背景），其中排名 1 是最困难的级别，排名 2 是中等，排名 3 是最简单的级别。</p>
 <p><strong>基于新数据集的模型设计</strong>：基于我们的新数据集，我们提出了一个同时定位、分割和排名伪装目标的方法。给定输入图像，前两个任务分别回归注视图和分割图，而第三个任务涉及实例分割（伪装目标检测）和分类（伪装目标排名）。我们在一个统一的框架中构建这三个任务，如图 2 所示，其中定位网络和分割网络集成在一个联合学习框架中。排名模型与联合学习框架共享骨干网络，以生成伪装排名。</p>
-<img src="https://vip.helloimg.com/i/2024/08/18/66c1df83c1bdb.png" />
-
+<p><img src="https://vip.helloimg.com/i/2024/08/18/66c1df83c1bdb.png" /></p>
 <blockquote>
 <p><strong>Figure 2</strong>: 提出的网络概述。我们的框架中有两个主要任务，即伪装目标排名，这一任务由排名地面真值和每个排名基于的二进制分割图监督；以及伪装目标区分区域定位和分割的联合学习框架。通过输入图像，我们的模型通过端到端训练来生成区分区域定位、伪装目标分割和伪装排名。图中的“FPN”和“RPN”分别表示特征金字塔网络 [28] 和区域提议网络 [39]。</p>
 </blockquote>
@@ -469,20 +471,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-count">35</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-count">44</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -576,6 +578,8 @@
   
   <script color='0,0,255' opacity='0.4' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
   <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 
