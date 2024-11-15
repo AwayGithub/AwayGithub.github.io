@@ -1167,7 +1167,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #ff21c8;
+  background: #ff348f;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2387,44 +2387,11 @@ embed {
 header {
   width: 100% !important;
 }
-header.post-header {
-  width: auto !important;
-}
 .container .main-inner {
   width: 85%;
 }
 .content-wrap {
-  width: calc(100%);
-}
-@media (min-width: 768px) and (max-width: 991px) {
-  .header {
-    width: auto !important;
-  }
-}
-@media (max-width: 767px) {
-  .header {
-    width: auto !important;
-  }
-}
-@media (min-width: 768px) and (max-width: 991px) {
-  .container .main-inner {
-    width: auto !important;
-  }
-}
-@media (max-width: 767px) {
-  .container .main-inner {
-    width: auto !important;
-  }
-}
-@media (min-width: 768px) and (max-width: 991px) {
-  .content-wrap {
-    width: 100% !important;
-  }
-}
-@media (max-width: 767px) {
-  .content-wrap {
-    width: 100% !important;
-  }
+  width: 100% !important;
 }
 .custom-logo .site-meta-headline {
   text-align: center;
