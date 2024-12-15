@@ -187,14 +187,14 @@
   </url>
   
   <url>
-    <loc>http://awayx.online/tags/%E6%95%99%E7%A8%8B/</loc>
+    <loc>http://awayx.online/tags/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/</loc>
     <lastmod>2024-12-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://awayx.online/tags/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/</loc>
+    <loc>http://awayx.online/tags/%E6%95%99%E7%A8%8B/</loc>
     <lastmod>2024-12-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -208,13 +208,6 @@
   </url>
   
   <url>
-    <loc>http://awayx.online/tags/%E8%A1%8C%E4%B8%9A/</loc>
-    <lastmod>2024-12-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>http://awayx.online/tags/%E6%92%AD%E5%AE%A2/</loc>
     <lastmod>2024-12-15</lastmod>
     <changefreq>weekly</changefreq>
@@ -222,7 +215,7 @@
   </url>
   
   <url>
-    <loc>http://awayx.online/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>
+    <loc>http://awayx.online/tags/%E8%A1%8C%E4%B8%9A/</loc>
     <lastmod>2024-12-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -235,14 +228,14 @@
     <priority>0.2</priority>
   </url>
   
-
-  
   <url>
-    <loc>http://awayx.online/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/</loc>
+    <loc>http://awayx.online/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>
     <lastmod>2024-12-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
+  
+
   
   <url>
     <loc>http://awayx.online/categories/%E6%95%99%E7%A8%8B/</loc>
@@ -252,14 +245,7 @@
   </url>
   
   <url>
-    <loc>http://awayx.online/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/Computer-Vision/</loc>
-    <lastmod>2024-12-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://awayx.online/categories/%E9%9A%8F%E6%83%B3/</loc>
+    <loc>http://awayx.online/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/</loc>
     <lastmod>2024-12-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -280,14 +266,21 @@
   </url>
   
   <url>
-    <loc>http://awayx.online/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/Computer-Vision/Salient-Object-Ranking/</loc>
+    <loc>http://awayx.online/categories/%E9%9A%8F%E6%83%B3/</loc>
     <lastmod>2024-12-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://awayx.online/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>
+    <loc>http://awayx.online/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/Computer-Vision/</loc>
+    <lastmod>2024-12-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://awayx.online/categories/%E6%95%99%E7%A8%8B/%E6%95%B0%E6%8D%AE%E9%9B%86/PASCAL-VOC/</loc>
     <lastmod>2024-12-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -301,14 +294,14 @@
   </url>
   
   <url>
-    <loc>http://awayx.online/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/Computer-Vision/Diffusion-Model/</loc>
+    <loc>http://awayx.online/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>
     <lastmod>2024-12-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://awayx.online/categories/%E6%95%99%E7%A8%8B/%E6%95%B0%E6%8D%AE%E9%9B%86/PASCAL-VOC/</loc>
+    <loc>http://awayx.online/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/Computer-Vision/Salient-Object-Ranking/</loc>
     <lastmod>2024-12-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -323,6 +316,13 @@
   
   <url>
     <loc>http://awayx.online/categories/%E6%95%99%E6%9D%90/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/</loc>
+    <lastmod>2024-12-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://awayx.online/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/Computer-Vision/Diffusion-Model/</loc>
     <lastmod>2024-12-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
