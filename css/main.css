@@ -1167,7 +1167,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #cd44e4;
+  background: #66b421;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2359,7 +2359,7 @@ mjx-container + br {
   margin: 0 auto;
 }
 .header {
-  width: 100% !important;
+  width: 100%;
 }
 @media (max-width: 767px) {
   .header {
@@ -2381,16 +2381,13 @@ mjx-container + br {
   box-sizing: border-box;
 }
 .content-wrap {
-  width: 100% !important;
-}
-@media (max-width: 767px) {
-  .content-wrap {
-    width: 90% !important;
-  }
+  width: 100%; /* 宽度继承父容器 content-wrap */
+  padding: 0 5%; /* 与 .main-inner 保持相同的左右留白 */
+  box-sizing: border-box; /* 确保宽度计算包括 padding */
 }
 @media (max-width: 767px) {
   .footer-inner {
-    width: 100% !important;
+    width: 100%;
   }
 }
 .content {
