@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://awayx.online/2024/11/01/thoughts/</loc>
+    
+    <lastmod>2024-12-18</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://awayx.online/2024/12/18/%E5%A6%82%E4%BD%95%E6%89%A9%E6%95%A3/</loc>
     
     <lastmod>2024-12-18</lastmod>
@@ -12,15 +21,6 @@
   
   <url>
     <loc>http://awayx.online/2024/08/14/hopeless/</loc>
-    
-    <lastmod>2024-11-15</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://awayx.online/2024/11/01/thoughts/</loc>
     
     <lastmod>2024-11-15</lastmod>
     
@@ -196,14 +196,14 @@
   </url>
   
   <url>
-    <loc>http://awayx.online/tags/%E6%95%99%E7%A8%8B/</loc>
+    <loc>http://awayx.online/tags/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/</loc>
     <lastmod>2024-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://awayx.online/tags/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/</loc>
+    <loc>http://awayx.online/tags/%E6%95%99%E7%A8%8B/</loc>
     <lastmod>2024-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -224,13 +224,6 @@
   </url>
   
   <url>
-    <loc>http://awayx.online/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>
-    <lastmod>2024-12-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>http://awayx.online/tags/%E8%A1%8C%E4%B8%9A/</loc>
     <lastmod>2024-12-18</lastmod>
     <changefreq>weekly</changefreq>
@@ -244,14 +237,14 @@
     <priority>0.2</priority>
   </url>
   
-
-  
   <url>
-    <loc>http://awayx.online/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/</loc>
+    <loc>http://awayx.online/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>
     <lastmod>2024-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
+  
+
   
   <url>
     <loc>http://awayx.online/categories/%E6%95%99%E7%A8%8B/</loc>
@@ -261,7 +254,14 @@
   </url>
   
   <url>
-    <loc>http://awayx.online/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/Computer-Vision/</loc>
+    <loc>http://awayx.online/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/</loc>
+    <lastmod>2024-12-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://awayx.online/categories/%E6%95%99%E7%A8%8B/Hexo/</loc>
     <lastmod>2024-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -282,14 +282,7 @@
   </url>
   
   <url>
-    <loc>http://awayx.online/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/Computer-Vision/Salient-Object-Ranking/</loc>
-    <lastmod>2024-12-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://awayx.online/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>
+    <loc>http://awayx.online/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/Computer-Vision/</loc>
     <lastmod>2024-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -303,7 +296,14 @@
   </url>
   
   <url>
-    <loc>http://awayx.online/categories/%E6%95%99%E7%A8%8B/Hexo/</loc>
+    <loc>http://awayx.online/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>
+    <lastmod>2024-12-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://awayx.online/categories/%E6%95%99%E7%A8%8B/%E6%95%B0%E6%8D%AE%E9%9B%86/PASCAL-VOC/</loc>
     <lastmod>2024-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -317,7 +317,7 @@
   </url>
   
   <url>
-    <loc>http://awayx.online/categories/%E6%95%99%E7%A8%8B/%E6%95%B0%E6%8D%AE%E9%9B%86/PASCAL-VOC/</loc>
+    <loc>http://awayx.online/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/Computer-Vision/Salient-Object-Ranking/</loc>
     <lastmod>2024-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
