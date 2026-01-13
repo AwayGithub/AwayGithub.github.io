@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/infinite-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/infinite-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="baidu-site-verification" content="codeva-3QPiHE5fDw" />
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"awayx.online","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"buttons","active":"valine","storage":false,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="&lt;!DOCTYPE html&gt;                 Gesture Tarot                         body {             font-family: &#39;Noto Serif SC&#39;, serif;             background-color: #050505;             color: #e5e5e5;">
+<meta property="og:type" content="website">
+<meta property="og:title" content="AwaySpace">
+<meta property="og:url" content="http://awayx.online/tarot/example.html">
+<meta property="og:site_name" content="AwaySpace">
+<meta property="og:description" content="&lt;!DOCTYPE html&gt;                 Gesture Tarot                         body {             font-family: &#39;Noto Serif SC&#39;, serif;             background-color: #050505;             color: #e5e5e5;">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-01-13T16:48:33.036Z">
+<meta property="article:modified_time" content="2026-01-13T16:48:33.036Z">
+<meta property="article:author" content="AwayX">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://awayx.online/tarot/example">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title> | AwaySpace
+</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">AwaySpace</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">9</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">13</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">15</span></a>
+
+  </li>
+        <li class="menu-item menu-item-tarot">
+
+    <a href="/tarot/" rel="section"><i class="fa fa-magic fa-fw"></i>tarot</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container"></div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="algolia-results">
+  <div id="algolia-stats"></div>
+  <div id="algolia-hits"></div>
+  <div id="algolia-pagination" class="algolia-pagination"></div>
+</div>
+
+      
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+  
+  
+
+          <div class="content page posts-expand">
+            
+
+    
+    
+    
+    <div class="post-block" lang="zh-CN">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">
+</h1>
+
+<div class="post-meta">
+  
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <p>&lt;!DOCTYPE html&gt;</p>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gesture Tarot</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Noto+Serif+SC:wght@300;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Noto Serif SC', serif;
+            background-color: #050505;
+            color: #e5e5e5;
+            overflow: hidden;
+            user-select: none;
+        }
+
+        .font-cinzel { font-family: 'Cinzel', serif; }
+
+        /* Custom Cursor */
+        #hand-cursor {
+            position: fixed;
+            width: 0px; 
+            height: 0px;
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 50;
+            transition: border-color 0.2s, box-shadow 0.2s; 
+        }
+
+        #cursor-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 1px dashed rgba(168, 85, 247, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
+            transition: width 0.1s, height 0.1s;
+        }
+
+        #hand-cursor.grabbing {
+            background-color: #a855f7;
+            border-color: #a855f7;
+            box-shadow: 0 0 20px #a855f7;
+        }
+
+        /* Directional Guides (Visual Feedback for Joystick) */
+        .guide-arrow {
+            position: absolute;
+            top: 50%;
+            font-size: 2rem;
+            color: rgba(168, 85, 247, 0.3);
+            transform: translateY(-50%);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s, transform 0.3s;
+        }
+        .guide-left { left: 5%; }
+        .guide-right { right: 5%; }
+
+        /* Card Styles */
+        .card-container {
+            perspective: 1000px;
+            transform-style: preserve-3d;
+        }
+
+        .card {
+            width: 200px;
+            height: 340px;
+            border-radius: 12px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform-origin: center center;
+            transition: transform 0.1s linear, opacity 0.3s, box-shadow 0.3s; /* Optimized for continuous scroll */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+            will-change: transform;
+        }
+
+        .card-inner {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card-back {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+            border: 1px solid #333;
+            background-image: radial-gradient(#333 1px, transparent 1px);
+            background-size: 10px 10px;
+        }
+
+        .card-back::after {
+            content: '☾';
+            font-size: 40px;
+            color: #444;
+        }
+
+        .card-front {
+            background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+            border: 1px solid #a855f7;
+            transform: rotateY(180deg);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .fog {
+            position: absolute;
+            width: 200%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(168, 85, 247, 0.05) 0%, rgba(0,0,0,0) 70%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        #debug-info {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            color: #444;
+            font-size: 10px;
+            font-family: monospace;
+            pointer-events: none;
+            z-index: 40;
+        }
+    </style>
+</head>
+<body class="h-screen w-screen flex flex-col items-center justify-center relative">
+
+    <div id="hand-cursor">
+        <div id="cursor-ring"></div>
+    </div>
+
+    <!-- Visual Guides -->
+    <div id="guide-left" class="guide-arrow guide-left">‹</div>
+    <div id="guide-right" class="guide-arrow guide-right">›</div>
+
+    <div id="debug-info">CALIBRATING...</div>
+
+    <div id="ui-layer" class="absolute top-0 left-0 w-full h-full pointer-events-none z-40 flex flex-col justify-between p-8">
+        <div class="w-full flex justify-between items-start">
+            <h1 class="text-3xl font-cinzel tracking-widest text-purple-400 opacity-80">TAROT</h1>
+            <div class="text-right space-y-2">
+                <div class="flex items-center justify-end gap-2 text-xs uppercase tracking-widest text-gray-500">
+                    <span id="status-text">初始化视觉中枢...</span>
+                    <div id="status-dot" class="w-2 h-2 rounded-full bg-red-900"></div>
+                </div>
+                <div id="instruction" class="text-sm text-gray-400 font-light opacity-0 transition-opacity duration-500">
+                    将手移至边缘以滚动 <br> <span class="text-purple-400">保持捏合</span> 以查看
+                </div>
+            </div>
+        </div>
+
+        <div id="result-overlay" class="hidden absolute bottom-16 left-1/2 transform -translate-x-1/2 text-center w-full max-w-md pointer-events-auto pb-4 transition-opacity duration-300 opacity-0">
+            <h2 id="card-name" class="text-4xl font-cinzel text-white mb-2"></h2>
+            <p id="card-desc" class="text-gray-300 font-light leading-relaxed px-4"></p>
+            <div class="mt-4 text-xs text-gray-500 tracking-widest uppercase animate-pulse">
+                松开手指返回
+            </div>
+        </div>
+    </div>
+
+    <div id="stage" class="relative w-full h-96 flex justify-center items-center overflow-hidden z-10 transition-opacity duration-1000 opacity-0">
+        <div id="deck-track" class="relative w-full h-full flex justify-center items-center">
+            <!-- Cards injected here -->
+        </div>
+    </div>
+
+    <video id="webcam" class="absolute opacity-0 pointer-events-none" autoplay playsinline></video>
+
+    <script type="module">
+        import { FilesetResolver, HandLandmarker } from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0/+esm";
+
+        // --- Full Tarot Deck Data (78 Cards) ---
+        const majorArcana = [
+            { name: "0. 愚者", nameEn: "The Fool", desc: "新的开始，冒险，纯真，自发性。迈向未知的信仰之跃。" },
+            { name: "I. 魔术师", nameEn: "The Magician", desc: "创造力，技能，意志力，显化。你拥有实现目标所需的一切资源。" },
+            { name: "II. 女祭司", nameEn: "The High Priestess", desc: "直觉，潜意识，神秘，内在的声音。倾听你内心的智慧。" },
+            { name: "III. 皇后", nameEn: "The Empress", desc: "丰饶，自然，母性，感官享受。创造与滋养的时机。" },
+            { name: "IV. 皇帝", nameEn: "The Emperor", desc: "权威，结构，控制，父亲形象。建立秩序与稳固的基础。" },
+            { name: "V. 教皇", nameEn: "The Hierophant", desc: "传统，信仰，一致性，教育。遵循既定的道路或寻找精神导师。" },
+            { name: "VI. 恋人", nameEn: "The Lovers", desc: "爱，和谐，关系，价值观的选择。重要的决断时刻。" },
+            { name: "VII. 战车", nameEn: "The Chariot", desc: "控制，意志力，胜利，决心。通过自律克服障碍。" },
+            { name: "VIII. 力量", nameEn: "Strength", desc: "勇气，耐心，控制，同情。以柔克刚的内在力量。" },
+            { name: "IX. 隐士", nameEn: "The Hermit", desc: "内省，孤独，寻求真理，指引。向内探索的时刻。" },
+            { name: "X. 命运之轮", nameEn: "Wheel of Fortune", desc: "改变，周期，命运，转折点。生活是不断变化的循环。" },
+            { name: "XI. 正义", nameEn: "Justice", desc: "公正，真理，因果，法律。为你的行动负责。" },
+            { name: "XII. 倒吊人", nameEn: "The Hanged Man", desc: "牺牲，放下，新视角，等待。通过暂停获得启示。" },
+            { name: "XIII. 死神", nameEn: "Death", desc: "结束，转变，放下，新开始。为了重生必须结束旧事物。" },
+            { name: "XIV. 节制", nameEn: "Temperance", desc: "平衡，适度，耐心，目标。寻找中间道路与和谐。" },
+            { name: "XV. 恶魔", nameEn: "The Devil", desc: "束缚，上瘾，物质主义，阴影自我。面对限制你的恐惧。" },
+            { name: "XVI. 高塔", nameEn: "The Tower", desc: "突变，混乱，启示，觉醒。旧结构的崩塌带来自由。" },
+            { name: "XVII. 星星", nameEn: "The Star", desc: "希望，信仰，目的，更新。暴风雨后的平静与灵感。" },
+            { name: "XVIII. 月亮", nameEn: "The Moon", desc: "幻觉，恐惧，焦虑，潜意识。事情并非表面看起来那样。" },
+            { name: "XIX. 太阳", nameEn: "The Sun", desc: "积极，温暖，成功，活力。纯粹的快乐与清晰。" },
+            { name: "XX. 审判", nameEn: "Judgement", desc: "重生，内在召唤，宽恕。回顾过去，迎接觉醒。" },
+            { name: "XXI. 世界", nameEn: "The World", desc: "完成，整合，成就，旅行。一个周期的圆满结束。" }
+        ];
+
+        // Helper to generate Minor Arcana
+        const suits = [
+            { name: "权杖", en: "Wands", meaning: "火元素。行动，激情，灵感，意志。" },
+            { name: "圣杯", en: "Cups", meaning: "水元素。情感，关系，直觉，爱。" },
+            { name: "宝剑", en: "Swords", meaning: "风元素。思想，智慧，冲突，真相。" },
+            { name: "星币", en: "Pentacles", meaning: "土元素。物质，工作，金钱，现实。" }
+        ];
+
+        const ranks = [
+            { val: "Ace", cn: "首牌", desc: "新的开始，纯粹的潜力。" },
+            { val: "Two", cn: "二", desc: "平衡，决定，合作。" },
+            { val: "Three", cn: "三", desc: "成长，创造，团队合作。" },
+            { val: "Four", cn: "四", desc: "稳定，结构，休息。" },
+            { val: "Five", cn: "五", desc: "冲突，损失，挑战。" },
+            { val: "Six", cn: "六", desc: "和谐，帮助，回忆。" },
+            { val: "Seven", cn: "七", desc: "评估，策略，坚持。" },
+            { val: "Eight", cn: "八", desc: "速度，行动，变化。" },
+            { val: "Nine", cn: "九", desc: "完成，满足，韧性。" },
+            { val: "Ten", cn: "十", desc: "结局，遗产，循环。" },
+            { val: "Page", cn: "侍从", desc: "消息，好奇心，新机会。" },
+            { val: "Knight", cn: "骑士", desc: "行动，追求，冲动。" },
+            { val: "Queen", cn: "王后", desc: "滋养，成熟，理解。" },
+            { val: "King", cn: "国王", desc: "掌控，权威，领导。" }
+        ];
+
+        let minorArcana = [];
+        suits.forEach(suit => {
+            ranks.forEach(rank => {
+                minorArcana.push({
+                    name: `${suit.name}${rank.cn}`,
+                    nameEn: `${rank.val} of ${suit.en}`,
+                    desc: `${suit.meaning} ${rank.desc}`
+                });
+            });
+        });
+
+        const tarotData = [...majorArcana, ...minorArcana];
+
+        // --- Fisher-Yates Shuffle Algorithm ---
+        function shuffleDeck(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        const state = {
+            handLandmarker: undefined,
+            webcamRunning: false,
+            lastVideoTime: -1,
+            currentScroll: 0,
+            scrollVelocity: 0,
+            handX: 0.5, 
+            isPinching: false,
+            cardCount: tarotData.length,
+            selectedIndex: 0,
+            mode: 'loading', 
+            cardElements: [],
+            smoothX: 0.5,
+            pinchLevel: 0 
+        };
+
+        const DOM = {
+            video: document.getElementById("webcam"),
+            cursor: document.getElementById("hand-cursor"),
+            cursorRing: document.getElementById("cursor-ring"), 
+            debugInfo: document.getElementById("debug-info"),
+            statusText: document.getElementById("status-text"),
+            statusDot: document.getElementById("status-dot"),
+            instruction: document.getElementById("instruction"),
+            stage: document.getElementById("stage"),
+            deckTrack: document.getElementById("deck-track"),
+            resultOverlay: document.getElementById("result-overlay"),
+            cardName: document.getElementById("card-name"),
+            cardDesc: document.getElementById("card-desc"),
+            guideLeft: document.getElementById("guide-left"),
+            guideRight: document.getElementById("guide-right")
+        };
+
+        async function init() {
+            try {
+                // Shuffle data immediately on init for "Schrödinger's Card" effect
+                shuffleDeck(tarotData);
+
+                const vision = await FilesetResolver.forVisionTasks(
+                    "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0/wasm"
+                );
+                state.handLandmarker = await HandLandmarker.createFromOptions(vision, {
+                    baseOptions: {
+                        modelAssetPath: `https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task`,
+                        delegate: "GPU"
+                    },
+                    runningMode: "VIDEO",
+                    numHands: 1
+                });
+                DOM.statusText.innerText = "请求视觉权限...";
+                startCamera();
+            } catch (error) {
+                console.error(error);
+                DOM.statusText.innerText = "初始化失败";
+                DOM.statusDot.className = "w-2 h-2 rounded-full bg-red-500";
+            }
+        }
+
+        function startCamera() {
+            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                alert("Browser API not supported");
+                return;
+            }
+            navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 480 } })
+                .then((stream) => {
+                    DOM.video.srcObject = stream;
+                    DOM.video.addEventListener("loadeddata", () => {
+                        state.webcamRunning = true;
+                        DOM.statusText.innerText = "系统就绪";
+                        DOM.statusDot.className = "w-2 h-2 rounded-full bg-green-500 shadow-[0_0_10px_#22c55e]";
+                        DOM.instruction.style.opacity = 1;
+                        DOM.stage.style.opacity = 1;
+                        state.mode = 'active';
+                        generateCards();
+                        renderLoop();
+                    });
+                })
+                .catch((err) => {
+                    DOM.statusText.innerText = "摄像头被拒绝";
+                    console.error(err);
+                });
+        }
+
+        function generateCards() {
+            DOM.deckTrack.innerHTML = '';
+            state.cardElements = [];
+
+            // Note: Since tarotData is now shuffled, index 0 is no longer guaranteed to be "The Fool".
+            // It is completely random.
+            tarotData.forEach((data) => {
+                const el = document.createElement('div');
+                el.className = 'card';
+                el.innerHTML = `
+                    <div class="card-inner">
+                        <div class="card-back"></div>
+                        <div class="card-front">
+                            <div class="text-4xl text-purple-400 mb-4 opacity-80">✦</div>
+                            <h3 class="text-xl font-cinzel text-white mb-1 leading-tight">${data.nameEn}</h3>
+                            <p class="text-sm text-gray-400 font-serif mt-2">${data.name}</p>
+                        </div>
+                    </div>
+                `;
+                DOM.deckTrack.appendChild(el);
+                state.cardElements.push(el);
+            });
+        }
+
+        function renderLoop() {
+            detectHands();
+
+            // Only update physics and main UI loop if NOT holding
+            if (state.mode === 'active') {
+                updatePhysics();
+                updateUI();
+            }
+
+            requestAnimationFrame(renderLoop);
+        }
+
+        function detectHands() {
+            if (!state.handLandmarker || !state.webcamRunning) return;
+
+            if (DOM.video.currentTime !== state.lastVideoTime) {
+                state.lastVideoTime = DOM.video.currentTime;
+                const startTimeMs = performance.now();
+                const results = state.handLandmarker.detectForVideo(DOM.video, startTimeMs);
+
+                if (results.landmarks && results.landmarks.length > 0) {
+                    const landmarks = results.landmarks[0];
+
+                    const indexTip = landmarks[8];
+                    const thumbTip = landmarks[4];
+                    const wrist = landmarks[0];
+                    const middleMcp = landmarks[9]; 
+
+                    // Hand Scale
+                    const handScale = Math.hypot(wrist.x - middleMcp.x, wrist.y - middleMcp.y);
+
+                    // Pinch Detection
+                    const pinchDistance = Math.hypot(indexTip.x - thumbTip.x, indexTip.y - thumbTip.y);
+                    const pinchRatio = pinchDistance / handScale;
+
+                    // Hysteresis
+                    const PINCH_ENTER_THRESH = 0.50; 
+                    const PINCH_EXIT_THRESH = 0.70;
+
+                    let isPinchingNow = state.isPinching;
+                    if (state.isPinching) {
+                        if (pinchRatio > PINCH_EXIT_THRESH) isPinchingNow = false;
+                    } else {
+                        if (pinchRatio < PINCH_ENTER_THRESH) isPinchingNow = true;
+                    }
+
+                    // Smoothing for X (Low Pass Filter)
+                    const rawX = 1 - indexTip.x;
+                    const alpha = 0.2; 
+                    state.smoothX = state.smoothX + (rawX - state.smoothX) * alpha;
+                    state.handX = state.smoothX;
+
+                    // State Transitions
+                    if (isPinchingNow && !state.isPinching) {
+                        if (state.mode === 'active') startReveal();
+                    } else if (!isPinchingNow && state.isPinching) {
+                        if (state.mode === 'holding') endReveal();
+                    }
+
+                    state.isPinching = isPinchingNow;
+
+                    // Visuals
+                    const cursorX = state.handX * 100;
+                    const cursorY = indexTip.y * 100;
+                    DOM.cursor.style.left = `${cursorX}%`;
+                    DOM.cursor.style.top = `${cursorY}%`;
+
+                    const ringSize = Math.min(150, Math.max(0, pinchRatio * 100));
+                    DOM.cursor.style.width = state.isPinching ? '10px' : '20px';
+                    DOM.cursor.style.height = state.isPinching ? '10px' : '20px';
+
+                    DOM.cursorRing.style.width = `${ringSize}px`;
+                    DOM.cursorRing.style.height = `${ringSize}px`;
+
+                    if(state.isPinching) {
+                        DOM.cursor.classList.add('grabbing');
+                        DOM.cursorRing.style.borderColor = 'rgba(168, 85, 247, 0.8)';
+                        DOM.cursorRing.style.borderStyle = 'solid';
+                    } else {
+                        DOM.cursor.classList.remove('grabbing');
+                        DOM.cursorRing.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+                        DOM.cursorRing.style.borderStyle = 'dashed';
+                    }
+
+                    DOM.debugInfo.innerText = `R: ${pinchRatio.toFixed(2)} | X: ${state.handX.toFixed(2)}`;
+                } else {
+                    // No hand detected - dampen velocity to stop
+                    state.handX = 0.5; // Reset virtual hand to center for calculation safety
+                }
+            }
+        }
+
+        function startReveal() {
+            state.mode = 'holding';
+
+            // Calculate true Modulo index for data retrieval
+            let idx = Math.round(state.currentScroll) % state.cardCount;
+            if (idx < 0) idx += state.cardCount;
+            state.selectedIndex = idx;
+
+            // Find the visual element that corresponds to this index in the looped array
+            let minOffset = Infinity;
+            let targetCard = null;
+
+            state.cardElements.forEach((card, i) => {
+                let offset = i - state.currentScroll;
+                // Infinite Wrap Logic applied to offset
+                while (offset < -state.cardCount / 2) offset += state.cardCount;
+                while (offset > state.cardCount / 2) offset -= state.cardCount;
+
+                if (Math.abs(offset) < Math.abs(minOffset)) {
+                    minOffset = offset;
+                    targetCard = card;
+                }
+            });
+
+            if (!targetCard) return;
+
+            // Get Data from the SHUFFLED deck
+            const data = tarotData[state.selectedIndex];
+
+            DOM.instruction.style.opacity = 0;
+            DOM.guideLeft.style.opacity = 0;
+            DOM.guideRight.style.opacity = 0;
+
+            state.cardElements.forEach((card) => {
+                if (card !== targetCard) {
+                    card.style.opacity = 0.1;
+                    // Keep them in place, just dim
+                }
+            });
+
+            // Override transform for the selected card
+            targetCard.style.transform = `translate(-50%, -85%) scale(1.3) rotateY(0deg)`;
+            targetCard.style.zIndex = 200;
+            targetCard.style.filter = 'brightness(1)';
+            targetCard.style.boxShadow = '0 0 40px rgba(168, 85, 247, 0.6)';
+
+            setTimeout(() => {
+                if(state.mode === 'holding') { 
+                    targetCard.classList.add('flipped');
+                    showText(data);
+                }
+            }, 100); 
+        }
+
+        function endReveal() {
+            DOM.resultOverlay.classList.remove('fade-in');
+            DOM.resultOverlay.style.opacity = 0;
+            setTimeout(() => DOM.resultOverlay.classList.add('hidden'), 300);
+
+            // Find the flipped card to reset
+            const flipped = document.querySelector('.card.flipped');
+            if(flipped) flipped.classList.remove('flipped');
+
+            state.mode = 'active';
+            DOM.instruction.style.opacity = 1;
+
+            state.cardElements.forEach(card => {
+                card.style.opacity = 1;
+            });
+        }
+
+        function showText(data) {
+            DOM.resultOverlay.classList.remove('hidden');
+            void DOM.resultOverlay.offsetWidth;
+            DOM.resultOverlay.style.opacity = 1;
+
+            DOM.cardName.innerText = data.name;
+            DOM.cardDesc.innerText = data.desc;
+
+            DOM.cardName.classList.add('fade-in');
+            DOM.cardDesc.classList.add('fade-in');
+        }
+
+        function updatePhysics() {
+            // --- JOYSTICK LOGIC (Rate Control) ---
+
+            const center = 0.5;
+            const deadzone = 0.15; // 35% to 65% is safe zone
+            const maxSpeed = 0.45; // Fast shuffle
+
+            let delta = state.handX - center;
+
+            // Apply Deadzone
+            if (Math.abs(delta) < deadzone) {
+                delta = 0;
+                DOM.guideLeft.style.opacity = 0;
+                DOM.guideRight.style.opacity = 0;
+            } else {
+                // Normalize speed after deadzone
+                // Sign * (Magnitude - Deadzone)
+                delta = Math.sign(delta) * (Math.abs(delta) - deadzone);
+
+                // Visual Guides
+                if (state.handX < 0.5) {
+                    DOM.guideLeft.style.opacity = Math.min(1, Math.abs(delta) * 5);
+                    DOM.guideLeft.style.transform = `translateY(-50%) translateX(-${Math.abs(delta)*20}px)`;
+                } else {
+                    DOM.guideRight.style.opacity = Math.min(1, Math.abs(delta) * 5);
+                    DOM.guideRight.style.transform = `translateY(-50%) translateX(${Math.abs(delta)*20}px)`;
+                }
+            }
+
+            // Target Velocity
+            const targetVel = delta * maxSpeed;
+
+            // Smooth Velocity (Inertia)
+            state.scrollVelocity += (targetVel - state.scrollVelocity) * 0.1;
+
+            // Apply Velocity
+            state.currentScroll += state.scrollVelocity;
+        }
+
+        function updateUI() {
+            const cardSpacing = 160;
+            const total = state.cardCount;
+
+            state.cardElements.forEach((card, index) => {
+                // Calculate relative offset from the "camera" (currentScroll)
+                let offset = index - state.currentScroll;
+
+                // --- INFINITE SCROLL WRAPPING ---
+                while (offset < -total / 2) offset += total;
+                while (offset > total / 2) offset -= total;
+
+                // Only render if within visible range (optimization)
+                const isVisible = Math.abs(offset) < 5; 
+                card.style.display = isVisible ? 'block' : 'none';
+
+                if (isVisible) {
+                    const xTrans = offset * cardSpacing;
+                    const zTrans = -Math.abs(offset) * 100;
+                    const rotateY = offset * -25;
+
+                    const isFocused = Math.abs(offset) < 0.5;
+                    const scale = isFocused ? 1.1 : 0.9;
+                    const brightness = Math.max(0.3, 1 - Math.abs(offset) * 0.3);
+
+                    card.style.transform = `translate(-50%, -50%) translateX(${xTrans}px) translateZ(${zTrans}px) rotateY(${rotateY}deg) scale(${scale})`;
+                    card.style.zIndex = Math.round(100 - Math.abs(offset));
+                    card.style.filter = `brightness(${brightness})`;
+
+                    if (isFocused) {
+                        card.style.borderColor = '#a855f7';
+                        card.style.boxShadow = '0 0 20px rgba(168, 85, 247, 0.4)';
+                    } else {
+                        card.style.borderColor = '#333';
+                        card.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.5)';
+                    }
+                }
+            });
+        }
+
+        window.resetReading = function() { 
+            // Optional: Implement a re-shuffle logic here if user wants to pull new cards without refreshing
+            // For now, refreshing the page is the "standard" way to reset the deck entropy
+            location.reload();
+        };
+
+        init();
+    </script>
+</body>
+</html>
+      </div>
+      
+      
+      
+    </div>
+    
+
+    
+    
+    
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ui-layer"><span class="nav-number">1.</span> <span class="nav-text">TAROT</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#card-name"><span class="nav-number">1.1.</span> <span class="nav-text"></span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="AwayX"
+      src="/images/TheRightToCry.jpg">
+  <p class="site-author-name" itemprop="name">AwayX</p>
+  <div class="site-description" itemprop="description">嘿嘿</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/awaygithub" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;awaygithub" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:away2557103310@outlook.com" title="E-Mail → mailto:away2557103310@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://yoursite.com/" title="http:&#x2F;&#x2F;yoursite.com" rel="noopener" target="_blank">Title</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2024-02 – 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AwayX</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.4' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch-lite.umd.js"></script>
+<script src="//cdn.jsdelivr.net/npm/instantsearch.js@4/dist/instantsearch.production.min.js"></script>
+<script src="/js/algolia-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : '6qltCIVRCiBTC8XWDzRUs9fF-gzGzoHsz',
+      appKey     : 'WGdrJzu5gtgEEYLp47OGok8H',
+      placeholder: "OOO000ooo...",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
